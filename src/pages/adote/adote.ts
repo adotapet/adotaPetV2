@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
-import { PerfilPage } from '../perfil/perfil';
+import {Component} from '@angular/core';
+import {NavController, ToastController} from 'ionic-angular';
+import {PerfilPage} from '../perfil/perfil';
+import {AngularFireAuth} from "angularfire2/auth";
 
 @Component({
   selector: 'page-adote',
@@ -8,9 +9,27 @@ import { PerfilPage } from '../perfil/perfil';
 })
 export class AdotePage {
 
-  constructor(public navCtrl: NavController) {
+  constructor(private afAuth: AngularFireAuth, public navCtrl: NavController, public toast: ToastController) {
   }
-  goToPerfil(params){
+
+  ionViewDidLoad() {
+    this.afAuth.authState.subscribe(data => {
+      if (data && data.email && data.uid) {
+        this.toast.create({
+          message: `Bem-vindo ao Adota Pet, ${data.email}`,
+          duration: 3000
+        }).present();
+      } else {
+        this.toast.create({
+          message: `Bem-Vindo ao Adota Pet`,
+          duration: 3000
+        }).present();
+      }
+
+    })
+  }
+
+  goToPerfil(params) {
     if (!params) params = {};
     this.navCtrl.push(PerfilPage);
   }

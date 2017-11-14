@@ -17,13 +17,13 @@
       <ion-label>
         Email
       </ion-label>
-      <ion-input type="text" placeholder=""></ion-input>
+      <ion-input type="text" placeholder="" [(ngModel)]="user.email" name="email"></ion-input>
     </ion-item>
     <ion-item id="cadastrar-input8">
       <ion-label>
         Senha
       </ion-label>
-      <ion-input type="password" placeholder=""></ion-input>
+      <ion-input type="password" placeholder="" [(ngModel)]="user.password" name="password"></ion-input>
     </ion-item>
   </form>
   <form id="cadastrar-form6">
@@ -34,7 +34,7 @@
       <ion-toggle color="positive" checked="false"></ion-toggle>
     </ion-item>
   </form>
-  <button id="cadastrar-button5" ion-button color="assertive" block on-click="goToLogin()">
+  <button id="cadastrar-button5" ion-button color="assertive" block (click)="register(user)">
     Cadastrar
   </button>
 </ion-content>

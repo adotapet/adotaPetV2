@@ -1,20 +1,27 @@
-import { NgModule, ErrorHandler } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-import { MyApp } from './app.component';
-import { CadastrarPage } from '../pages/cadastrar/cadastrar';
-import { AdicionarPetPage } from '../pages/adicionar-pet/adicionar-pet';
-import { MeusPetsPage } from '../pages/meus-pets/meus-pets';
-import { AdotePage } from '../pages/adote/adote';
-import { TabsControllerPage } from '../pages/tabs-controller/tabs-controller';
-import { LoginPage } from '../pages/login/login';
-import { ChatPage } from '../pages/chat/chat';
-import { PerfilPage } from '../pages/perfil/perfil';
-import { MensagemPage } from '../pages/mensagem/mensagem';
+import {NgModule, ErrorHandler} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
+import {MyApp} from './app.component';
+import {CadastrarPage} from '../pages/cadastrar/cadastrar';
+import {AdicionarPetPage} from '../pages/adicionar-pet/adicionar-pet';
+import {MeusPetsPage} from '../pages/meus-pets/meus-pets';
+import {TabsControllerPage} from '../pages/tabs-controller/tabs-controller';
+import {LoginPage} from '../pages/login/login';
+import {ChatPage} from '../pages/chat/chat';
+import {PerfilPage} from '../pages/perfil/perfil';
+import {MensagemPage} from '../pages/mensagem/mensagem';
+import {AdotePage} from "../pages/adote/adote";
 
 
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+import {StatusBar} from '@ionic-native/status-bar';
+import {SplashScreen} from '@ionic-native/splash-screen';
+import {LoginProvider} from '../providers/login/login';
+import {PostProvider} from '../providers/post/post';
+import {ChatProvider} from '../providers/chat/chat';
+
+import {AngularFireModule} from "angularfire2";
+import {AngularFireAuthModule} from "angularfire2/auth";
+import {FIREBASE_CONFIG} from "./app.firebase.config";
 
 @NgModule({
   declarations: [
@@ -22,16 +29,18 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     CadastrarPage,
     AdicionarPetPage,
     MeusPetsPage,
-    AdotePage,
     TabsControllerPage,
     LoginPage,
     ChatPage,
     PerfilPage,
-    MensagemPage
+    MensagemPage,
+    AdotePage
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(FIREBASE_CONFIG),
+    AngularFireAuthModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -39,17 +48,21 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     CadastrarPage,
     AdicionarPetPage,
     MeusPetsPage,
-    AdotePage,
     TabsControllerPage,
     LoginPage,
     ChatPage,
     PerfilPage,
-    MensagemPage
+    MensagemPage,
+    AdotePage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    LoginProvider,
+    PostProvider,
+    ChatProvider
   ]
 })
-export class AppModule {}
+export class AppModule {
+}
