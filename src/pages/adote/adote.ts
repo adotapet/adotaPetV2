@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {NavController, ToastController} from 'ionic-angular';
 import {PerfilPage} from '../perfil/perfil';
 import {AngularFireAuth} from "angularfire2/auth";
+import {TabsControllerPage} from "../tabs-controller/tabs-controller";
 
 @Component({
   selector: 'page-adote',

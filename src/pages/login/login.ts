@@ -4,6 +4,7 @@ import {User} from "../../models/user";
 import {CadastrarPage} from "../cadastrar/cadastrar";
 import {AngularFireAuth} from "angularfire2/auth";
 import {AdotePage} from "../adote/adote"
+import {TabsControllerPage} from "../tabs-controller/tabs-controller";
 
 @Component({
   selector: 'page-login',
@@ -24,11 +25,13 @@ export class LoginPage {
     try {
       const result = this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password)
       if (result) {
-        this.navCtrl.setRoot(AdotePage);
+        localStorage.setItem('skipIntro', 'true');
+        this.navCtrl.setRoot(TabsControllerPage);
       }
       console.log(result);
     } catch (e) {
       console.error(e);
+      localStorage.setItem('skipIntro', 'false');
     }
   }
 
