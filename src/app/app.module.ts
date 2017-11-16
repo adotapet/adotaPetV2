@@ -11,8 +11,6 @@ import {ChatPage} from '../pages/chat/chat';
 import {PerfilPage} from '../pages/perfil/perfil';
 import {MensagemPage} from '../pages/mensagem/mensagem';
 import {AdotePage} from "../pages/adote/adote";
-
-
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {LoginProvider} from '../providers/login/login';
@@ -21,6 +19,7 @@ import {ChatProvider} from '../providers/chat/chat';
 
 import {AngularFireModule} from "angularfire2";
 import {AngularFireAuthModule} from "angularfire2/auth";
+import { AngularFireDatabaseModule } from 'angularfire2/database'
 import {FIREBASE_CONFIG} from "./app.firebase.config";
 
 @NgModule({
@@ -40,6 +39,7 @@ import {FIREBASE_CONFIG} from "./app.firebase.config";
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
+    AngularFireDatabaseModule,
     AngularFireAuthModule
   ],
   bootstrap: [IonicApp],
