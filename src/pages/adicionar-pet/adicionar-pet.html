@@ -11,9 +11,7 @@
 <ion-content padding id="page3">
   <img src="assets/img/NsepPTAR9CVtubPYQpQ5_noimglarge.png" style="display:block;width:100%;height:auto;margin-left:auto;margin-right:auto;" />
   <form id="adicionarPet-form2">
-    <div style="width:100%;height:220px;margin:0px 0px;line-height:250px;background-color:#e8ebef;text-align:center;">
-      <i class="icon ion-image" style="font-size:64px;color:#888;vertical-align:middle;"></i>
-    </div>
+
     <button id="adicionarPet-button3" ion-button color="assertive" block style="border-radius:100px 100px 100px 100px;">
       <ion-icon name="camera"></ion-icon>
       Upload da Foto
@@ -22,14 +20,14 @@
       <ion-label>
         Nome do Pet
       </ion-label>
-      <ion-input type="text" placeholder=""></ion-input>
+      <ion-input type="text" name="nome" placeholder="" [(ngModel)]="post.nome"></ion-input>
     </ion-item>
     <div class="spacer" style="width:300px;height:45px;" id="adicionarPet-spacer3"></div>
     <ion-item id="adicionarPet-select1">
       <ion-label>
         Espécie
       </ion-label>
-      <ion-select name="">
+      <ion-select name="especie" [(ngModel)]="post.especie">
         <ion-option>
           Canina
         </ion-option>
@@ -98,7 +96,7 @@
       <ion-label>
         WhatsApp
       </ion-label>
-      <ion-input type="number" placeholder=""></ion-input>
+      <ion-input type="number" placeholder="" name="whats" [(ngModel)]="post.whatsapp"></ion-input>
     </ion-item>
     <ion-item id="adicionarPet-input5">
       <ion-label stacked>
@@ -106,8 +104,10 @@
       </ion-label>
       <ion-input type="text" placeholder="Conte-nos um pouco sobre o Pet"></ion-input>
     </ion-item>
-    <button id="adicionarPet-button4" ion-button color="assertive" block>
+    <button id="adicionarPet-button4" ion-button color="assertive" (click)="addPost()">
       Publicar
     </button>
+
+    {{post}}
   </form>
 </ion-content>
