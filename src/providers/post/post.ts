@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
 
 /*
   Generated class for the PostProvider provider.
@@ -10,8 +11,11 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class PostProvider {
 
+    // posts: FirebaseListObservable<any>;
+
   constructor(public http: HttpClient) {
-    console.log('Hello PostProvider Provider');
+      // this.posts = afDatabase.list('/posts').valueChanges();
+
   }
 
 }

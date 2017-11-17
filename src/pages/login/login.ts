@@ -5,6 +5,10 @@ import {CadastrarPage} from "../cadastrar/cadastrar";
 import {AngularFireAuth} from "angularfire2/auth";
 import {AdotePage} from "../adote/adote"
 import {TabsControllerPage} from "../tabs-controller/tabs-controller";
+import { Facebook } from "@ionic-native/facebook";
+import firebase from 'firebase/app';
+
+
 
 @Component({
   selector: 'page-login',
@@ -14,7 +18,8 @@ export class LoginPage {
 
   user = {} as User;
 
-  constructor(private afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private afAuth: AngularFireAuth, public navCtrl: NavController,
+              public navParams: NavParams, public facebook: Facebook) {
   }
 
   ionViewDidLoad() {
@@ -38,4 +43,22 @@ export class LoginPage {
   register() {
     this.navCtrl.push(CadastrarPage);
   }
+
+  //Login com Facebook
+
+    facebookLogin(): Promise<any> {
+        return this.facebook.login(['email'])
+            .then( response => {
+                const facebookCredential = firebase.auth.FacebookAuthProvider
+                    .credential(response.authResponse.accessToken);
+
+                firebase.auth().signInWithCredential(facebookCredential)
+                    .then( success => {
+                        console.log("Firebase success: " + JSON.stringify(success));
+                        this.navCtrl.setRoot(TabsControllerPage);
+                    });
+
+            }).catch((error) => { console.log(error) });
+
+    }
 }

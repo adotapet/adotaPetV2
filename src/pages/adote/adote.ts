@@ -10,7 +10,9 @@ import {TabsControllerPage} from "../tabs-controller/tabs-controller";
 })
 export class AdotePage {
 
+
   constructor(private afAuth: AngularFireAuth, public navCtrl: NavController, public toast: ToastController) {
+
   }
 
   ionViewDidLoad() {
