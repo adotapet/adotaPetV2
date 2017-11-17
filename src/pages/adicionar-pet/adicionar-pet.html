@@ -11,8 +11,7 @@
 <ion-content padding id="page3">
   <img src="assets/img/NsepPTAR9CVtubPYQpQ5_noimglarge.png" style="display:block;width:100%;height:auto;margin-left:auto;margin-right:auto;" />
   <form id="adicionarPet-form2">
-
-    <button id="adicionarPet-button3" ion-button color="assertive" block style="border-radius:100px 100px 100px 100px;">
+    <button id="adicionarPet-button3"  (click)="takePhoto()"  ion-button block color="assertive"  style="border-radius:100px 100px 100px 100px;">
       <ion-icon name="camera"></ion-icon>
       Upload da Foto
     </button>
@@ -28,13 +27,13 @@
         Espécie
       </ion-label>
       <ion-select name="especie" [(ngModel)]="post.especie">
-        <ion-option>
+        <ion-option value="Canina">
           Canina
         </ion-option>
-        <ion-option>
+        <ion-option value="Felina">
           Felina
         </ion-option>
-        <ion-option>
+        <ion-option value="Outros">
           Outros
         </ion-option>
       </ion-select>
@@ -43,71 +42,75 @@
       <ion-label>
         Raça
       </ion-label>
-      <ion-select name=""></ion-select>
+      <ion-select name="raca"></ion-select>
     </ion-item>
     <ion-item id="adicionarPet-select4">
       <ion-label>
         Estado
       </ion-label>
-      <ion-select name=""></ion-select>
+      <ion-select name="estado"></ion-select>
     </ion-item>
     <div class="spacer" style="width:300px;height:45px;" id="adicionarPet-spacer4"></div>
     <ion-item id="adicionarPet-select3">
       <ion-label>
         Idade
       </ion-label>
-      <ion-select name="">
-        <ion-option>
+      <ion-select name="idade" [(ngModel)]="post.idade">
+        <ion-option value="1 a 3 meses">
           1 a 3 meses
         </ion-option>
-        <ion-option>
+        <ion-option value="3 a 6 meses" >
           3 a 6 meses
         </ion-option>
-        <ion-option>
+        <ion-option value="6 a 9 meses">
           6 a 9 meses
         </ion-option>
-        <ion-option>
+        <ion-option value="9 a 12 meses">
           9 a 12 meses
         </ion-option>
-        <ion-option>
+        <ion-option value="1 a 3 anos">
           1 a 3 anos
         </ion-option>
-        <ion-option>
+        <ion-option value="Acima de 3 anos">
           Acima de 3 anos
         </ion-option>
-        <ion-option></ion-option>
+
       </ion-select>
+
     </ion-item>
+
     <ion-item id="adicionarPet-select5">
       <ion-label>
         Sexo
       </ion-label>
-      <ion-select name="">
-        <ion-option>
+      <ion-select name="sexo" [(ngModel)]="post.sexo">
+        <ion-option value="Mâcho">
           Macho
         </ion-option>
-        <ion-option>
+        <ion-option value="Femêa">
           Femêa
         </ion-option>
-        <ion-option></ion-option>
+        <ion-option value="Desconhecido">
+          Desconhecido
+        </ion-option>
       </ion-select>
     </ion-item>
+
     <ion-item id="adicionarPet-input4">
       <ion-label>
         WhatsApp
       </ion-label>
-      <ion-input type="number" placeholder="" name="whats" [(ngModel)]="post.whatsapp"></ion-input>
+      <ion-input type="number" placeholder=""  name="whats" [(ngModel)]="post.whatsapp"></ion-input>
     </ion-item>
     <ion-item id="adicionarPet-input5">
       <ion-label stacked>
         Informações Adicionais
       </ion-label>
-      <ion-input type="text" placeholder="Conte-nos um pouco sobre o Pet"></ion-input>
+      <ion-input name="informacoes" type="text"  placeholder="Conte-nos um pouco sobre o Pet" [(ngModel)]="post.informacoes"></ion-input>
     </ion-item>
     <button id="adicionarPet-button4" ion-button color="assertive" (click)="addPost()">
       Publicar
     </button>
 
-    {{post}}
   </form>
 </ion-content>
