@@ -21,6 +21,8 @@ import {AngularFireModule} from "angularfire2";
 import {AngularFireAuthModule} from "angularfire2/auth";
 import { AngularFireDatabaseModule } from 'angularfire2/database'
 import {FIREBASE_CONFIG} from "./app.firebase.config";
+import {Facebook} from "@ionic-native/facebook";
+import {Camera} from "@ionic-native/camera";
 
 @NgModule({
   declarations: [
@@ -61,7 +63,9 @@ import {FIREBASE_CONFIG} from "./app.firebase.config";
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     LoginProvider,
     PostProvider,
-    ChatProvider
+    ChatProvider,
+    Facebook,
+    Camera
   ]
 })
 export class AppModule {

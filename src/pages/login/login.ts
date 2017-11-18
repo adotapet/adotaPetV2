@@ -55,6 +55,7 @@ export class LoginPage {
                 firebase.auth().signInWithCredential(facebookCredential)
                     .then( success => {
                         console.log("Firebase success: " + JSON.stringify(success));
+                        localStorage.setItem('skipIntro', 'true');
                         this.navCtrl.setRoot(TabsControllerPage);
                     });
 

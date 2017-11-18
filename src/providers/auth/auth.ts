@@ -1,22 +1,21 @@
-import { Facebook } from '@ionic-native/facebook';
+import {Facebook} from "@ionic-native/facebook";
 // import { GooglePlus } from '@ionic-native/google-plus'; //falta o reverse client id
-import { AngularFireAuth } from 'angularfire2/auth';
-import { Injectable } from '@angular/core';
-import firebase from 'firebase/app';
+import {AngularFireAuth} from 'angularfire2/auth';
+import {Injectable} from '@angular/core';
+import firebase from 'firebase/app';;
 
 @Injectable()
 export class AuthProvider {
-  constructor(
-    public afAuth: AngularFireAuth,
-    // public googlePlus: GooglePlus, //falta o reverse client id
-    public facebook: Facebook
-  ) {}
+  constructor(public afAuth: AngularFireAuth,
+              // public googlePlus: GooglePlus, //falta o reverse client id
+              public facebook: Facebook) {
+  }
 
   getUser(): firebase.User {
     return this.afAuth.auth.currentUser;
   }
 
-    //falta o reverse client id
+  //falta o reverse client id
 
   // googleLogin(): Promise<any> {
   //   return this.googlePlus
@@ -64,3 +63,4 @@ export class AuthProvider {
       });
   }
 }
+
