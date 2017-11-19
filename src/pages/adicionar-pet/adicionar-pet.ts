@@ -58,10 +58,10 @@ export class AdicionarPetPage {
     try {
       this.afDatabase.list('BR/adocao/pets').push(this.post).then(res => {
 
-        const picture = storage().ref(`images/adocao/${key}/`);
+        const picture = storage().ref(`images/adocao/${res.key}/`);
         let uploadTask = picture.putString(this.photoUrls[1], 'data_url');
         console.log('linkkk', uploadTask.snapshot.downloadURL);
-        this.afDatabase.list('BR/adocao/pets/' + key + '/').set('imgUrl', uploadTask.snapshot.downloadURL);
+        this.afDatabase.list('BR/adocao/pets/' + res.key + '/').set('imgUrl', uploadTask.snapshot.downloadURL);
 
         console.log(res, 'pet cadastrado');
         let popup = this.alert.create({
