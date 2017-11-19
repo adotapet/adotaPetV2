@@ -9,11 +9,15 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding id="page3">
-  <img src="assets/img/NsepPTAR9CVtubPYQpQ5_noimglarge.png" style="display:block;width:100%;height:auto;margin-left:auto;margin-right:auto;" />
+  <ion-slides pager="true" *ngIf="photoUrls.length">
+    <ion-slide *ngFor="let photo of photoUrls">
+      <img [src]="photo" />
+    </ion-slide>
+  </ion-slides>
   <form id="adicionarPet-form2">
     <button id="adicionarPet-button3"  (click)="takePhoto()"  ion-button block color="assertive"  style="border-radius:100px 100px 100px 100px;">
       <ion-icon name="camera"></ion-icon>
-      Upload da Foto
+       Upload da Foto
     </button>
     <ion-item id="adicionarPet-input3">
       <ion-label>

@@ -16,11 +16,10 @@ import {storage} from "firebase";
 export class AdicionarPetPage {
 
   post = {} as Post;
-  photoUrl: string = '';
+  photoUrls = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alert: AlertController,
               private camera: Camera, private afDatabase: AngularFireDatabase) {
-    console.log(this.post);
   }
 
 
@@ -35,17 +34,15 @@ export class AdicionarPetPage {
         encodingType: this.camera.EncodingType.JPEG,
         mediaType: this.camera.MediaType.PICTURE,
         correctOrientation: true
-      }
+      };
 
-      // await this.camera.getPicture(options);
-      // const image = 'data:image/jpeg;base64,${result}';
-      // console.log(image);
 
-      await this.camera.getPicture(options).then((imageData) => {
+      this.camera.getPicture(options).then((imageData) => {
+        console.log('getPicture');
         // imageData is either a base64 encoded string or a file URI
         // If it's base64:
         let base64Image = 'data:image/jpeg;base64,' + imageData;
-        this.photoUrl = base64Image;
+        this.photoUrls.push(base64Image);
       }, (err) => {
         // Handle error
       });
@@ -60,13 +57,17 @@ export class AdicionarPetPage {
   addPost() {
     try {
       this.afDatabase.list('BR/adocao/pets').push(this.post).then(res => {
-        const picture = storage().ref('images/adocao/');
-        picture.putString(this.photoUrl, 'data_url');
+
+        const picture = storage().ref(`images/adocao/${key}/`);
+        let uploadTask = picture.putString(this.photoUrls[1], 'data_url');
+        console.log('linkkk', uploadTask.snapshot.downloadURL);
+        this.afDatabase.list('BR/adocao/pets/' + key + '/').set('imgUrl', uploadTask.snapshot.downloadURL);
+
         console.log(res, 'pet cadastrado');
         let popup = this.alert.create({
           title: 'Pet Postado',
           subTitle: 'Boa sorte!',
-          buttons: ['Dismiss']
+          buttons: ['Ok']
         });
         popup.present();
       });
