@@ -1,31 +1,30 @@
-<ion-content style="background:url(assets/img/29I2444QPm1ULGFYRbMo_e49cfd556aec13fb15a866006ea5a645.png) no-repeat center;background-size:cover;" id="page5">
-  <form id="login-form1">
-    <div class="spacer" style="width:320px;height:119px;" id="login-spacer2"></div>
-    <ion-list id="login-list1">
-      <ion-item id="login-input1">
-        <ion-label floating></ion-label>
-        <ion-input type="email" placeholder="Seu Email" [(ngModel)]="user.email" name="email"></ion-input>
-      </ion-item>
-      <ion-item id="login-input2">
-        <ion-label floating></ion-label>
-        <ion-input type="password" placeholder="Sua Senha" [(ngModel)]="user.password" name="password"></ion-input>
-      </ion-item>
-    </ion-list>
-    <div class="spacer" style="height:40px;" id="login-spacer1"></div>
-    <button id="login-button2" ion-button clear color="positive" block (click)="register()">
-      Criar Minha Conta
-    </button>
-    <button id="login-button1" ion-button color="assertive" block (click)="login(user)">
-      Login
-    </button>
-    <button id="login-button9" ion-button clear color="positive" block href-inappbrowser="/signup">
-      ou
-    </button>
-    <button id="login-button8" ion-button color="positive" block (click)="facebookLogin()">
-      <ion-icon name="facebook">Facebook</ion-icon>
-    </button>
-    <button id="login-button10" ion-button color="assertive" block>
-      <ion-icon name="google"></ion-icon>
-    </button>
-  </form>
+<ion-content class="background" no-repeat>
+  <ion-card>
+    <ion-card-header>
+      Bem vindo(a) ao AdotaPet
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list no-lines>
+        <div class="spacer" style="height: 10px;"></div>
+        <ion-item>
+          <ion-input type="email" placeholder="Email" [(ngModel)]="user.email" name="email"></ion-input>
+        </ion-item>
+        <div class="spacer" style="height: 5px;"></div>
+        <ion-item>
+          <ion-input type="password" placeholder="Password" [(ngModel)]="user.password" name="password"></ion-input>
+        </ion-item>
+        <div class="spacer" style="height: 10px;"></div>
+        <a (click)="passwordreset()">Esqueceu a senha? <b> Redefinir senha </b></a>
+        <div class="spacer" style="height: 10px;"></div>
+        <button ion-button block round outline color="light" (click)="login(user)">Login</button>
+        <div class="spacer" style="height: 10px;"></div>
+        <p>OR</p>
+        <div class="spacer" style="height: 10px;"></div>
+        <button ion-button round block (click)="facebookLogin()">Facebook</button>
+        <div class="spacer" style="height: 10px;"></div>
+        <button ion-button round block color="danger">Google</button>
+        <button ion-button clear full color="light" (click)="signup()">Não tem uma conta? Cadastre-se</button>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

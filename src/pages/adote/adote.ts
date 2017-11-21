@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {NavController, ToastController} from 'ionic-angular';
 import {PerfilPage} from '../perfil/perfil';
 import {AngularFireAuth} from "angularfire2/auth";
-import {TabsControllerPage} from "../tabs-controller/tabs-controller";
 
 @Component({
   selector: 'page-adote',
@@ -25,7 +24,7 @@ export class AdotePage {
       } else {
         this.toast.create({
           message: `Bem-Vindo ao Adota Pet`,
-          duration: 3000
+          duration: 1000
         }).present();
       }
 

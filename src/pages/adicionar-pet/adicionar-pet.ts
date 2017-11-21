@@ -17,6 +17,7 @@ export class AdicionarPetPage {
 
   post = {} as Post;
   photoUrls = [];
+  uploadUrl = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alert: AlertController,
               private camera: Camera, private afDatabase: AngularFireDatabase) {
@@ -58,10 +59,12 @@ export class AdicionarPetPage {
     try {
       this.afDatabase.list('BR/adocao/pets').push(this.post).then(res => {
 
-        const picture = storage().ref(`images/adocao/${res.key}/`);
-        let uploadTask = picture.putString(this.photoUrls[1], 'data_url');
-        console.log('linkkk', uploadTask.snapshot.downloadURL);
-        this.afDatabase.list('BR/adocao/pets/' + res.key + '/').set('imgUrl', uploadTask.snapshot.downloadURL);
+       storage().ref(`images/adocao/${res.key}/`);
+
+        this.photoUrls.forEach(function (item) {
+        });
+      //  console.log('linkkk', uploadTask.snapshot.downloadURL);
+      //  this.afDatabase.list('BR/adocao/pets/' + res.key + '/images/').push(uploadTask.snapshot.downloadURL);
 
         console.log(res, 'pet cadastrado');
         let popup = this.alert.create({
@@ -76,6 +79,10 @@ export class AdicionarPetPage {
       console.log(e);
     }
 
+  }
+
+  putString(picture) {
+    //this.uploadUrl = picture.putString(item, 'data_url');
   }
 
 }

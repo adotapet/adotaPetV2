@@ -23,6 +23,8 @@ import { AngularFireDatabaseModule } from 'angularfire2/database'
 import {FIREBASE_CONFIG} from "./app.firebase.config";
 import {Facebook} from "@ionic-native/facebook";
 import {Camera} from "@ionic-native/camera";
+import { Push } from '@ionic-native/push';
+import { GoogleAnalytics } from '@ionic-native/google-analytics';
 
 @NgModule({
   declarations: [
@@ -65,7 +67,9 @@ import {Camera} from "@ionic-native/camera";
     PostProvider,
     ChatProvider,
     Facebook,
-    Camera
+    Camera,
+    Push,
+    GoogleAnalytics
   ]
 })
 export class AppModule {

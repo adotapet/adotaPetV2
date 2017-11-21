@@ -1,14 +1,11 @@
 import {Component} from '@angular/core';
-import {NavController, NavParams} from 'ionic-angular';
+import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {User} from "../../models/user";
 import {CadastrarPage} from "../cadastrar/cadastrar";
 import {AngularFireAuth} from "angularfire2/auth";
-import {AdotePage} from "../adote/adote"
 import {TabsControllerPage} from "../tabs-controller/tabs-controller";
 import { Facebook } from "@ionic-native/facebook";
 import firebase from 'firebase/app';
-
-
 
 @Component({
   selector: 'page-login',
@@ -36,7 +33,6 @@ export class LoginPage {
       console.log(result);
     } catch (e) {
       console.error(e);
-      localStorage.setItem('skipIntro', 'false');
     }
   }
 
