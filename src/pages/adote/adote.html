@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="danger">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -9,7 +9,7 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding id="page4">
-  <ion-card id="adote-card21" *ngFor="let post of posts | async">
+  <ion-card id="adote-card21" *ngFor="let post of posts">
     <ion-list>
       <img src="assets/img/IefaytxPTvmIeIUBCbFC_FarmafC3B3rmula-Pet.jpg" />
       <ion-item color="assertive" id="adote-list-item4">
@@ -20,3 +20,4 @@
     </ion-list>
   </ion-card>
 </ion-content>
+ionic cordova plugin add cordova-plugin-facebook4 --variable APP_ID="287389468354047" --variable APP_NAME="AdotaPet"

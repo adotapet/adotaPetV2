@@ -43,7 +43,7 @@ export class LoginPage {
   //Login com Facebook
 
     facebookLogin(): Promise<any> {
-        return this.facebook.login(['email'])
+        return this.facebook.login(['public_profile','email'])
             .then( response => {
                 const facebookCredential = firebase.auth.FacebookAuthProvider
                     .credential(response.authResponse.accessToken);

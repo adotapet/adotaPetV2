@@ -25,6 +25,8 @@ import {Facebook} from "@ionic-native/facebook";
 import {Camera} from "@ionic-native/camera";
 import { Push } from '@ionic-native/push';
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
+import { FCM } from '@ionic-native/fcm';
+import {HTTP} from '@ionic-native/http';
 
 @NgModule({
   declarations: [
@@ -69,7 +71,9 @@ import { GoogleAnalytics } from '@ionic-native/google-analytics';
     Facebook,
     Camera,
     Push,
-    GoogleAnalytics
+    GoogleAnalytics,
+    FCM,
+    HTTP
   ]
 })
 export class AppModule {

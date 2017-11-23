@@ -9,6 +9,19 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding id="page7">
+  <form>
+    <ion-item id="adicionarPet-input3">
+      <ion-label>
+        token alvo
+      </ion-label>
+      <ion-input floating type="text" name="token" placeholder="token" [(ngModel)]="sendToken"></ion-input>
+    </ion-item>
+    <div class="spacer" style="width:300px;height:45px;" id="adicionarPet-spacer3"></div>
+    <ion-item>
+      <button block (click)="sendNotification(sendToken)"></button>
+    </ion-item>
+  </form>
+
   <ion-list id="chat-list6">
     <ion-item color="none" on-click="goToMensagem()" id="chat-list-item18">
       <ion-avatar item-left>
