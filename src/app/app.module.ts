@@ -25,8 +25,8 @@ import {Facebook} from "@ionic-native/facebook";
 import {Camera} from "@ionic-native/camera";
 import { Push } from '@ionic-native/push';
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
-import { FCM } from '@ionic-native/fcm';
-import {HTTP} from '@ionic-native/http';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -46,7 +46,8 @@ import {HTTP} from '@ionic-native/http';
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -71,9 +72,7 @@ import {HTTP} from '@ionic-native/http';
     Facebook,
     Camera,
     Push,
-    GoogleAnalytics,
-    FCM,
-    HTTP
+    GoogleAnalytics
   ]
 })
 export class AppModule {

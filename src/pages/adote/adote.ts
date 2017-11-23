@@ -27,7 +27,7 @@ export class AdotePage {
         this.toast.create({
           message: `Bem-Vindo ao Adota Pet`,
           duration: 1000
-        }).present();
+        })
       }
 
     })
