@@ -8,31 +8,18 @@
     </ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content padding id="page7">
-  <form>
-    <ion-item id="adicionarPet-input3">
-      <ion-label>
-        token alvo
-      </ion-label>
-      <ion-input floating type="text" name="token" placeholder="token" [(ngModel)]="sendToken"></ion-input>
-    </ion-item>
-    <div class="spacer" style="width:300px;height:45px;" id="adicionarPet-spacer3"></div>
-    <ion-item>
-      <button block (click)="sendNotification(sendToken)"></button>
-    </ion-item>
-  </form>
 
-  <ion-list id="chat-list6">
-    <ion-item color="none" on-click="goToMensagem()" id="chat-list-item18">
-      <ion-avatar item-left>
-        <img />
+<ion-content  padding class="chatPage">
+
+  <ion-list no-lines >
+    <ion-item *ngFor="let msg of messages" (click)="goToMensagem(msg)">
+      <ion-avatar item-start>
+        <img src="img/avatar-finn.png">
       </ion-avatar>
-      <h2>
-       <h1>{{msg}}</h1>
-        <p>Nottification msg: {{notification}}</p>
-        <p>Error msg: {{error}}</p>
-      </h2>
+      <h2>{{msg.senderName}}</h2>
+      <h3>Don't Know What To Do!</h3>
+      <p>I've had a pretty messed up day. If we just...</p>
     </ion-item>
-    <ion-item>Register: <p>{{register}}</p></ion-item>
   </ion-list>
+
 </ion-content>

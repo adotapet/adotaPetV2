@@ -1,11 +1,46 @@
 <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>
-      Mensagem
-    </ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <button ion-button (click)="dismiss()">
+            <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+            <ion-title>
+                Chat
+            </ion-title>
+        </button>
+
+    </ion-navbar>
 </ion-header>
-<ion-content padding id="page9"></ion-content>
+
+<ion-content #content padding class="chatPage">
+
+    <ion-list no-lines>
+        <ion-item *ngFor="let msg of messages">
+            <div class="chatBubble">
+                <img class="profile-pic {{msg.position}}" src="{{msg.img}}">
+                <div class="chat-bubble {{msg.position}}">
+                    <div class="message">{{msg.content}}</div>
+                    <div class="message-detail">
+                        <span style="font-weight:bold;">{{msg.senderName}} </span>,
+                        <span>{{msg.time}}</span>
+                    </div>
+                </div>
+            </div>
+        </ion-item>
+    </ion-list>
+
+</ion-content>
+
+<ion-footer class="chatPageFooter">
+    <ion-toolbar>
+        <ion-item>
+            <ion-label style="margin:0px;"></ion-label>
+            <ion-input item-content style="width:100%;">
+            </ion-input>
+        </ion-item>
+
+        <ion-buttons right>
+            <button style="min-width:45px;" (click)="goToMensagem()">
+                <ion-icon name="md-send"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-footer>

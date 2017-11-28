@@ -19,10 +19,10 @@ export class AdotePage {
   ionViewDidLoad() {
     this.afAuth.authState.subscribe(data => {
       if (data && data.email && data.uid) {
-        this.toast.create({
-          message: `Bem-vindo ao Adota Pet, ${data.email}`,
-          duration: 3000
-        }).present();
+      //  this.toast.create({
+      //    message: `Bem-vindo ao Adota Pet, ${data.email}`,
+      //    duration: 3000
+      //  }).present();
       } else {
         this.toast.create({
           message: `Bem-Vindo ao Adota Pet`,
