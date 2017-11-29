@@ -16,7 +16,6 @@ export class AdicionarPetPage {
 
     post = {} as Post;
     photoUrls = [];
-    database: database.Database;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private alert: AlertController,
                 private camera: Camera, private afDatabase: AngularFireDatabase) {
@@ -44,7 +43,7 @@ export class AdicionarPetPage {
                 let base64Image = 'data:image/jpeg;base64,' + imageData;
                 let date = new Date().getTime();
                 let image = {'date': date, 'img': base64Image};
-                this.post.fotoUrl.push(image);
+                this.photoUrls.push(image);
             }, (err) => {
                 let popup = this.alert.create({
                     title: 'Erro!',
@@ -61,21 +60,25 @@ export class AdicionarPetPage {
     }
 
 
-    addPost() {
+    addPost(post) {
         try {
             console.log('add post');
-            let key = this.database.ref('BR/adocao/pets').push().key;
+            //Pegando uma key do database pra criar a pasta das fotos;
+            let key = database().ref('BR/adocao/pets').push().key;
+            let tmpUploadUrls = [];
             let uploadUrls = [];
+            //Fazendo um loop inserindo as strings base64 das fotos e colocando no storage.
             this.photoUrls.forEach(function (item) {
 
                 let fileName = key + '_' + item.date;
                 let imageRef = storage().ref(`images/adocao/${key}/${fileName}`);
-                imageRef.putString(item, 'data_url').then(data => {
-                    console.log(data.downloadURL, 'image data');
-                    uploadUrls.push(data.downloadURL);
+                imageRef.putString(item.img, 'data_url').then(data => {
+                    uploadUrls = tmpUploadUrls.concat(data.downloadURL);
                 });
             });
-            this.database.ref('BR/adocao/pets/' + key).set(this.post).then(res => {
+            //coloca as urls das fotos upadas no objeto do pet;
+            post.fotoUrls =  uploadUrls;
+            database().ref('BR/adocao/pets/' + key).set(post).then(res => {
                 console.log(res, 'pet cadastrado');
                 let popup = this.alert.create({
                     title: 'Pet Postado',

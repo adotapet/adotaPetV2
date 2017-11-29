@@ -11,7 +11,7 @@
 <ion-content padding id="page3">
   <ion-slides pager="true" *ngIf="photoUrls.length">
     <ion-slide *ngFor="let photo of photoUrls">
-      <img [src]="photo" />
+      <img [src]="photo.img" />
     </ion-slide>
   </ion-slides>
   <form id="adicionarPet-form2">
@@ -112,7 +112,7 @@
       </ion-label>
       <ion-input name="informacoes" type="text"  placeholder="Conte-nos um pouco sobre o Pet" [(ngModel)]="post.informacoes"></ion-input>
     </ion-item>
-    <button id="adicionarPet-button4" ion-button color="assertive" (click)="addPost()">
+    <button id="adicionarPet-button4" ion-button color="assertive" (click)="addPost(post)">
       Publicar
     </button>
 
