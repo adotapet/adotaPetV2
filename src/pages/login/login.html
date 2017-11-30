@@ -1,30 +1,36 @@
-<ion-content class="background" no-repeat>
-  <ion-card>
-    <ion-card-header>
-      Bem vindo(a) ao AdotaPet
-    </ion-card-header>
-    <ion-card-content>
-      <ion-list no-lines>
-        <div class="spacer" style="height: 10px;"></div>
-        <ion-item>
-          <ion-input type="email" placeholder="Email" [(ngModel)]="user.email" name="email"></ion-input>
-        </ion-item>
-        <div class="spacer" style="height: 5px;"></div>
-        <ion-item>
-          <ion-input type="password" placeholder="Password" [(ngModel)]="user.password" name="password"></ion-input>
-        </ion-item>
-        <div class="spacer" style="height: 10px;"></div>
-        <a (click)="passwordreset()">Esqueceu a senha? <b> Redefinir senha </b></a>
-        <div class="spacer" style="height: 10px;"></div>
-        <button ion-button block round outline color="light" (click)="login(user)">Login</button>
-        <div class="spacer" style="height: 10px;"></div>
-        <p>OR</p>
-        <div class="spacer" style="height: 10px;"></div>
-        <button ion-button round block (click)="facebookLogin()">Facebook</button>
-        <div class="spacer" style="height: 10px;"></div>
-        <button ion-button round block color="danger">Google</button>
-        <button ion-button clear full color="light" (click)="signup()">Não tem uma conta? Cadastre-se</button>
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
+<ion-header >
+  <ion-navbar  hideBackButton="true">
+    <ion-buttons end>
+      <button ion-button icon-right color="light">SKIP<ion-icon name="ios-arrow-forward"></ion-icon></button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col ><button ion-button block class="facebookButton" (click)="facebookLogin()">Login With Facebook</button></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col><button ion-button block class="instagramButton">Login With google</button></ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div class="hrLine"><span>Or</span></div>
+
+  <ion-list no-lines padding-top>
+    <ion-item>
+      <ion-input type="text" placeholder="Username" [(ngModel)]="user.email" name="email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="password" placeholder="Password" [(ngModel)]="user.password" name="password"></ion-input>
+    </ion-item>
+  </ion-list>
+  <button ion-button block round color="secondary" (click)="login(user)">Login</button>
+
+  <div padding-top>
+    <button ion-button block color="light" clear (click)="register()">Não tem uma conta? Cadastre-se</button>
+    <button ion-button block color="light" clear>Forgot Password</button>
+  </div>
+
 </ion-content>

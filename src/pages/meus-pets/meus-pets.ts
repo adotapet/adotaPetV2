@@ -1,13 +1,21 @@
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import {Component} from '@angular/core';
+import {NavController} from 'ionic-angular';
+import {AuthProvider} from "../../providers/auth/auth";
 
 @Component({
-  selector: 'page-meus-pets',
-  templateUrl: 'meus-pets.html'
+    selector: 'page-meus-pets',
+    templateUrl: 'meus-pets.html'
 })
 export class MeusPetsPage {
 
-  constructor(public navCtrl: NavController) {
-  }
-  
+    myPets = [];
+
+    constructor(public navCtrl: NavController, public auth: AuthProvider) {
+    }
+
+    ionViewDidLoad(){
+
+    }
+
+
 }

@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {NavController, NavParams, ModalController} from 'ionic-angular';
 import {MensagemPage} from '../mensagem/mensagem';
-import {Push, PushObject, PushOptions} from '@ionic-native/push';
+//import {Push, PushObject, PushOptions} from '@ionic-native/push';
 //import {FCM} from '@ionic-native/fcm';
 //import {HTTP} from '@ionic-native/http';
 import {HttpClient} from '@angular/common/http';

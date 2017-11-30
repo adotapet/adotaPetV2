@@ -1,40 +1,21 @@
-<ion-content id="page2">
-  <form id="cadastrar-form4">
-    <div class="spacer" style="width:320px;height:80px;" id="cadastrar-spacer5"></div>
-    <img src="assets/img/9KmhG82RKyPklYAzyAtQ_NsepPTAR9CVtubPYQpQ5_noimglarge.png" style="display:block;width:100%;height:auto;margin-left:auto;margin-right:auto;" />
-    <button id="cadastrar-button6" ion-button color="assertive" block>
-      Escolha Uma foto
-    </button>
-    <ion-item id="cadastrar-input6">
-      <ion-label>
-        Nome
-      </ion-label>
-      <ion-input type="text" placeholder=""></ion-input>
-    </ion-item>
-  </form>
-  <form id="cadastrar-form5">
-    <ion-item id="cadastrar-input9">
-      <ion-label>
-        Email
-      </ion-label>
-      <ion-input type="text" placeholder="" [(ngModel)]="user.email" name="email"></ion-input>
-    </ion-item>
-    <ion-item id="cadastrar-input8">
-      <ion-label>
-        Senha
-      </ion-label>
-      <ion-input type="password" placeholder="" [(ngModel)]="user.password" name="password"></ion-input>
-    </ion-item>
-  </form>
-  <form id="cadastrar-form6">
-    <ion-item id="cadastrar-toggle1">
-      <ion-label>
-        Mostrar Senha
-      </ion-label>
-      <ion-toggle color="positive" checked="false"></ion-toggle>
-    </ion-item>
-  </form>
-  <button id="cadastrar-button5" ion-button color="assertive" block (click)="register(user)">
-    Cadastrar
-  </button>
+<ion-header>
+    <ion-navbar>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+    <ion-list no-lines padding-top>
+        <ion-item>
+            <ion-input type="email" placeholder="Email" [(ngModel)]="user.email"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-input type="password" placeholder="Password" [(ngModel)]="user.password"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-input type="password" placeholder="Confirm Password" [(ngModel)]="confirmPassword"></ion-input>
+        </ion-item>
+    </ion-list>
+    <button ion-button block round color="secondary" (disabled)="confirmPassword != user.password">Cadastrar</button>
+
 </ion-content>

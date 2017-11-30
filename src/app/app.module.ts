@@ -19,61 +19,64 @@ import {ChatProvider} from '../providers/chat/chat';
 
 import {AngularFireModule} from "angularfire2";
 import {AngularFireAuthModule} from "angularfire2/auth";
-import { AngularFireDatabaseModule } from 'angularfire2/database'
+import {AngularFireDatabaseModule} from 'angularfire2/database'
 import {FIREBASE_CONFIG} from "./app.firebase.config";
 import {Facebook} from "@ionic-native/facebook";
 import {Camera} from "@ionic-native/camera";
-import { Push } from '@ionic-native/push';
-import { GoogleAnalytics } from '@ionic-native/google-analytics';
-import { HttpClientModule } from '@angular/common/http';
+import {GoogleAnalytics} from '@ionic-native/google-analytics';
+import {HttpClientModule} from '@angular/common/http';
+import {AuthProvider} from "../providers/auth/auth";
+import {ProfilePage} from "../pages/profile/profile";
 
 
 @NgModule({
-  declarations: [
-    MyApp,
-    CadastrarPage,
-    AdicionarPetPage,
-    MeusPetsPage,
-    TabsControllerPage,
-    LoginPage,
-    ChatPage,
-    PerfilPage,
-    MensagemPage,
-    AdotePage
-  ],
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot(MyApp),
-    AngularFireModule.initializeApp(FIREBASE_CONFIG),
-    AngularFireDatabaseModule,
-    AngularFireAuthModule,
-    HttpClientModule
-  ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-    CadastrarPage,
-    AdicionarPetPage,
-    MeusPetsPage,
-    TabsControllerPage,
-    LoginPage,
-    ChatPage,
-    PerfilPage,
-    MensagemPage,
-    AdotePage
-  ],
-  providers: [
-    StatusBar,
-    SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    LoginProvider,
-    PostProvider,
-    ChatProvider,
-    Facebook,
-    Camera,
-    Push,
-    GoogleAnalytics
-  ]
+    declarations: [
+        MyApp,
+        CadastrarPage,
+        AdicionarPetPage,
+        MeusPetsPage,
+        TabsControllerPage,
+        LoginPage,
+        ChatPage,
+        PerfilPage,
+        MensagemPage,
+        AdotePage,
+        ProfilePage
+    ],
+    imports: [
+        BrowserModule,
+        IonicModule.forRoot(MyApp),
+        AngularFireModule.initializeApp(FIREBASE_CONFIG),
+        AngularFireDatabaseModule,
+        AngularFireAuthModule,
+        HttpClientModule
+    ],
+    bootstrap: [IonicApp],
+    entryComponents: [
+        MyApp,
+        CadastrarPage,
+        AdicionarPetPage,
+        MeusPetsPage,
+        TabsControllerPage,
+        LoginPage,
+        ChatPage,
+        PerfilPage,
+        MensagemPage,
+        AdotePage,
+        ProfilePage
+    ],
+    providers: [
+        StatusBar,
+        SplashScreen,
+        {provide: ErrorHandler, useClass: IonicErrorHandler},
+        LoginProvider,
+        AuthProvider,
+        PostProvider,
+        ChatProvider,
+        Facebook,
+        Camera,
+        GoogleAnalytics
+    ]
 })
 export class AppModule {
 }

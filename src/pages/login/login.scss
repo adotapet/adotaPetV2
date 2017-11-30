@@ -1,66 +1,28 @@
-page-login {
-  .background {
-    background-image: url('https://metrouk2.files.wordpress.com/2017/06/105082572.jpg?w=620&h=484&crop=1');
-  }
-  .scroll-content {
-    align-content: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-  }
-  ion-card.card {
-    box-shadow: none;
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 5px;
-  }
-  a, p,
-  ion-card-header.card-header {
-    color: #fff!important;
-  }
-
-  .list > .item-block:first-child {
-    border: medium none;
-  }
-
-  .item {
-    margin-bottom: 10px;
-    background: rgba(255, 255, 255, 0.5);
-    border: medium none;
-
-    .text-input, {
-      color: #fff;
+.ios, .md, .wp {
+  page-login {
+    .toolbar-background {
+      background: transparent;
+      border-style: none;
+    }
+    .toolbar::after, .header-md::after {
+      background-image: none;
+    }
+    ion-content {
+      background-color: color($colors, primary);
+      background-image: url('../assets/images/bg-pattern.png');
+      background-size: 100% auto;
     }
 
-
-    input::-moz-placeholder{
-      color: #fff!important;
-    }
-    input:-moz-placeholder {
-      color: #fff!important;
-    }
-    *:-moz-placeholder{
-      color: #fff!important;
-    }
-    *:-ms-input-placeholder{
-      color: #fff!important;
-    }
-    *::-webkit-input-placeholder{
-      color: #fff!important;
+    //.scroll-content { display: table; width: 100%; height: 100%; }
+    .centerAlign {
+      display: table-cell;
+      vertical-align: middle;
+      border: #ff0000 1px solid;
     }
 
+    .item {
+      border: $border-color 1px solid !important;
+      margin-bottom: 10px;
+    }
   }
-
-  .icon {
-    padding-right: 10px;
-  }
-
-  .bottom {
-    bottom: 0;
-  }
-
-  .input-cover {
-    position: static;
-  }
-
 }

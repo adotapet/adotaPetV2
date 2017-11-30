@@ -36,8 +36,8 @@ export class AdotePage {
 
   async listPets() {
     this.db.database.ref('BR/adocao/pets').on('child_added', (data) => {
-      console.log(data.val());
-      this.posts.push(data.val());
+      this.posts.splice(1, 0, data.val());
+      console.log(this.posts);
     });
 
   }

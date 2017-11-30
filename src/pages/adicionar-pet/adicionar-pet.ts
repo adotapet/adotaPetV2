@@ -1,8 +1,9 @@
 import {Component} from '@angular/core';
 import {NavController, AlertController, NavParams} from 'ionic-angular';
 import {TabsControllerPage} from "../tabs-controller/tabs-controller";
-import {AngularFireDatabase} from 'angularfire2/database'
 import {Post} from "../../models/post";
+import {AuthProvider} from "../../providers/auth/auth";
+import {AngularFireDatabase} from 'angularfire2/database';
 import {Camera, CameraOptions} from "@ionic-native/camera";
 import {storage, database} from "firebase";
 
@@ -18,9 +19,9 @@ export class AdicionarPetPage {
     photoUrls = [];
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private alert: AlertController,
-                private camera: Camera, private afDatabase: AngularFireDatabase) {
-    }
+                private camera: Camera, private afDatabase: AngularFireDatabase, private auth: AuthProvider) {
 
+    }
 
     async takePhoto() {
 
@@ -73,12 +74,14 @@ export class AdicionarPetPage {
                 let fileName = key + '_' + item.date;
                 let imageRef = storage().ref(`images/adocao/${key}/${fileName}`);
                 imageRef.putString(item.img, 'data_url').then(data => {
-                    uploadUrls = tmpUploadUrls.concat(data.downloadURL);
+                    uploadUrls.push(data.downloadURL);
                 });
             });
             //coloca as urls das fotos upadas no objeto do pet;
-            post.fotoUrls =  uploadUrls;
-            database().ref('BR/adocao/pets/' + key).set(post).then(res => {
+            post.fotoUrls = uploadUrls;
+            post.user = this.auth.getUser().uid;
+            console.log(post);
+            this.afDatabase.object(`BR/adocao/pets/${key}`).set(post).then(res => {
                 console.log(res, 'pet cadastrado');
                 let popup = this.alert.create({
                     title: 'Pet Postado',
@@ -86,6 +89,7 @@ export class AdicionarPetPage {
                     buttons: ['Ok']
                 });
                 popup.present();
+                post = {} as Post;
             });
             this.navCtrl.push(TabsControllerPage);
         } catch (e) {

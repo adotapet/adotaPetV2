@@ -11,6 +11,8 @@ import {AngularFireAuth} from "angularfire2/auth";
 export class CadastrarPage {
 
   user = {email: '', password: ''};
+  confirmPassword;
+
   constructor(private afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams) {
   }
 

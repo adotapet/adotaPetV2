@@ -9,14 +9,14 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding id="page6">
-  <ion-list id="meusPets-list3">
+  <ion-list id="meusPets-list3" *ngFor="let pet of myPets">
     <ion-item-sliding>
       <ion-item color="assertive" id="meusPets-list-item6">
         <ion-avatar item-left>
           <img />
         </ion-avatar>
         <h2>
-          Nome do Pet
+         {{pet.nome}}
         </h2>
       </ion-item>
       <ion-item-options side="left">

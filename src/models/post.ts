@@ -6,6 +6,6 @@ export interface Post {
     idade: string;
     sexo: string;
     raca: string;
-    fotoUrl: any;
-
+    fotoUrls: any;
+    user: string;
 }
