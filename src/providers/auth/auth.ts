@@ -4,6 +4,8 @@ import {AngularFireAuth} from 'angularfire2/auth';
 import {Injectable} from '@angular/core';
 import firebase from 'firebase/app';
 
+
+
 @Injectable()
 export class AuthProvider {
     constructor(public afAuth: AngularFireAuth,
