@@ -4,22 +4,22 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>
-      Adicionar Pet {{photoUrls.length}}
+      Adicionar Pet
     </ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content padding id="page3">
-  <img src="assets/img/NsepPTAR9CVtubPYQpQ5_noimglarge.png" ng-hide="!photoUrls.length"
+  <img src="assets/img/NsepPTAR9CVtubPYQpQ5_noimglarge.png" ng-hide="!photo.img"
        style="display:block;width:100%;height:auto;margin-left:auto;margin-right:auto;" />
-  <ion-slides pager="true" *ngIf="photoUrls.length">
-
-    <ion-slide *ngFor="let photo of photoUrls">
-      <img [src]="photo" />
-    </ion-slide>
-  </ion-slides>
+    <ion-slides pager="true" *ngIf="photoUrls.length">
+        <ion-slide *ngFor="let photo of photoUrls">
+            <img [src]="photo.img" />
+        </ion-slide>
+    </ion-slides>
   <form id="adicionarPet-form2">
 
-    <button id="adicionarPet-button3"  (click)="takePhoto()"  ion-button block color="assertive"  style="border-radius:100px 100px 100px 100px;">
+    <button id="adicionarPet-button3"  (click)="takePhoto()"  ion-button block color="assertive"
+            style="border-radius:100px 100px 100px 100px;">
       <ion-icon name="camera"></ion-icon>
        Upload da Foto
     </button>
@@ -160,7 +160,8 @@
       <ion-input name="informacoes" type="text"  placeholder="Conte-nos um pouco sobre o Pet" [(ngModel)]="post.informacoes"></ion-input>
     </ion-item>
 
-    <button id="adicionarPet-button4" ion-button color="assertive" (click)="addPost()">
+    <button id="adicionarPet-button4" ion-button color="assertive" ion-button block color="assertive"
+            style="border-radius:100px 100px 100px 100px;" (click)="addPost()">
       Publicar
     </button>
 

@@ -1,10 +1,11 @@
 import {Component} from '@angular/core';
 import {NavController, AlertController, NavParams} from 'ionic-angular';
 import {TabsControllerPage} from "../tabs-controller/tabs-controller";
-import {AngularFireDatabase} from 'angularfire2/database'
 import {Post} from "../../models/post";
+import {AuthProvider} from "../../providers/auth/auth";
+import {AngularFireDatabase} from 'angularfire2/database';
 import {Camera, CameraOptions} from "@ionic-native/camera";
-import {storage} from "firebase";
+import {storage, database} from "firebase";
 
 
 @Component({
@@ -18,43 +19,14 @@ export class AdicionarPetPage {
     post = {} as Post;
     photoUrls = [];
     uploadUrl = [];
-
-
-
-especie = [];
-
+    especie = [];
     selectedRacas: any;
-
     selectedEspecie: any;
 
-
-
-    especies : any;
-
     constructor(public navCtrl: NavController, public navParams: NavParams, private alert: AlertController,
-                private camera: Camera, private afDatabase: AngularFireDatabase,
-                ) {
-
-
-
-
-
-
-
-        // if(this.selectedEspecie == "Canina"){
-        //     this.selectedRacas = [
-        //         "(SRD)",
-        //         "Afegão Hound",
-        //         "Affenpinscher",
-        //         "Airedale Terrier",
-        //         "Akita",
-        //         "American Staffordshire Terrier"
-        //     ];
-        //     console.log(this.selectedRacas)
-        // }
+                private camera: Camera, private afDatabase: AngularFireDatabase, private auth: AuthProvider) {
 
     }
-
 
     onChange(newEspecie){
 
@@ -64,29 +36,119 @@ especie = [];
 
             case "Canina":
                 this.selectedRacas = [
-                    '',
-                    '(SRD)',
-                    'Afegão Hound',
-                    'Afegão Hound2',
-                    'Afegão Hound3'
-
+                    "(SRD)",
+                    "Afegão Hound",
+                    "Affenpinscher",
+                    "Airedale Terrier",
+                    "Akita",
+                    "American Staffordshire Terrier",
+                    "Basenji",
+                    "Basset Hound",
+                    "Beagle",
+                    "Bearded Collie",
+                    "Bedlington Terrier",
+                    "Bichon Frisé",
+                    "Bloodhound",
+                    "Bobtail",
+                    "Boiadeiro Australiano",
+                    "Boiadeiro Bernês",
+                    "Border Collie",
+                    "Border Terrier",
+                    "Borzoi",
+                    "Boston Terrier",
+                    "Boxer",
+                    "Buldogue",
+                    "Bull Terrier",
+                    "Bulmastife",
+                    "Cairn Terrier",
+                    "Cane Corso",
+                    "Cão de Água Português",
+                    "Cão de Crista Chinês",
+                    "Cavalier King Charles Spaniel",
+                    "Chesapeake Bay Retriever",
+                    "Chihuahua",
+                    "Chow Chow",
+                    "Cocker Spaniel",
+                    "Collie",
+                    "Coton de Tuléar",
+                    "Dachshund",
+                    "Dálmata",
+                    "Dandie Dinmont Terrier",
+                    "Doberman",
+                    "Dogo Argentino",
+                    "Dogue Alemão",
+                    "Fila Brasileiro",
+                    "Fox Terrier (Pelo Duro e Pelo Liso)",
+                    "Foxhound Inglês",
+                    "Galgo",
+                    "Golden Retriever",
+                    "Grande Boiadeiro Suiço",
+                    "Greyhound",
+                    "Grifo da Bélgica",
+                    "Husky Siberiano",
+                    "Jack Russell Terrier",
+                    "King Charles",
+                    "Komondor",
+                    "Labradoodle",
+                    "Labrador",
+                    "Lakeland Terrier",
+                    "Leonberger",
+                    "Lhasa Apso",
+                    "Lulu da Pomerânia",
+                    "Malamute do Alasca",
+                    "Maltês",
+                    "Mastife",
+                    "Mastim",
+                    "Norfolk Terrier",
+                    "Norwich Terrier",
+                    "Papillon",
+                    "Pastor Alemão",
+                    "Pastor Australiano",
+                    "Pinscher Miniatura",
+                    "Poodle",
+                    "Pug",
+                    "Rottweiler",
+                    "ShihTzu",
+                    "Silky Terrier",
+                    "Skye Terrier",
+                    "Staffordshire Bull Terrier",
+                    "Terra Nova",
+                    "Terrier Escocês",
+                    "Tosa",
+                    "Weimaraner",
+                    "Welsh Corgi (Cardigan)",
+                    "Welsh Corgi (Pembroke)",
+                    "West Highland White Terrier",
+                    "Whippet",
+                    "Xoloitzcuintli",
+                    "Yorkshire Terrier"
                 ];
                 break;
 
             case "Felina":
                 this.selectedRacas = [
-                    "",
                     "(SRD)",
-                    "Gato",
-
+                    "Persa",
+                    "Siamês",
+                    "Himalaia",
+                    "Maine Coon",
+                    "Angorá",
+                    "Siberiano",
+                    "Sphynx",
+                    "Burmese",
+                    "Ragdoll",
+                    "British Shorthair"
                 ];
                 break;
             case "Outros":
                 this.selectedRacas = [
-                    "",
-                    "(SRD)",
-                    "nenhum",
-
+                    "Periquito",
+                    "Papagaio",
+                    "Cacatua",
+                    "Canário",
+                    "Calopsita",
+                    "Coelho",
+                    "Hamster"
                 ];
                 break;
         }
@@ -112,9 +174,16 @@ especie = [];
                 // imageData is either a base64 encoded string or a file URI
                 // If it's base64:
                 let base64Image = 'data:image/jpeg;base64,' + imageData;
-                this.photoUrls.push(base64Image);
+                let date = new Date().getTime();
+                let image = {'date': date, 'img': base64Image};
+                this.photoUrls.push(image);
             }, (err) => {
-                // Handle error
+                let popup = this.alert.create({
+                    title: 'Erro!',
+                    subTitle: 'Não conseguimos pegar a foto, tente novamente.',
+                    buttons: ['Ok']
+                });
+                popup.present();
             });
         }
         catch (e) {
@@ -123,39 +192,41 @@ especie = [];
 
     }
 
+    addPost(post) {
+        try {
+            console.log('add post');
+            //Pegando uma key do database pra criar a pasta das fotos;
+            let key = database().ref('BR/adocao/pets').push().key;
+            let tmpUploadUrls = [];
+            let uploadUrls = [];
+            //Fazendo um loop inserindo as strings base64 das fotos e colocando no storage.
+            this.photoUrls.forEach(function (item) {
 
+                let fileName = key + '_' + item.date;
+                let imageRef = storage().ref(`images/adocao/${key}/${fileName}`);
+                imageRef.putString(item.img, 'data_url').then(data => {
+                    uploadUrls.push(data.downloadURL);
+                });
+            });
+            //coloca as urls das fotos upadas no objeto do pet;
+            post.fotoUrls = uploadUrls;
+            post.user = this.auth.getUser().uid;
+            console.log(post);
+            this.afDatabase.object(`BR/adocao/pets/${key}`).set(post).then(res => {
+                console.log(res, 'pet cadastrado');
+                let popup = this.alert.create({
+                    title: 'Pet Postado',
+                    subTitle: 'Boa sorte!',
+                    buttons: ['Ok']
+                });
+                popup.present();
+                post = {} as Post;
+            });
+            this.navCtrl.push(TabsControllerPage);
+        } catch (e) {
+            console.log(e);
+        }
 
-
-
-  addPost() {
-
-    try {
-      this.afDatabase.list('BR/adocao/pets').push(this.post).then(res => {
-
-       storage().ref(`images/adocao/${res.key}/`);
-
-        this.photoUrls.forEach(function (item) {
-        });
-      //  console.log('linkkk', uploadTask.snapshot.downloadURL);
-      //  this.afDatabase.list('BR/adocao/pets/' + res.key + '/images/').push(uploadTask.snapshot.downloadURL);
-
-        console.log(res, 'pet cadastrado');
-        let popup = this.alert.create({
-          title: 'Pet Postado',
-          subTitle: 'Boa sorte!',
-          buttons: ['Ok']
-        });
-        popup.present();
-      });
-      this.navCtrl.push(TabsControllerPage);
-    } catch (e) {
-      console.log(e);
     }
-
-  }
-
-  putString(picture) {
-    //this.uploadUrl = picture.putString(item, 'data_url');
-  }
 
 }
