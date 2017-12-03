@@ -9,8 +9,8 @@ import {storage, database} from "firebase";
 
 
 @Component({
-  selector: 'page-adicionar-pet',
-  templateUrl: 'adicionar-pet.html'
+    selector: 'page-adicionar-pet',
+    templateUrl: 'adicionar-pet.html'
 })
 
 
@@ -18,7 +18,6 @@ export class AdicionarPetPage {
 
     post = {} as Post;
     photoUrls = [];
-    uploadUrl = [];
     especie = [];
     selectedRacas: any;
     selectedEspecie: any;
@@ -28,7 +27,7 @@ export class AdicionarPetPage {
 
     }
 
-    onChange(newEspecie){
+    onChange(newEspecie) {
 
         this.selectedEspecie = newEspecie;
 
@@ -192,24 +191,16 @@ export class AdicionarPetPage {
 
     }
 
-    addPost(post) {
+    async addPost(post) {
         try {
             console.log('add post');
             //Pegando uma key do database pra criar a pasta das fotos;
             let key = database().ref('BR/adocao/pets').push().key;
-            let tmpUploadUrls = [];
-            let uploadUrls = [];
-            //Fazendo um loop inserindo as strings base64 das fotos e colocando no storage.
-            this.photoUrls.forEach(function (item) {
 
-                let fileName = key + '_' + item.date;
-                let imageRef = storage().ref(`images/adocao/${key}/${fileName}`);
-                imageRef.putString(item.img, 'data_url').then(data => {
-                    uploadUrls.push(data.downloadURL);
-                });
-            });
+            //Fazendo um loop inserindo as strings base64 das fotos e colocando no storage.
+
             //coloca as urls das fotos upadas no objeto do pet;
-            post.fotoUrls = uploadUrls;
+            post.fotoUrls = await this.getUrls(key);
             post.user = this.auth.getUser().uid;
             console.log(post);
             this.afDatabase.object(`BR/adocao/pets/${key}`).set(post).then(res => {
@@ -227,6 +218,19 @@ export class AdicionarPetPage {
             console.log(e);
         }
 
+    }
+
+    async getUrls(key): Promise<any> {
+        let uploadUrls = {};
+        await this.photoUrls.forEach(function (item, index) {
+            let fileName = key + '_' + item.date;
+            let imageRef = storage().ref(`images/adocao/${key}/${fileName}`);
+            imageRef.putString(item.img, 'data_url').then(data => {
+                uploadUrls[index] = data.downloadURL.slice(8);
+            });
+        });
+
+        return uploadUrls;
     }
 
 }
