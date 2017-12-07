@@ -9,8 +9,7 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding id="page3">
-  <img src="assets/img/NsepPTAR9CVtubPYQpQ5_noimglarge.png" ng-hide="!photo.img"
-       style="display:block;width:100%;height:auto;margin-left:auto;margin-right:auto;" />
+  <img (ng-hide)="photoUrls.length == 0" src="assets/img/NsepPTAR9CVtubPYQpQ5_noimglarge.png" style="display:block;width:100%;height:auto;margin-left:auto;margin-right:auto;" />
     <ion-slides pager="true" *ngIf="photoUrls.length">
         <ion-slide *ngFor="let photo of photoUrls">
             <img [src]="photo.img" />
@@ -161,7 +160,7 @@
     </ion-item>
 
     <button id="adicionarPet-button4" ion-button color="assertive" ion-button block color="assertive"
-            style="border-radius:100px 100px 100px 100px;" (click)="addPost()">
+            style="border-radius:100px 100px 100px 100px;" (click)="addPost(post)">
       Publicar
     </button>
 

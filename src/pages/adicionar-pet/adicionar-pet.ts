@@ -202,7 +202,7 @@ export class AdicionarPetPage {
             //coloca as urls das fotos upadas no objeto do pet;
             post.fotoUrls = await this.getUrls(key);
             post.user = this.auth.getUser().uid;
-            console.log(post);
+            console.log('post final', post);
             this.afDatabase.object(`BR/adocao/pets/${key}`).set(post).then(res => {
                 console.log(res, 'pet cadastrado');
                 let popup = this.alert.create({
@@ -211,8 +211,8 @@ export class AdicionarPetPage {
                     buttons: ['Ok']
                 });
                 popup.present();
-                post = {} as Post;
             });
+            post = {} as Post;
             this.navCtrl.push(TabsControllerPage);
         } catch (e) {
             console.log(e);
@@ -221,15 +221,17 @@ export class AdicionarPetPage {
     }
 
     async getUrls(key): Promise<any> {
+
         let uploadUrls = {};
         await this.photoUrls.forEach(function (item, index) {
             let fileName = key + '_' + item.date;
             let imageRef = storage().ref(`images/adocao/${key}/${fileName}`);
             imageRef.putString(item.img, 'data_url').then(data => {
-                uploadUrls[index] = data.downloadURL.slice(8);
+                let downloadURL = data.downloadURL;
+                uploadUrls[index] = downloadURL.slice(8);
             });
         });
-
+        console.log('uploadUrlls ln 234',uploadUrls);
         return uploadUrls;
     }
 
