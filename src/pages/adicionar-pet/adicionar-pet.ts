@@ -200,39 +200,42 @@ export class AdicionarPetPage {
             //Fazendo um loop inserindo as strings base64 das fotos e colocando no storage.
 
             //coloca as urls das fotos upadas no objeto do pet;
-            post.fotoUrls = await this.getUrls(key);
+            let ref =  this.afDatabase.object(`BR/adocao/pets/${key}`);
+            this.getUrls(key, ref);
+            //post.fotoUrls = await urls;
             post.user = this.auth.getUser().uid;
             console.log('post final', post);
-            this.afDatabase.object(`BR/adocao/pets/${key}`).set(post).then(res => {
-                console.log(res, 'pet cadastrado');
-                let popup = this.alert.create({
-                    title: 'Pet Postado',
-                    subTitle: 'Boa sorte!',
-                    buttons: ['Ok']
-                });
-                popup.present();
+            await this.afDatabase.object(`BR/adocao/pets/${key}`).update(post);
+            console.log('pet cadastrado');
+            this.post = {} as Post;
+            let popup = this.alert.create({
+                title: 'Pet Postado',
+                subTitle: 'Boa sorte!',
+                buttons: ['Ok']
             });
-            post = {} as Post;
+            popup.present();
             this.navCtrl.push(TabsControllerPage);
+
         } catch (e) {
             console.log(e);
         }
 
     }
 
-    async getUrls(key): Promise<any> {
+    async getUrls(key, ref) {
 
-        let uploadUrls = {};
-        await this.photoUrls.forEach(function (item, index) {
+        let uploadUrls = {"fotoUrls" : []};
+        this.photoUrls.forEach(function (item, index) {
             let fileName = key + '_' + item.date;
             let imageRef = storage().ref(`images/adocao/${key}/${fileName}`);
             imageRef.putString(item.img, 'data_url').then(data => {
                 let downloadURL = data.downloadURL;
-                uploadUrls[index] = downloadURL.slice(8);
+                uploadUrls['fotoUrls'].push(downloadURL);
+                ref.update(uploadUrls);
             });
         });
         console.log('uploadUrlls ln 234',uploadUrls);
-        return uploadUrls;
+        return;
     }
 
 }
