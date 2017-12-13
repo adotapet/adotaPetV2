@@ -3,7 +3,7 @@
     <name>AdotaPet</name>
     <description>Adota pet versao 2</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Labup Team</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://192.168.1.4:8100" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -79,6 +79,9 @@
     </platform>
     <allow-navigation href="http://192.168.56.1:8100" />
     <allow-navigation href="http://192.168.1.5:8100" />
+    <allow-navigation href="http://192.168.232.1:8100" />
+    <allow-navigation href="http://192.168.1.3:8100" />
+    <allow-navigation href="http://192.168.1.4:8100" />
     <engine name="windows" spec="~5.0.0" />
     <engine name="browser" spec="~5.0.1" />
     <engine name="android" spec="^6.3.0" />
@@ -92,10 +95,8 @@
         <variable name="APP_ID" value="287389468354047" />
         <variable name="APP_NAME" value="AdotaPet" />
     </plugin>
-    <plugin name="phonegap-plugin-push" spec="^2.1.0">
-        <variable name="FCM_VERSION" value="11.0.1" />
-    </plugin>
     <plugin name="cordova-plugin-advanced-http" spec="^1.8.1" />
-    <plugin name="cordova-plugin-fcm" spec="^2.1.2" />
     <plugin name="cordova-plugin-google-analytics" spec="^1.8.3" />
+    <plugin name="cordova-plugin-crosswalk-webview" spec="^2.3.0" />
+    <plugin name="onesignal-cordova-plugin" spec="^2.2.4" />
 </widget>

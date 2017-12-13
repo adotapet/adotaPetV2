@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-//import { Push } from '@ionic-native/push';
+import {OneSignal} from "@ionic-native/onesignal";
 
 @Component({
   selector: 'page-chat-room',
@@ -8,11 +8,25 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class ChatRoomPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private oneSignal: OneSignal) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ChatRoomPage');
   }
 
+    sendNotification(text){
+        this.oneSignal.getIds().then(data => {
+            let msg = {
+                contents: {
+                    en: text
+                },
+                include_player_ids: [data.userId]
+            };
+
+            this.oneSignal.postNotification(msg).then(() => alert('notificacao enviada'));
+        });
+
+
+    }
 }

@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {NavController, ViewController} from 'ionic-angular';
+import {OneSignal, OSNotification} from "@ionic-native/onesignal";
 
 @Component({
     selector: 'page-mensagem',
@@ -9,8 +10,9 @@ export class MensagemPage {
 
     messages = [];
     contactName = 'Contact xx';
+    msgText: string;
 
-    constructor(public navCtrl: NavController, public viewCtrl: ViewController) {
+    constructor(public navCtrl: NavController, public viewCtrl: ViewController, private oneSignal: OneSignal) {
         console.log('menssagem page');
         this.messages = [
             {
@@ -40,5 +42,25 @@ export class MensagemPage {
     dismiss() {
         let data = {'foo': 'bar'};
         this.viewCtrl.dismiss(data);
+    }
+
+    sendNotification(text){
+        console.log('clicked send');
+       this.oneSignal.getIds().then(data => {
+           console.log(data);
+           let msg = {
+               "app_id": "f2dc92d3-6665-406d-8e5f-e7c6e19e822d",
+               "data": {"msg": 'sdfdfdfdf'},
+               "contents": {"en": "English Message", "pt": "em portugues"},
+               "include_player_ids": [data.userId]
+           };
+           console.log(msg);
+
+           this.oneSignal.postNotification(msg).then(() => {
+              alert('notificacao enviadaaaaa');
+           });
+       });
+
+
     }
 }

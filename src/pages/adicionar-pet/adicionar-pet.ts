@@ -18,6 +18,7 @@ export class AdicionarPetPage {
 
     post = {} as Post;
     photoUrls = [];
+    uploadUrls = {};
     especie = [];
     selectedRacas: any;
     selectedEspecie: any;
@@ -200,21 +201,23 @@ export class AdicionarPetPage {
             //Fazendo um loop inserindo as strings base64 das fotos e colocando no storage.
 
             //coloca as urls das fotos upadas no objeto do pet;
-            let ref =  this.afDatabase.object(`BR/adocao/pets/${key}`);
-            this.getUrls(key, ref);
-            //post.fotoUrls = await urls;
-            post.user = this.auth.getUser().uid;
-            console.log('post final', post);
-            await this.afDatabase.object(`BR/adocao/pets/${key}`).update(post);
-            console.log('pet cadastrado');
-            this.post = {} as Post;
-            let popup = this.alert.create({
-                title: 'Pet Postado',
-                subTitle: 'Boa sorte!',
-                buttons: ['Ok']
-            });
-            popup.present();
-            this.navCtrl.push(TabsControllerPage);
+            let ref = this.afDatabase.object(`BR/adocao/pets/${key}`);
+            if (this.photoUrls[0]) {
+                console.log('post final', post, this.photoUrls);
+                await this.getUrls(key);
+                post.fotoUrls = await this.uploadUrls;
+                post.user = this.auth.getUser().uid;
+                this.afDatabase.object(`BR/adocao/pets/${key}`).set(post);
+                console.log('pet cadastrado');
+                this.post = {} as Post;
+                let popup = this.alert.create({
+                    title: 'Pet Postado',
+                    subTitle: 'Boa sorte!',
+                    buttons: ['Ok']
+                });
+                popup.present();
+                this.navCtrl.push(TabsControllerPage);
+            }
 
         } catch (e) {
             console.log(e);
@@ -222,20 +225,26 @@ export class AdicionarPetPage {
 
     }
 
-    async getUrls(key, ref) {
+    async getUrls(key): Promise<any> {
 
-        let uploadUrls = {"fotoUrls" : []};
+        let uploadUrls = {};
+        let length = this.photoUrls.length;
+        let countLength = 0;
         this.photoUrls.forEach(function (item, index) {
             let fileName = key + '_' + item.date;
             let imageRef = storage().ref(`images/adocao/${key}/${fileName}`);
             imageRef.putString(item.img, 'data_url').then(data => {
                 let downloadURL = data.downloadURL;
-                uploadUrls['fotoUrls'].push(downloadURL);
-                ref.update(uploadUrls);
+                uploadUrls[index] = downloadURL;
+                countLength++;
+                if (countLength == length) {
+                    console.log('returned');
+                   this.uploadUrls = uploadUrls;
+                   return;
+                }
             });
         });
-        console.log('uploadUrlls ln 234',uploadUrls);
-        return;
+        console.log('uploadUrlls ln 234', uploadUrls);
     }
 
 }

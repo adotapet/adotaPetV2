@@ -33,12 +33,12 @@
     <ion-toolbar>
         <ion-item>
             <ion-label style="margin:0px;"></ion-label>
-            <ion-input item-content style="width:100%;">
+            <ion-input item-content style="width:100%;" [(ngModel)]="msgText">
             </ion-input>
         </ion-item>
 
         <ion-buttons right>
-            <button style="min-width:45px;" (click)="goToMensagem()">
+            <button style="min-width:45px;" (click)="sendNotification(msgText)">
                 <ion-icon name="md-send"></ion-icon>
             </button>
         </ion-buttons>

@@ -27,7 +27,7 @@ import {GoogleAnalytics} from '@ionic-native/google-analytics';
 import {HttpClientModule} from '@angular/common/http';
 import {AuthProvider} from "../providers/auth/auth";
 import {ProfilePage} from "../pages/profile/profile";
-
+import {OneSignal} from "@ionic-native/onesignal";
 
 @NgModule({
     declarations: [
@@ -75,7 +75,8 @@ import {ProfilePage} from "../pages/profile/profile";
         ChatProvider,
         Facebook,
         Camera,
-        GoogleAnalytics
+        GoogleAnalytics,
+        OneSignal
     ]
 })
 export class AppModule {
