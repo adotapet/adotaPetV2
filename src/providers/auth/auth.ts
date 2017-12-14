@@ -13,7 +13,7 @@ export class AuthProvider {
 
     getUserPerfil(userId) {
         try {
-            return database().ref().child('profile' + userId).once('value');
+            return database().ref().child('profile/' + userId);
         }catch (e){
             console.log(e);
         }

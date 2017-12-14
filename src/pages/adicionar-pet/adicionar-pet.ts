@@ -204,8 +204,7 @@ export class AdicionarPetPage {
             let ref = this.afDatabase.object(`BR/adocao/pets/${key}`);
             if (this.photoUrls[0]) {
                 console.log('post final', post, this.photoUrls);
-                await this.getUrls(key);
-                post.fotoUrls = await this.uploadUrls;
+                post.fotoUrls = await this.getUrls(key);
                 post.user = this.auth.getUser().uid;
                 this.afDatabase.object(`BR/adocao/pets/${key}`).set(post);
                 console.log('pet cadastrado');
@@ -239,8 +238,7 @@ export class AdicionarPetPage {
                 countLength++;
                 if (countLength == length) {
                     console.log('returned');
-                   this.uploadUrls = uploadUrls;
-                   return;
+                    return uploadUrls;
                 }
             });
         });

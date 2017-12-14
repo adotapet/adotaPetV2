@@ -10,13 +10,33 @@
 </ion-header>
 
 <ion-content  padding class="chatPage">
-
+  <ion-item>
+    <a class="tab-item">
+      Mensagens Recebidas
+    </a>
+  </ion-item>
   <ion-list no-lines >
-    <ion-item *ngFor="let msg of messages" (click)="goToMensagem(msg)">
+    <ion-item *ngFor="let msg of conversasRecebidas" (click)="goToMensagem(msg)">
       <ion-avatar item-start>
-        <img src="img/avatar-finn.png">
+        <img src="{{msg.imagePet}}">
       </ion-avatar>
-      <h2>{{msg.senderName}}</h2>
+      <h2>{{msg.nomeInteressado}}</h2>
+      <h3>Don't Know What To Do!</h3>
+      <p>I've had a pretty messed up day. If we just...</p>
+    </ion-item>
+  </ion-list>
+
+  <ion-item>
+    <a class="tab-item">
+      Mensagens Enviadas
+    </a>
+  </ion-item>
+  <ion-list no-lines >
+    <ion-item *ngFor="let msg of conversasEnviadas" (click)="goToMensagem(msg)">
+      <ion-avatar item-start>
+        <img src="{{msg.imagePet}}">
+      </ion-avatar>
+      <h2>{{msg.nomeDono}}</h2>
       <h3>Don't Know What To Do!</h3>
       <p>I've had a pretty messed up day. If we just...</p>
     </ion-item>

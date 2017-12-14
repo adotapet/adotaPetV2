@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import {NavController, NavParams} from 'ionic-angular';
+import {MensagemPage} from "../mensagem/mensagem";
 
 @Component({
   selector: 'page-perfil',
@@ -7,7 +8,19 @@ import { NavController } from 'ionic-angular';
 })
 export class PerfilPage {
 
-  constructor(public navCtrl: NavController) {
+  pet: any;
+  key: string = 'aaaaaaaa';
+  constructor(public navCtrl: NavController,public params: NavParams) {
+    this.pet = params.get('pet');
+    this.key = params.get('key');
+    console.log(this.pet);
+  }
+
+
+  goToChat(){
+    let key = this.key;
+    console.log(key);
+    this.navCtrl.push(MensagemPage, {"key": key, "dono": this.pet.user});
   }
   
 }

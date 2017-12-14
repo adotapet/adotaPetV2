@@ -16,7 +16,7 @@
           <img />
         </ion-avatar>
         <h2>
-          Nome do Pet
+          {{pet.nome}}
         </h2>
       </ion-item>
       <div style="width:100%;height:220px;margin:0px 0px;line-height:250px;background-color:#e8ebef;text-align:center;">
@@ -49,7 +49,7 @@
       </ion-item>
     </ion-list>
   </ion-card>
-  <button id="perfil-button7" ion-button color="assertive" block>
+  <button id="perfil-button7" ion-button color="assertive" block (click)="goToChat()">
     Abrir Chat
   </button>
   <div id="perfil-markdown4" style="text-align:center;" class="show-list-numbers-and-dots">
