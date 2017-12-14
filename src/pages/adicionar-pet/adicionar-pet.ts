@@ -204,8 +204,8 @@ export class AdicionarPetPage {
             let ref = this.afDatabase.object(`BR/adocao/pets/${key}`);
             if (this.photoUrls[0]) {
                 console.log('post final', post, this.photoUrls);
-                post.fotoUrls = await this.getUrls(key);
-                post.user = this.auth.getUser().uid;
+                post.fotoUrls = await this.getUrls(key).then(urls => urls);
+                post.user = this.auth.getUserPerfil();
                 this.afDatabase.object(`BR/adocao/pets/${key}`).set(post);
                 console.log('pet cadastrado');
                 this.post = {} as Post;

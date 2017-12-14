@@ -3,6 +3,7 @@ import {NavController, NavParams, ViewController} from 'ionic-angular';
 import {OneSignal} from "@ionic-native/onesignal";
 import {ChatProvider} from "../../providers/chat/chat";
 import {AuthProvider} from "../../providers/auth/auth";
+import {Observable} from "rxjs/Observable";
 
 @Component({
     selector: 'page-mensagem',
@@ -15,6 +16,7 @@ export class MensagemPage {
     msgText: string;
     key: string;
     dono: string;
+    myId;
     idGrouped: string;
     dadosSala;
 
@@ -22,14 +24,17 @@ export class MensagemPage {
         this.key = params.get('key');
         this.dono = params.get('dono');
         let myInfo = this.auth.getUser();
+        this.myId = myInfo.uid;
         this.idGrouped = `${this.dono}_${myInfo.uid}_${this.key}`;
         console.log(this.idGrouped);
+        this.listMessages();
     }
 
-    ionViewDidLoad() {
+
+    async listMessages(){
         this.chatProvider.getMenssagens(this.idGrouped).subscribe(data => {
+            console.log('msgs', data);
             this.messages = data;
-            console.log(data);
         });
     }
 

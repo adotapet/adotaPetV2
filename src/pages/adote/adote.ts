@@ -3,7 +3,6 @@ import {NavController, ToastController} from 'ionic-angular';
 import {PerfilPage} from '../perfil/perfil';
 import {AngularFireAuth} from "angularfire2/auth";
 import {AngularFireDatabase} from "angularfire2/database";
-import {Observable} from "rxjs/Observable";
 
 @Component({
     selector: 'page-adote',

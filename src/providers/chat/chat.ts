@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {AuthProvider} from "../auth/auth";
 import {PostProvider} from "../post/post";
 import {AngularFireDatabase} from 'angularfire2/database';
+import {Observable} from "rxjs/Observable";
 
 /*
   Generated class for the ChatProvider provider.
@@ -40,7 +41,6 @@ export class ChatProvider {
         if (!petData && !petKey && !myInfo && !nomeDono && !msg) {
             return {error: 'Não foi possivel encontrar informações necessárias para enviar a mensagem. Tente novamente.'}
         }
-        let idGrouped = `${petData.user}_${myInfo.uid}_${petKey}`;
         console.log(idGrouped, 'agrupados');
 
         this.salasRef.orderByChild('dono_interessado_pet').equalTo(idGrouped).once('value', function (snap) {
@@ -58,6 +58,10 @@ export class ChatProvider {
                     dono_interessado_pet: idGrouped
                 };
                 let objMsg = {
+                    img: 'assets/img/IefaytxPTvmIeIUBCbFC_FarmafC3B3rmula-Pet.jpg',
+                    content: msg,
+                    senderName: (myInfo.displayName ? myInfo.displayName : myInfo.email),
+                    time: '28-Dez-2017 21:53',
                     dono_interessado_pet: idGrouped,
                     autor: myInfo.uid,
                     msg: msg
@@ -70,12 +74,11 @@ export class ChatProvider {
             } else {
                 let objMsg = {
                     img: 'assets/img/IefaytxPTvmIeIUBCbFC_FarmafC3B3rmula-Pet.jpg',
-                    position: 'right',
                     content: msg,
-                    senderName: (myInfo.displayName ? myInfo.displayName: myInfo.email),
+                    senderName: (myInfo.displayName ? myInfo.displayName : myInfo.email),
                     time: '28-Dez-2017 21:53',
                     dono_interessado_pet: idGrouped,
-                    autor: myInfo.email,
+                    autor: myInfo.uid,
                     msg: msg
                 };
                 msgRef.push(objMsg);
@@ -85,7 +88,8 @@ export class ChatProvider {
     }
 
     getMenssagens(key) {
-       return this.afDb.list('BR/chat/menssagens', ref => ref.orderByChild('dono_interessado_pet').equalTo(key)).valueChanges();
+        console.log('getMessages service');
+        return this.afDb.list('BR/chat/menssagens', ref => ref.orderByChild('dono_interessado_pet').equalTo(key)).valueChanges();
     }
 
     getConversasEnviadas() {
