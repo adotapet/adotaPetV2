@@ -24,28 +24,28 @@
       </div>
       <div id="perfil-markdown3" style="text-align:justify;" class="show-list-numbers-and-dots">
         <p style="color:#000000;">
-          Texto aqui justificado porque é mais bonitao e foda pra caralho , &#39;é isso ai........... pera ae ....... tem mais ..... pronto!
+         {{pet.informacoes}}
         </p>
       </div>
       <ion-item color="none" id="perfil-list-item11">
         <ion-icon name="paw" item-left></ion-icon>
-        Espécie:
+        Espécie: {{pet.especie}}
       </ion-item>
       <ion-item color="none" id="perfil-list-item12">
         <ion-icon name="octocat" item-left></ion-icon>
-        Raça:
+        Raça: {{pet.raca}}
       </ion-item>
       <ion-item color="none" id="perfil-list-item13">
         <ion-icon name="female" item-left></ion-icon>
-        sexo:
+        sexo: {{pet.sexo}}
       </ion-item>
       <ion-item color="none" id="perfil-list-item14">
         <ion-icon name="information-circle" item-left></ion-icon>
-        Idade:
+        Idade: {{pet.idade}}
       </ion-item>
       <ion-item color="none" id="perfil-list-item15">
         <ion-icon name="whatsapp" item-left></ion-icon>
-        Whats:
+        Whats: {{pet.whatsapp}}
       </ion-item>
     </ion-list>
   </ion-card>
@@ -63,7 +63,7 @@
         <img />
       </ion-avatar>
       <h2>
-        Nome
+        Nome: {{pet.user}}
       </h2>
     </ion-item>
     <ion-item color="none" id="perfil-list-item10">
