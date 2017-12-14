@@ -10,12 +10,13 @@ import {AuthProvider} from "../../providers/auth/auth";
 })
 export class MensagemPage {
 
-    messages = [];
+    messages: any[];
     contactName = 'Contact xx';
     msgText: string;
     key: string;
     dono: string;
     idGrouped: string;
+    dadosSala;
 
     constructor(public navCtrl: NavController, public params: NavParams, public viewCtrl: ViewController, private chatProvider: ChatProvider, private oneSignal: OneSignal, private auth: AuthProvider) {
         this.key = params.get('key');
@@ -23,24 +24,15 @@ export class MensagemPage {
         let myInfo = this.auth.getUser();
         this.idGrouped = `${this.dono}_${myInfo.uid}_${this.key}`;
         console.log(this.idGrouped);
-
-
-        //let messages = [
-        //    {
-        //        img: 'build/img/hugh.png',
-        //        position: 'left',
-        //        content: 'Hello from the other side.',
-        //        senderName: 'Gregory',
-        //        time: '28-Jun-2016 21:53'
-        //    },
-        //];
     }
-    ionViewDidLoad(){
-        this.chatProvider.getMenssagens(this.idGrouped).subscribe(msg => {
-            console.log(msg);
-            this.messages.push(msg);
+
+    ionViewDidLoad() {
+        this.chatProvider.getMenssagens(this.idGrouped).subscribe(data => {
+            this.messages = data;
+            console.log(data);
         });
     }
+
 
     dismiss() {
         let data = {'foo': 'bar'};
@@ -48,7 +40,7 @@ export class MensagemPage {
     }
 
     sendMessage(msg) {
-        this.chatProvider.sendMessage(msg, this.key);
+        this.chatProvider.sendMessage(msg, this.key, this.idGrouped);
         this.msgText = '';
     }
 

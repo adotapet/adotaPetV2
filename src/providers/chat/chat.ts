@@ -23,7 +23,7 @@ export class ChatProvider {
         this.myInfo = this.auth.getUser();
     }
 
-    async sendMessage(msg, petKey): Promise<any> {
+    async sendMessage(msg, petKey, idGrouped): Promise<any> {
         let salasRef = this.salasRef;
         let msgRef = this.msgRef;
         let myInfo = this.myInfo;
@@ -69,8 +69,13 @@ export class ChatProvider {
                 msgRef.push(objMsg);
             } else {
                 let objMsg = {
+                    img: 'assets/img/IefaytxPTvmIeIUBCbFC_FarmafC3B3rmula-Pet.jpg',
+                    position: 'right',
+                    content: msg,
+                    senderName: (myInfo.displayName ? myInfo.displayName: myInfo.email),
+                    time: '28-Dez-2017 21:53',
                     dono_interessado_pet: idGrouped,
-                    autor: myInfo.uid,
+                    autor: myInfo.email,
                     msg: msg
                 };
                 msgRef.push(objMsg);
@@ -80,8 +85,7 @@ export class ChatProvider {
     }
 
     getMenssagens(key) {
-        console.log(key);
-        return this.afDb.list('BR/chat/menssagens/' + key).snapshotChanges();
+       return this.afDb.list('BR/chat/menssagens', ref => ref.orderByChild('dono_interessado_pet').equalTo(key)).valueChanges();
     }
 
     getConversasEnviadas() {

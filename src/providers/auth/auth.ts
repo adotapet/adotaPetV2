@@ -11,9 +11,10 @@ export class AuthProvider {
         return this.afAuth.auth.currentUser;
     }
 
-    getUserPerfil(userId) {
+    getUserPerfil(userId = null) {
+       let id = (userId ? userId : this.getUser().uid);
         try {
-            return database().ref().child('profile/' + userId);
+            return database().ref().child('profile/' + id);
         }catch (e){
             console.log(e);
         }
