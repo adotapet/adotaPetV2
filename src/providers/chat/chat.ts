@@ -38,12 +38,12 @@ export class ChatProvider {
             Dono = user[0];
 
         });
-        console.log('donooooooooooooooo', Dono);
 
         if (!petData && !petKey && !myInfo && !Dono && !msg) {
             return {error: 'Não foi possivel encontrar informações necessárias para enviar a mensagem. Tente novamente.'}
         }
         console.log(idGrouped, 'agrupados');
+        console.log('iddddddddddddd', idGrouped);
 
         this.salasRef.orderByChild('dono_interessado_pet').equalTo(idGrouped).once('value', function (snap) {
 

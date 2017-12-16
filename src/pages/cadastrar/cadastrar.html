@@ -16,6 +16,6 @@
             <ion-input type="password" placeholder="Confirm Password" [(ngModel)]="confirmPassword"></ion-input>
         </ion-item>
     </ion-list>
-    <button ion-button block round color="secondary" (disabled)="confirmPassword != user.password">Cadastrar</button>
+    <button ion-button block round color="secondary" (disabled)="(confirmPassword != user.password)" (click)="register(user)">Cadastrar</button>
 
 </ion-content>
