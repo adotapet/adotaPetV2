@@ -1,3 +1,17 @@
 page-tabs-controller {
+  .tabs-ios .tab-button[aria-selected=true] .tab-button-icon {
+    color: #e6322e;
+  }
 
+  .tabs-ios .tab-button:hover:not(.disable-hover), .tabs-ios .tab-button[aria-selected=true] {
+    color: #e6322e;
+  }
+
+  .tabs-md .tab-button[aria-selected=true] .tab-button-icon {
+    color: #e6322e;
+  }
+
+  .tabs-md .tab-button:hover:not(.disable-hover), .tabs-ios .tab-button[aria-selected=true] {
+    color: #e6322e;
+  }
 }
