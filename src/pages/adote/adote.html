@@ -13,10 +13,11 @@
     <ion-list>
       <img src="assets/img/IefaytxPTvmIeIUBCbFC_FarmafC3B3rmula-Pet.jpg" />
       <ion-item color="assertive" id="adote-list-item4">
-        <ion-icon name="musical-notes" item-left></ion-icon>
-        {{post.payload.val().nome}} ----- {{post.key}}
-        <ion-icon name="octocat" item-right></ion-icon>
+        <ion-icon name="logo-octocat" item-left> <h5>{{post.payload.val().nome}}</h5> </ion-icon>
+        <ion-icon name="paw" item-left> <h5>{{post.payload.val().raca}}</h5></ion-icon>
+        <ion-icon name="pin" item-left> <h5>{{post.payload.val().estado}}</h5></ion-icon>
       </ion-item>
+      ----- {{post.key}}
     </ion-list>
   </ion-card>
 </ion-content>
