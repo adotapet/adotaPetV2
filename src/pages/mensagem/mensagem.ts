@@ -22,10 +22,9 @@ export class MensagemPage {
 
     constructor(public navCtrl: NavController, public params: NavParams, public viewCtrl: ViewController, private chatProvider: ChatProvider, private oneSignal: OneSignal, private auth: AuthProvider) {
         this.key = params.get('key');
-        this.dono = params.get('dono');
+        this.idGrouped = params.get('idGrouped');
         let myInfo = this.auth.getUser();
         this.myId = myInfo.uid;
-        this.idGrouped = `${this.dono}_${myInfo.uid}_${this.key}`;
         console.log(this.idGrouped);
         this.listMessages();
     }
