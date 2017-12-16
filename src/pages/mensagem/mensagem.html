@@ -13,9 +13,9 @@
             <div class="chatBubble">
                 <img class="profile-pic" [ngClass]="(msg.autor != myId) ? 'left' : 'right'" src="{{msg.img}}">
                 <div class="chat-bubble" [ngClass]="(msg.autor != myId) ? 'left' : 'right'">
-                    <div class="message">{{msg.msg}}</div>
+                    <div class="message">{{msg.content}}</div>
                     <div class="message-detail" text-wrap>
-                        <span style="font-weight:bold;">{{msg.autor}} </span>,
+                        <span style="font-weight:bold;">{{msg.senderName}} </span>,
                         <span>{{msg.time}}</span>
                     </div>
                 </div>

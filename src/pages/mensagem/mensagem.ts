@@ -1,9 +1,8 @@
-import {Component} from '@angular/core';
-import {NavController, NavParams, ViewController} from 'ionic-angular';
+import {Component, ViewChild} from '@angular/core';
+import {NavController, NavParams, ViewController, Content} from 'ionic-angular';
 import {OneSignal} from "@ionic-native/onesignal";
 import {ChatProvider} from "../../providers/chat/chat";
 import {AuthProvider} from "../../providers/auth/auth";
-import {Observable} from "rxjs/Observable";
 
 @Component({
     selector: 'page-mensagem',
@@ -19,6 +18,7 @@ export class MensagemPage {
     myId;
     idGrouped: string;
     dadosSala;
+    @ViewChild(Content) content: Content;
 
     constructor(public navCtrl: NavController, public params: NavParams, public viewCtrl: ViewController, private chatProvider: ChatProvider, private oneSignal: OneSignal, private auth: AuthProvider) {
         this.key = params.get('key');
@@ -31,13 +31,19 @@ export class MensagemPage {
     }
 
 
-    async listMessages(){
+     listMessages() {
         this.chatProvider.getMenssagens(this.idGrouped).subscribe(data => {
-            console.log('msgs', data);
             this.messages = data;
+            console.log(data);
+            this.content.scrollToBottom();
+
         });
+
     }
 
+    ionViewDidEnter() {
+        this.content.scrollToBottom();
+    }
 
     dismiss() {
         let data = {'foo': 'bar'};
