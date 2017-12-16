@@ -9,31 +9,39 @@ import {ChatProvider} from "../../providers/chat/chat";
 })
 export class ChatPage {
 
-    messages: any;
     notification = '';
     error: any;
-    register;
-    conversasEnviadas: any;
-    conversasRecebidas: any;
+    conversasEnviadas: any[];
+    conversasRecebidas: any[];
 
     constructor(public navCtrl: NavController, public params: NavParams, private chat: ChatProvider) {
 
-        chat.getConversasEnviadas().on('child_added', function (snap) {
-            this.conversasEnviadas.push(snap);
-        });
-        chat.getConversasRecebidas().on('child_added', function (snap) {
-            this.conversasRecebidas.push(snap);
-        });
+
     }
 
     sendNotification(token) {
 
     }
 
+    ionViewDidEnter() {
+        try {
+            this.chat.getConversasRecebidas().subscribe(data => {
+                this.conversasRecebidas = data;
+                console.log(data)
+            });
+            this.chat.getConversasEnviadas().subscribe(data => {
+                this.conversasEnviadas = data;
+                console.log(data)
+            });
+        } catch (e) {
+            console.error(e);
+        }
 
-    goToMensagem(key) {
-        if (!key) key = null;
-        this.navCtrl.push(MensagemPage, {"key": key});
+    }
+
+    goToMensagem(sala) {
+        if (!sala) sala = null;
+        this.navCtrl.push(MensagemPage, {"key": sala.pet, "dono": sala.id_dono});
     }
 
 }
