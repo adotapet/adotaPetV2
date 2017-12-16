@@ -194,28 +194,39 @@ export class AdicionarPetPage {
 
     async addPost(post) {
         try {
-            console.log('add post');
+            console.log('add post log 1');
             //Pegando uma key do database pra criar a pasta das fotos;
             let key = database().ref('BR/adocao/pets').push().key;
 
-            //Fazendo um loop inserindo as strings base64 das fotos e colocando no storage.
 
-            //coloca as urls das fotos upadas no objeto do pet;
-            let ref = this.afDatabase.object(`BR/adocao/pets/${key}`);
-            if (this.photoUrls[0]) {
-                console.log('post final', post, this.photoUrls);
-                post.fotoUrls = await this.getUrls(key).then(urls => urls);
-                post.user = this.auth.getUserPerfil();
-                this.afDatabase.object(`BR/adocao/pets/${key}`).set(post);
-                console.log('pet cadastrado');
-                this.post = {} as Post;
+            //let ref = this.afDatabase.object(`BR/adocao/pets/${key}`);
+            if (!this.photoUrls[0]) {
+                //Fazendo um loop inserindo as strings base64 das fotos e colocando no storage.
+                this.getUrls(key).then(urls => {
+                    //coloca as urls das fotos upadas no objeto do pet;
+                    post.fotoUrls = urls;
+                });
+                this.auth.getUserPerfil().subscribe(data => {
+                    console.log('log 3',data);
+                    post.user.push(data);
+                });
+                console.log('post final log 4', post);
+                this.afDatabase.object(`BR/adocao/pets/${key}`).set(post).then(()=> console.log('finished log 5'));
                 let popup = this.alert.create({
                     title: 'Pet Postado',
                     subTitle: 'Boa sorte!',
                     buttons: ['Ok']
                 });
                 popup.present();
+                this.post = {} as Post;
                 this.navCtrl.push(TabsControllerPage);
+            } else {
+                this.post = {} as Post;
+                let popup = this.alert.create({
+                    title: 'Vpcê precisa colocar pelo menos uma foto pro pet!',
+                    buttons: ['Ok']
+                });
+                popup.present();
             }
 
         } catch (e) {
@@ -233,16 +244,14 @@ export class AdicionarPetPage {
             let fileName = key + '_' + item.date;
             let imageRef = storage().ref(`images/adocao/${key}/${fileName}`);
             imageRef.putString(item.img, 'data_url').then(data => {
-                let downloadURL = data.downloadURL;
-                uploadUrls[index] = downloadURL;
+                uploadUrls[index] = data.downloadURL;
                 countLength++;
                 if (countLength == length) {
-                    console.log('returned');
+                    console.log('returned log 2.x');
                     return uploadUrls;
                 }
             });
         });
-        console.log('uploadUrlls ln 234', uploadUrls);
     }
 
 }
