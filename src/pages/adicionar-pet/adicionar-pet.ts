@@ -6,6 +6,8 @@ import {AuthProvider} from "../../providers/auth/auth";
 import {AngularFireDatabase} from 'angularfire2/database';
 import {Camera, CameraOptions} from "@ionic-native/camera";
 import {storage, database} from "firebase";
+import {AdotePage} from "../adote/adote";
+
 
 
 @Component({
@@ -18,13 +20,15 @@ export class AdicionarPetPage {
 
     post = {} as Post;
     photoUrls = [];
+    fotoUrls: any[];
     uploadUrls = {};
     especie = [];
     selectedRacas: any;
     selectedEspecie: any;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private alert: AlertController,
-                private camera: Camera, private afDatabase: AngularFireDatabase, private auth: AuthProvider) {
+                private camera: Camera, private afDatabase: AngularFireDatabase, private auth: AuthProvider,
+               ) {
 
     }
 
@@ -159,13 +163,14 @@ export class AdicionarPetPage {
 
         try {
             const options: CameraOptions = {
-                quality: 50,
-                targetWidth: 600,
-                targetHeight: 600,
+                quality: 90,
+                targetWidth: 400,
+                targetHeight: 400,
                 destinationType: this.camera.DestinationType.DATA_URL,
                 encodingType: this.camera.EncodingType.JPEG,
                 mediaType: this.camera.MediaType.PICTURE,
-                correctOrientation: true
+                sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+                allowEdit: true
             };
 
 
@@ -177,10 +182,11 @@ export class AdicionarPetPage {
                 let date = new Date().getTime();
                 let image = {'date': date, 'img': base64Image};
                 this.photoUrls.push(image);
+                console.log(this.photoUrls)
             }, (err) => {
                 let popup = this.alert.create({
-                    title: 'Erro!',
-                    subTitle: 'Não conseguimos pegar a foto, tente novamente.',
+                    title: 'Erro! :(',
+                    subTitle: 'Não conseguimos encontrar a imagem, tente novamente. ',
                     buttons: ['Ok']
                 });
                 popup.present();
@@ -192,66 +198,74 @@ export class AdicionarPetPage {
 
     }
 
+
     async addPost(post) {
-        try {
-            console.log('add post log 1');
-            //Pegando uma key do database pra criar a pasta das fotos;
-            let key = database().ref('BR/adocao/pets').push().key;
 
 
-            //let ref = this.afDatabase.object(`BR/adocao/pets/${key}`);
-            if (!this.photoUrls[0]) {
-                //Fazendo um loop inserindo as strings base64 das fotos e colocando no storage.
-                this.getUrls(key).then(urls => {
-                    //coloca as urls das fotos upadas no objeto do pet;
-                    post.fotoUrls = urls;
-                });
-                this.auth.getUserPerfil().subscribe(data => {
-                    console.log('log 3',data);
-                    post.user.push(data);
-                });
-                console.log('post final log 4', post);
-                this.afDatabase.object(`BR/adocao/pets/${key}`).set(post).then(()=> console.log('finished log 5'));
-                let popup = this.alert.create({
-                    title: 'Pet Postado',
-                    subTitle: 'Boa sorte!',
-                    buttons: ['Ok']
-                });
-                popup.present();
-                this.post = {} as Post;
-                this.navCtrl.push(TabsControllerPage);
-            } else {
-                this.post = {} as Post;
-                let popup = this.alert.create({
-                    title: 'Vpcê precisa colocar pelo menos uma foto pro pet!',
-                    buttons: ['Ok']
-                });
-                popup.present();
+
+            try {
+                console.log('add post log 1');
+                //Pegando uma key do database pra criar a pasta das fotos;
+                let key = database().ref('BR/adocao/pets').push().key;
+
+
+                //let ref = this.afDatabase.object(`BR/adocao/pets/${key}`);
+                if (this.photoUrls[0]) {
+                    //Fazendo um loop inserindo as strings base64 das fotos e colocando no storage.
+                    this.getUrls(key, post).then(post => {
+                       this.post = post.fotoUrls;
+                       console.log('post.fotoUrls' , post.fotoUrls)
+                        console.log('this.post' , post.fotoUrls)
+
+
+                    });
+
+                    console.log('post final log 4', post);
+                    this.afDatabase.object(`BR/adocao/pets/${key}`).set(post).then(()=>
+                        console.log('finished log 5', post));
+                    let popup = this.alert.create({
+                        title: 'Pet em Adoção :D',
+                        subTitle: 'Esperamos que ele encontre um dono rápido, Boa sorte!',
+                        buttons: ['Ok']
+                    });
+                    popup.present();
+
+                    this.post = {} as Post;
+                    this.navCtrl.push(AdotePage);
+                } else {
+                    this.post = {} as Post;
+                    let popup = this.alert.create({
+                        title: 'Você precisa colocar uma foto do pet!',
+                        buttons: ['Ok']
+                    });
+                    popup.present();
+                }
+
+            } catch (e) {
+                console.log(e);
             }
-
-        } catch (e) {
-            console.log(e);
-        }
 
     }
 
-    async getUrls(key): Promise<any> {
 
-        let uploadUrls = {};
-        let length = this.photoUrls.length;
-        let countLength = 0;
-        this.photoUrls.forEach(function (item, index) {
-            let fileName = key + '_' + item.date;
+    async getUrls(key, post: Post): Promise<any> {
+        let i = 0;
+        post.fotoUrls =[];
+
+        for (let url of this.photoUrls) {
+            let fileName = key + '_' + url.date;
             let imageRef = storage().ref(`images/adocao/${key}/${fileName}`);
-            imageRef.putString(item.img, 'data_url').then(data => {
-                uploadUrls[index] = data.downloadURL;
-                countLength++;
-                if (countLength == length) {
-                    console.log('returned log 2.x');
-                    return uploadUrls;
+            imageRef.putString(url.img, 'data_url').then(data => {
+                post.fotoUrls[i] = data.downloadURL;
+                i++;
+                this.afDatabase.object(`BR/adocao/pets/${key}`).set(post)
+                if(i == this.photoUrls.length){
+
+                    return post;
                 }
             });
-        });
+        }
+        console.log('returned log 2', post);
     }
 
 }
