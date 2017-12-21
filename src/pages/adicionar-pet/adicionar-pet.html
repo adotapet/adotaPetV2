@@ -9,7 +9,7 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding id="page3">
-  <img (ng-hide)="photoUrls.length == 0" src="assets/img/NsepPTAR9CVtubPYQpQ5_noimglarge.png" style="display:block;width:100%;height:auto;margin-left:auto;margin-right:auto;" />
+  <img *ngIf="photoUrls.length == 0" src="assets/img/NsepPTAR9CVtubPYQpQ5_noimglarge.png" style="display:block;width:100%;height:auto;margin-left:auto;margin-right:auto;" />
     <ion-slides pager="true" *ngIf="photoUrls.length">
         <ion-slide *ngFor="let photo of photoUrls">
             <img [src]="photo.img" />
@@ -66,7 +66,7 @@
       <ion-label>
         Estado
       </ion-label>
-      <ion-select name="estado">
+      <ion-select name="estado" [(ngModel)]="post.estado">
         
           <ion-option value="">Selecione</ion-option>
           <ion-option value="AC">Acre</ion-option>
