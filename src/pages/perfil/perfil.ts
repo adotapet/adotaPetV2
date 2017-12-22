@@ -1,32 +1,26 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {NavController, NavParams} from 'ionic-angular';
 import {MensagemPage} from "../mensagem/mensagem";
 import {AngularFireAuth} from "angularfire2/auth";
-import {AngularFireDatabase} from "angularfire2/database";
 
 @Component({
-  selector: 'page-perfil',
-  templateUrl: 'perfil.html'
+    selector: 'page-perfil',
+    templateUrl: 'perfil.html'
 })
 export class PerfilPage {
 
-  pet: any;
-  key: string = 'aaaaaaaa';
-  user:any;
-  usuarioAtual :any;
-  donoDaPostagem:boolean;
+    pet: any;
+    key: string = 'aaaaaaaa';
+    user: any;
+    usuarioAtual: any;
+    donoDaPostagem: boolean;
 
 
-  constructor(public navCtrl: NavController,public params: NavParams, private afAuth: AngularFireAuth, private db: AngularFireDatabase) {
-    this.pet = params.get('pet');
-    this.key = params.get('key');
-    console.log(this.pet);
-
-
-
-
-
-  }
+    constructor(public navCtrl: NavController, public params: NavParams, private afAuth: AngularFireAuth) {
+        this.pet = params.get('pet');
+        this.key = params.get('key');
+        console.log(this.key);
+    }
 
     ionViewDidLoad() {
 
@@ -39,29 +33,20 @@ export class PerfilPage {
                     console.log(this.donoDaPostagem)
                 } else {
                     this.donoDaPostagem = false;
-                    console.log(this.donoDaPostagem)
+                    console.log(this.usuarioAtual)
                 }
-
-
 
             }
         });
 
-
-
-
     }
-  goToChat(){
-    let key = this.key;
-    console.log(key);
-    this.navCtrl.push(MensagemPage, {"key": key, "dono": this.pet.user});
-  }
+
+    goToChat() {
+        let key = this.key;
+        let idGrouped = `${this.pet.user}_${this.usuarioAtual}_${key}`;
+        console.log(key, this.pet.user);
+        this.navCtrl.push(MensagemPage, {"key": key, "idGrouped": idGrouped});
+    }
 
 
-
-
-
-
-
-  
 }

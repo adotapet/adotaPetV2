@@ -1,42 +1,33 @@
 <ion-header>
     <ion-navbar>
-            <ion-title>
-                Chat
-            </ion-title>
+        <ion-title>
+            Chat
+        </ion-title>
     </ion-navbar>
 </ion-header>
 
 <ion-content #content padding class="chatPage">
 
-    <ion-list no-lines>
-        <ion-item *ngFor="let msg of messages">
-            <div class="chatBubble">
-                <img class="profile-pic" [ngClass]="(msg.autor != myId) ? 'left' : 'right'" src="{{msg.img}}">
-                <div class="chat-bubble" [ngClass]="(msg.autor != myId) ? 'left' : 'right'">
-                    <div class="message">{{msg.content}}</div>
-                    <div class="message-detail" text-wrap>
-                        <span style="font-weight:bold;">{{msg.senderName}} </span>,
-                        <span>{{msg.time}}</span>
-                    </div>
+    <div *ngFor="let msg of messages">
+        <div class="chatBubble">
+            <img class="profile-pic" [ngClass]="(msg.autor != myId) ? 'left' : 'right'" src="{{msg.img}}">
+            <div class="chat-bubble" [ngClass]="(msg.autor != myId) ? 'left' : 'right'">
+                <div class="message">{{msg.content}}</div>
+                <div class="message-detail" text-wrap>
+                    <span>{{msg.time}}</span>
                 </div>
             </div>
-        </ion-item>
-    </ion-list>
+        </div>
+    </div>
 
 </ion-content>
 
 <ion-footer class="chatPageFooter">
-    <ion-toolbar>
-        <ion-item>
-            <ion-label style="margin:0px;"></ion-label>
-            <ion-input item-content style="width:100%;" [(ngModel)]="msgText">
-            </ion-input>
-        </ion-item>
-        <ion-buttons>
-            <button  style="min-width:45px;" (click)="sendMessage(msgText)">
-                <ion-icon name="md-send"></ion-icon>
-            </button>
-        </ion-buttons>
+    <ion-toolbar  color="light">
+        <ion-input [(ngModel)]="msgText"></ion-input>
 
+        <button  (click)="sendMessage(msgText)">
+            <ion-icon name="md-send"></ion-icon>
+        </button>
     </ion-toolbar>
 </ion-footer>

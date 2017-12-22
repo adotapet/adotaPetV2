@@ -6,7 +6,12 @@
       </ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-content id="side-menu21"></ion-content>
+  <ion-content id="side-menu21">
+    <button id="logoffButton" ion-button color="assertive" ion-button block color="assertive"
+            style="border-radius:100px 100px 100px 100px;" (click)="logoff()">
+      Sair
+    </button>
+  </ion-content>
 </ion-menu>
 
 <ion-nav #mainContent [root]="rootPage"></ion-nav>

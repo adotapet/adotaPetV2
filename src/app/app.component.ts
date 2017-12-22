@@ -19,7 +19,6 @@ export class MyApp {
         this.ga.startTrackerWithId('AIzaSyAgCuNyINj93Qo3sB0ghvKxGfAwxuxSnqE')
             .then(() => {
                 console.log('Google analytics is ready now');
-                this.ga.trackView('test');
                 // Tracker is ready
                 // You can now track pages or set additional information such as AppVersion or UserId
             })
@@ -35,7 +34,7 @@ export class MyApp {
         platform.ready().then(() => {
             // Okay, so the platform is ready and our plugins are available.
             // Here you can do any higher level native things you might need.
-            statusBar.styleDefault();
+            statusBar.styleLightContent();
             splashScreen.hide();
 
             // OneSignal Code start:
@@ -44,16 +43,20 @@ export class MyApp {
             let funcaoRetorno = (data) => {
                 //colocar aqui o que fazer se a notificacao for clicada
                 console.log('Notificações: ' + JSON.stringify(data));
+                alert(JSON.stringify((data)));
             };
 
             window["plugins"].OneSignal.startInit("f2dc92d3-6665-406d-8e5f-e7c6e19e822d",
                 "534848323519")
                 .handleNotificationOpened(funcaoRetorno)
                 .endInit();
-
-            //this.oneSignal.startInit('f2dc92d3-6665-406d-8e5f-e7c6e19e822d', '534848323519');
-
         });
+    }
+
+    logoff() {
+        localStorage.clear();
+        this.rootPage = LoginPage;
+
     }
 
 }

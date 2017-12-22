@@ -1,6 +1,6 @@
 import {NgModule, ErrorHandler} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
+import {IonicApp, IonicModule, IonicErrorHandler, NavController} from 'ionic-angular';
 import {MyApp} from './app.component';
 import {CadastrarPage} from '../pages/cadastrar/cadastrar';
 import {AdicionarPetPage} from '../pages/adicionar-pet/adicionar-pet';
@@ -28,6 +28,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {AuthProvider} from "../providers/auth/auth";
 import {ProfilePage} from "../pages/profile/profile";
 import {OneSignal} from "@ionic-native/onesignal";
+import {NativePageTransitions} from '@ionic-native/native-page-transitions';
 
 @NgModule({
     declarations: [
@@ -76,7 +77,8 @@ import {OneSignal} from "@ionic-native/onesignal";
         Facebook,
         Camera,
         GoogleAnalytics,
-        OneSignal
+        OneSignal,
+        NativePageTransitions
     ]
 })
 export class AppModule {

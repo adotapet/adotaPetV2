@@ -11,13 +11,10 @@ import {AuthProvider} from "../../providers/auth/auth";
 export class MensagemPage {
 
     messages: any[];
-    contactName = 'Contact xx';
     msgText: string;
     key: string;
-    dono: string;
     myId;
     idGrouped: string;
-    dadosSala;
     @ViewChild(Content) content: Content;
 
     constructor(public navCtrl: NavController, public params: NavParams, public viewCtrl: ViewController, private chatProvider: ChatProvider, private oneSignal: OneSignal, private auth: AuthProvider) {
@@ -30,18 +27,13 @@ export class MensagemPage {
     }
 
 
-     listMessages() {
+    listMessages() {
         this.chatProvider.getMenssagens(this.idGrouped).subscribe(data => {
             this.messages = data;
             console.log(data);
             this.content.scrollToBottom();
-
         });
 
-    }
-
-    ionViewDidEnter() {
-        this.content.scrollToBottom();
     }
 
     dismiss() {
@@ -50,25 +42,25 @@ export class MensagemPage {
     }
 
     sendMessage(msg) {
-        this.chatProvider.sendMessage(msg, this.key, this.idGrouped);
+        this.chatProvider.sendMessage(msg, this.key, this.idGrouped).then(objMsg => {
+            this.sendNotification(objMsg);
+        });
+        this.content.scrollToBottom();
         this.msgText = '';
     }
 
-    sendNotification(text) {
-        console.log('clicked send');
-        this.oneSignal.getIds().then(data => {
-            console.log(data);
-            let msg = {
-                "app_id": "f2dc92d3-6665-406d-8e5f-e7c6e19e822d",
-                "data": {"sala": "1212hv2hv1h2v1hv"},
-                "contents": {"en": "English Message", "pt": text},
-                "include_player_ids": [data.userId]
-            };
-            console.log(msg);
+    sendNotification(objMsg) {
+        console.log('send notification');
+        let token = objMsg.token;
+        let msg = {
+            "app_id": "f2dc92d3-6665-406d-8e5f-e7c6e19e822d",
+            "data": {"sala": objMsg.dono_interessado_pet, "pet": objMsg.pet},
+            "contents": {"en": objMsg.content, "pt": objMsg.content},
+            "include_player_ids": [`"${token}"`]
+        };
 
-            this.oneSignal.postNotification(msg).then(() => {
-                alert('notificacao enviadaTT');
-            });
+        this.oneSignal.postNotification(msg).then(() => {
+            alert('notificacao enviada');
         });
     }
 }

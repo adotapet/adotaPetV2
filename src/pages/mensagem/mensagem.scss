@@ -1,4 +1,8 @@
 page-mensagem {
+  ion-content {
+    background-image: url('../../assets/img/back-chat1.png');
+  }
+
   .chatBubble {
 
     //position: relative;
@@ -31,7 +35,7 @@ page-mensagem {
 
     .message-detail {
       white-space: nowrap;
-      font-size: 14px;
+      font-size: small;
     }
 
     .chat-bubble {

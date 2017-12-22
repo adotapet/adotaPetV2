@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {NavController, AlertController, NavParams} from 'ionic-angular';
-import {TabsControllerPage} from "../tabs-controller/tabs-controller";
 import {Post} from "../../models/post";
 import {AuthProvider} from "../../providers/auth/auth";
 import {AngularFireDatabase} from 'angularfire2/database';
@@ -169,7 +168,8 @@ export class AdicionarPetPage {
                 destinationType: this.camera.DestinationType.DATA_URL,
                 encodingType: this.camera.EncodingType.JPEG,
                 mediaType: this.camera.MediaType.PICTURE,
-                sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+                //sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+                saveToPhotoAlbum: true,
                 allowEdit: true
             };
 
@@ -201,8 +201,6 @@ export class AdicionarPetPage {
 
     async addPost(post) {
 
-
-
             try {
                 console.log('add post log 1');
                 //Pegando uma key do database pra criar a pasta das fotos;
@@ -214,11 +212,8 @@ export class AdicionarPetPage {
                     //Fazendo um loop inserindo as strings base64 das fotos e colocando no storage.
                     this.getUrls(key, post).then(post => {
                        this.post = post.fotoUrls;
-                       console.log('post.fotoUrls' , post.fotoUrls)
-                        console.log('this.post' , post.fotoUrls)
-
-
                     });
+                    this.post.user = this.auth.getUser().uid;
 
                     console.log('post final log 4', post);
                     this.afDatabase.object(`BR/adocao/pets/${key}`).set(post).then(()=>

@@ -11,14 +11,12 @@
 <ion-content padding id="page4">
   <ion-card id="adote-card21" *ngFor="let post of posts" (click)="goToPerfil(post.key, post.payload.val())">
     <ion-list>
-      <img src="assets/img/IefaytxPTvmIeIUBCbFC_FarmafC3B3rmula-Pet.jpg" />
+      <img src="{{post.payload.val().fotoUrls[0]}}" />
       <ion-item color="assertive" id="adote-list-item4">
         <ion-icon name="logo-octocat" item-left> <h5>{{post.payload.val().nome}}</h5> </ion-icon>
         <ion-icon name="paw" item-left> <h5>{{post.payload.val().raca}}</h5></ion-icon>
         <ion-icon name="pin" item-left> <h5>{{post.payload.val().estado}}</h5></ion-icon>
       </ion-item>
-      ----- {{post.key}}
     </ion-list>
   </ion-card>
 </ion-content>
-ionic cordova plugin add cordova-plugin-facebook4 --variable APP_ID="287389468354047" --variable APP_NAME="AdotaPet"

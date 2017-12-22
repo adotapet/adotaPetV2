@@ -30,19 +30,19 @@ export class ChatProvider {
         let petsRef = await this.postProvider.getPetsRef();
         let petData;
         console.log(petsRef);
-        this.afDb.database.ref(`${petsRef}/${petKey}`).once('value', (data) => {
-            petData = data.val()
+        this.afDb.database.ref(`${petsRef}/${petKey}`).once('value', data => {
+            petData = data.val();
         });
-        let Dono;
-        this.auth.getUserPerfil(petData.user).subscribe(user => {
-            Dono = user[0];
+        let dono;
+        this.auth.getUserPerfil(petData.user).on('value',user => {
+            dono = user.val();
+            console.log(user.val(), 'donoooo');
 
         });
 
-        if (!petData && !petKey && !myInfo && !Dono && !msg) {
+        if (!petData && !petKey && !myInfo && !dono && !msg) {
             return {error: 'Não foi possivel encontrar informações necessárias para enviar a mensagem. Tente novamente.'}
         }
-        console.log(idGrouped, 'agrupados');
         console.log('iddddddddddddd', idGrouped);
 
         this.salasRef.orderByChild('dono_interessado_pet').equalTo(idGrouped).once('value', function (snap) {
@@ -52,12 +52,12 @@ export class ChatProvider {
             if (sala == null) {
                 let objSala = {
                     id_dono: petData.user,
-                    nomeDono: Dono,
+                    nomeDono: dono.name,
                     id_interessado: myInfo.uid,
                     nomeInteressado: (myInfo.displayName ? myInfo.displayName : myInfo.email),
                     pet: petKey,
                     nomePet: petData.nome,
-                    //imagePet: petData.fotoUrls[0],
+                    imagePet: petData.fotoUrls[0],
                     dono_interessado_pet: idGrouped
                 };
                 let objMsg = {
@@ -66,13 +66,16 @@ export class ChatProvider {
                     senderName: (myInfo.displayName ? myInfo.displayName : myInfo.email),
                     time: date,
                     dono_interessado_pet: idGrouped,
-                    autor: myInfo.uid
+                    autor: myInfo.uid,
+                    token: dono.notificationToken,
+                    pet: petKey
                 };
                 console.log('sala', objSala);
                 console.log('msg', objMsg);
 
                 salasRef.push(objSala);
                 msgRef.push(objMsg);
+                return objMsg;
             } else {
                 let objMsg = {
                     img: 'assets/img/IefaytxPTvmIeIUBCbFC_FarmafC3B3rmula-Pet.jpg',
@@ -80,12 +83,14 @@ export class ChatProvider {
                     senderName: (myInfo.displayName ? myInfo.displayName : myInfo.email),
                     time: date,
                     dono_interessado_pet: idGrouped,
-                    autor: myInfo.uid
+                    autor: myInfo.uid,
+                    token: dono.notificationToken,
+                    pet: petKey
                 };
                 console.log(date);
                 msgRef.push(objMsg);
+                return objMsg;
             }
-            return;
         });
     }
 

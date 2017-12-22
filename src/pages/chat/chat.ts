@@ -19,10 +19,6 @@ export class ChatPage {
 
     }
 
-    sendNotification(token) {
-
-    }
-
     ionViewDidEnter() {
         try {
             this.chat.getConversasRecebidas().subscribe(data => {

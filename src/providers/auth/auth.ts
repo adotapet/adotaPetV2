@@ -1,7 +1,7 @@
 import {AngularFireAuth} from 'angularfire2/auth';
 import {AngularFireDatabase} from 'angularfire2/database';
 import {Injectable} from '@angular/core';
-import {database} from "firebase";
+import {elementDef} from "@angular/core/src/view";
 
 @Injectable()
 export class AuthProvider {
@@ -13,9 +13,14 @@ export class AuthProvider {
     }
 
     getUserPerfil(userId = null) {
-        let id = (userId ? userId : this.getUser().uid);
+        let id;
+        if (userId) {
+            id = userId;
+        } else {
+            id = this.getUser().uid;
+        }
         try {
-            return this.afDb.list('profile/' + id).valueChanges();
+            return this.afDb.database.ref('profile/' + id);
         } catch (e) {
             console.log(e);
         }
