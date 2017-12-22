@@ -198,6 +198,46 @@ export class AdicionarPetPage {
 
     }
 
+    async takeGallery() {
+
+        try {
+            const options: CameraOptions = {
+                quality: 90,
+                targetWidth: 400,
+                targetHeight: 400,
+                destinationType: this.camera.DestinationType.DATA_URL,
+                encodingType: this.camera.EncodingType.JPEG,
+                mediaType: this.camera.MediaType.PICTURE,
+                sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+                saveToPhotoAlbum: true,
+                allowEdit: true
+            };
+
+
+            this.camera.getPicture(options).then((imageData) => {
+                console.log('getPicture');
+                // imageData is either a base64 encoded string or a file URI
+                // If it's base64:
+                let base64Image = 'data:image/jpeg;base64,' + imageData;
+                let date = new Date().getTime();
+                let image = {'date': date, 'img': base64Image};
+                this.photoUrls.push(image);
+                console.log(this.photoUrls)
+            }, (err) => {
+                let popup = this.alert.create({
+                    title: 'Erro! :(',
+                    subTitle: 'Não conseguimos encontrar a imagem, tente novamente. ',
+                    buttons: ['Ok']
+                });
+                popup.present();
+            });
+        }
+        catch (e) {
+            console.error(e);
+        }
+
+    }
+
 
     async addPost(post) {
 
