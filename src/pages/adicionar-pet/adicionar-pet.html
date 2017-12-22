@@ -17,11 +17,19 @@
     </ion-slides>
   <form id="adicionarPet-form2">
 
-    <button id="adicionarPet-button3"  (click)="takePhoto()"  ion-button block color="assertive"
-            style="border-radius:100px 100px 100px 100px;">
-      <ion-icon name="camera"></ion-icon>
-       Upload da Foto
-    </button>
+      <div style="width: 50%; float: left;">
+          <button cid="adicionarPet-button4" (click)="takePhoto()" ion-button icon-left large color="assertive" style="width: 100%;">
+              <ion-icon name="camera"></ion-icon>
+       Câmera
+   </button>
+      </div>
+      <div style="width: 50%; float: left;">
+      <button id="adicionarPet-button4"  (click)="takeGallery()"  ion-button icon-right large color="assertive" style="width: 100%;">
+          <ion-icon name="images"></ion-icon>
+           Galeria
+      </button>
+      </div>
+      <div class="spacer" style="width:300px;height:100px;" id="adicionarPet-spacer3"></div>
     <ion-item id="adicionarPet-input3">
       <ion-label>
         Nome do Pet
@@ -159,7 +167,7 @@
       <ion-input name="informacoes" type="text"  placeholder="Conte-nos um pouco sobre o Pet" [(ngModel)]="post.informacoes"></ion-input>
     </ion-item>
 
-    <button id="adicionarPet-button4" ion-button color="assertive" ion-button block color="assertive"
+    <button id="adicionarPet-button6" ion-button color="assertive" ion-button block color="assertive"
             style="border-radius:100px 100px 100px 100px;" (click)="addPost(post)">
       Publicar
     </button>
