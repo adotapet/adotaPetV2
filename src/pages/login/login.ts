@@ -48,6 +48,7 @@ export class LoginPage {
             }
         } catch (e) {
             console.error(e);
+            alert("A senha está incorreta ou o usuário não existe")
         }
     }
 
