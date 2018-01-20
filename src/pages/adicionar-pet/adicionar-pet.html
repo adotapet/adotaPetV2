@@ -18,15 +18,15 @@
   <form id="adicionarPet-form2">
 
       <div style="width: 50%; float: left;">
-          <button cid="adicionarPet-button4" (click)="takePhoto()" ion-button icon-left large color="assertive" style="width: 100%;">
-              <ion-icon name="camera"></ion-icon>
+          <button cid="adicionarPet-button4" (click)="takePhoto()" ion-button icon-left  color="assertive" style="width: 100%;">
+              <ion-icon name="camera"> </ion-icon>
        Câmera
    </button>
       </div>
       <div style="width: 50%; float: left;">
-      <button id="adicionarPet-button4"  (click)="takeGallery()"  ion-button icon-right large color="assertive" style="width: 100%;">
-          <ion-icon name="images"></ion-icon>
-           Galeria
+      <button id="adicionarPet-button4"  (click)="takeGallery()"  ion-button icon-left  color="assertive" style="width: 100%;">
+          <ion-icon name="images"> </ion-icon>
+            Galeria
       </button>
       </div>
       <div class="spacer" style="width:300px;height:100px;" id="adicionarPet-spacer3"></div>
@@ -164,7 +164,8 @@
       <ion-label stacked>
         Informações Adicionais
       </ion-label>
-      <ion-input name="informacoes" type="text"  placeholder="Conte-nos um pouco sobre o Pet" [(ngModel)]="post.informacoes"></ion-input>
+      <ion-input name="informacoes" type="text"  placeholder="Conte-nos um pouco sobre o Pet" [(ngModel)]="post.informacoes">
+      </ion-input>
     </ion-item>
 
     <button id="adicionarPet-button6" ion-button color="assertive" ion-button block color="assertive"

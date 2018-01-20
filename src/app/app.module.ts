@@ -16,6 +16,10 @@ import {SplashScreen} from '@ionic-native/splash-screen';
 import {LoginProvider} from '../providers/login/login';
 import {PostProvider} from '../providers/post/post';
 import {ChatProvider} from '../providers/chat/chat';
+import {AvaliePage} from "../pages/avalie/avalie";
+import {ApoioEPatrocinioPage} from "../pages/apoio-epatrocinio/apoio-epatrocinio";
+import {FiltrosPage} from "../pages/filtros/filtros";
+import {NotificacoesPage} from "../pages/notificacoes/notificacoes";
 
 import {AngularFireModule} from "angularfire2";
 import {AngularFireAuthModule} from "angularfire2/auth";
@@ -29,6 +33,7 @@ import {AuthProvider} from "../providers/auth/auth";
 import {ProfilePage} from "../pages/profile/profile";
 import {OneSignal} from "@ionic-native/onesignal";
 import {NativePageTransitions} from '@ionic-native/native-page-transitions';
+import {SocialSharing} from "@ionic-native/social-sharing";
 
 @NgModule({
     declarations: [
@@ -42,7 +47,11 @@ import {NativePageTransitions} from '@ionic-native/native-page-transitions';
         PerfilPage,
         MensagemPage,
         AdotePage,
-        ProfilePage
+        ProfilePage,
+        AvaliePage,
+        NotificacoesPage,
+        ApoioEPatrocinioPage,
+        FiltrosPage
     ],
     imports: [
         BrowserModule,
@@ -64,7 +73,12 @@ import {NativePageTransitions} from '@ionic-native/native-page-transitions';
         PerfilPage,
         MensagemPage,
         AdotePage,
-        ProfilePage
+        ProfilePage,
+        AvaliePage,
+        NotificacoesPage,
+        ApoioEPatrocinioPage,
+        FiltrosPage
+
     ],
     providers: [
         StatusBar,
@@ -78,7 +92,8 @@ import {NativePageTransitions} from '@ionic-native/native-page-transitions';
         Camera,
         GoogleAnalytics,
         OneSignal,
-        NativePageTransitions
+        NativePageTransitions,
+        SocialSharing
     ]
 })
 export class AppModule {

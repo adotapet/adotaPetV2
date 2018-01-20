@@ -15,18 +15,5 @@ export class ChatRoomPage {
     console.log('ionViewDidLoad ChatRoomPage');
   }
 
-    sendNotification(text){
-        this.oneSignal.getIds().then(data => {
-            let msg = {
-                contents: {
-                    en: text
-                },
-                include_player_ids: [data.userId]
-            };
 
-            this.oneSignal.postNotification(msg).then(() => alert('notificacao enviada'));
-        });
-
-
-    }
 }
