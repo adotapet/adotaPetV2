@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-title>
+      Filtros
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding id="page2">
+<ion-item>
+  <ion-label> Cachorro</ion-label>
+  <ion-toggle checked="true"></ion-toggle>
+</ion-item>
+<ion-item>
+  <ion-label> Gato</ion-label>
+  <ion-toggle checked="true"></ion-toggle>
+</ion-item>
+<ion-item>
+  <ion-label> Outros</ion-label>
+  <ion-toggle checked="true"></ion-toggle>
+</ion-item>
+
+
+      <ion-item id="adicionarPet-select4">
+        <ion-label>
+          Estado
+        </ion-label>
+        <ion-select name="estado" [(ngModel)]="estado">
+
+          <ion-option value="">Selecione</ion-option>
+          <ion-option value="AC">Acre</ion-option>
+          <ion-option value="AL">Alagoas</ion-option>
+          <ion-option value="AP">Amapá</ion-option>
+          <ion-option value="AM">Amazonas</ion-option>
+          <ion-option value="BA">Bahia</ion-option>
+          <ion-option value="CE">Ceará</ion-option>
+          <ion-option value="DF">Distrito Federal</ion-option>
+          <ion-option value="ES">Espirito Santo</ion-option>
+          <ion-option value="GO">Goiás</ion-option>
+          <ion-option value="MA">Maranhão</ion-option>
+          <ion-option value="MS">Mato Grosso do Sul</ion-option>
+          <ion-option value="MT">Mato Grosso</ion-option>
+          <ion-option value="MG">Minas Gerais</ion-option>
+          <ion-option value="PA">Pará</ion-option>
+          <ion-option value="PB">Paraíba</ion-option>
+          <ion-option value="PR">Paraná</ion-option>
+          <ion-option value="PE">Pernambuco</ion-option>
+          <ion-option value="PI">Piauí</ion-option>
+          <ion-option value="RJ">Rio de Janeiro</ion-option>
+          <ion-option value="RN">Rio Grande do Norte</ion-option>
+          <ion-option value="RS">Rio Grande do Sul</ion-option>
+          <ion-option value="RO">Rondônia</ion-option>
+          <ion-option value="RR">Roraima</ion-option>
+          <ion-option value="SC">Santa Catarina</ion-option>
+          <ion-option value="SP">São Paulo</ion-option>
+          <ion-option value="SE">Sergipe</ion-option>
+          <ion-option value="TO">Tocantins</ion-option>
+
+        </ion-select>
+
+      </ion-item>
+
+<ion-list>
+  <ion-item>
+    <ion-label>Sexo</ion-label>
+    <ion-select [(ngModel)]="sexo">
+      <ion-option selected="true" value="todos">Todos</ion-option>
+      <ion-option value="macho">Mâcho</ion-option>
+      <ion-option value="femea">Femêa</ion-option>
+    </ion-select>
+  </ion-item>
+</ion-list>
+
+      <button class="button button-assertive button-block" ng-click="filtrar(filtro)">Salvar</button>
+
+</ion-content>

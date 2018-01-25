@@ -5,6 +5,9 @@ import {AngularFireAuth} from "angularfire2/auth";
 import {AngularFireDatabase} from "angularfire2/database";
 import {NativePageTransitions, NativeTransitionOptions} from '@ionic-native/native-page-transitions';
 import {GoogleAnalytics} from "@ionic-native/google-analytics";
+import {AuthProvider} from "../../providers/auth/auth";
+
+
 
 @Component({
     selector: 'page-adote',
@@ -13,22 +16,35 @@ import {GoogleAnalytics} from "@ionic-native/google-analytics";
 export class AdotePage {
 
     posts: any[];
+    user: any;
 
     constructor(private afAuth: AngularFireAuth,
                 private db: AngularFireDatabase,
                 public navCtrl: NavController,
                 public toast: ToastController,
                 private nativePageTransitions: NativePageTransitions,
-                public ga: GoogleAnalytics
+                public ga: GoogleAnalytics,
+                private auth: AuthProvider
+
     ) {
+
         this.ga.trackView('PageAdote');
+
+
     }
 
+
+
     ionViewDidLoad() {
+        this.user = this.auth.getUser();
+        console.log(this.user);
+
+
         this.afAuth.authState.subscribe(data => {
             if (data && data.email && data.uid) {
                 this.toast.create({
                     message: `Bem-vindo ao Adota Pet, ${data.email}`,
+
                     duration: 1900
                 }).present();
             } else {
@@ -36,6 +52,8 @@ export class AdotePage {
                     message: `Bem-Vindo ao Adota Pet`,
                     duration: 1000
                 })
+                console.log(data);
+
             }
 
         });
@@ -63,4 +81,6 @@ export class AdotePage {
         this.nativePageTransitions.slide(options);
         this.navCtrl.push(PerfilPage, {"pet": data, "key": key});
     }
+
+
 }

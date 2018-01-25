@@ -41,26 +41,26 @@ export class MensagemPage {
         this.viewCtrl.dismiss(data);
     }
 
-    sendMessage(msg) {
-        this.chatProvider.sendMessage(msg, this.key, this.idGrouped).then(objMsg => {
-            this.sendNotification(objMsg);
-        });
-        this.content.scrollToBottom();
-        this.msgText = '';
-    }
+    // sendMessage(msg) {
+    //     this.chatProvider.sendMessage(msg, this.key, this.idGrouped).then(objMsg => {
+    //         this.sendNotification(objMsg);
+    //     });
+    //     this.content.scrollToBottom();
+    //     this.msgText = '';
+    // }
 
-    sendNotification(objMsg) {
-        console.log('send notification');
-        let token = objMsg.token;
-        let msg = {
-            "app_id": "f2dc92d3-6665-406d-8e5f-e7c6e19e822d",
-            "data": {"sala": objMsg.dono_interessado_pet, "pet": objMsg.pet},
-            "contents": {"en": objMsg.content, "pt": objMsg.content},
-            "include_player_ids": [`"${token}"`]
-        };
-
-        this.oneSignal.postNotification(msg).then(() => {
-            alert('notificacao enviada');
-        });
-    }
+    // sendNotification(objMsg) {
+    //     console.log('send notification');
+    //     let token = objMsg.token;
+    //     let msg = {
+    //         "app_id": "f2dc92d3-6665-406d-8e5f-e7c6e19e822d",
+    //         "data": {"sala": objMsg.dono_interessado_pet, "pet": objMsg.pet},
+    //         "contents": {"en": objMsg.content, "pt": objMsg.content},
+    //         "include_player_ids": [`"${token}"`]
+    //     };
+    //
+    //     this.oneSignal.postNotification(msg).then(() => {
+    //         alert('notificacao enviada');
+    //     });
+    // }
 }

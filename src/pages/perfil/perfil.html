@@ -68,7 +68,7 @@
   </div>
 
   <div *ngIf="donoDaPostagem">
-    <button id="abrirChat" ion-button style="background-color: #32db64;" block (click)="marcarComoAdotado()">
+    <button id="adotado" ion-button style="background-color: #32db64;" block (click)="marcarComoAdotado()">
       Marcar Como Adotado
     </button>
 
@@ -100,4 +100,10 @@
       Localizacao
     </ion-item>
   </ion-list>
+ <p style="text-align:center;"> Você pode compartilhar em grupos ou com amigos, isso ajudará o PET a ser adotado rapidamente.</p>
+
+    <button ion-button block style="background: limegreen;"  (click)="whatsappShare()"> <ion-icon name="logo-whatsapp"></ion-icon>  WhatsApp</button>
+    <button ion-button block style="background: royalblue;"  (click)="facebookShare()"> <ion-icon name="logo-facebook"></ion-icon>  Facebook</button>
+
+
 </ion-content>
