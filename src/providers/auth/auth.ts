@@ -26,5 +26,13 @@ export class AuthProvider {
         }
     }
 
+    getUserToken(userId){
+        let token;
+        this.afDb.database.ref('profile/' + userId + '/notificationToken').once('value', data => {
+            token = data.val();
+            return token;
+        });
+    }
+
 }
 

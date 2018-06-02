@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {AuthProvider} from "../auth/auth";
 import {PostProvider} from "../post/post";
 import {AngularFireDatabase} from 'angularfire2/database';
+import {OneSignal, OSNotification} from "@ionic-native/onesignal";
 
 /*
   Generated class for the ChatProvider provider.
@@ -16,38 +17,39 @@ export class ChatProvider {
     msgRef: any;
     myInfo: any;
 
-    constructor(private auth: AuthProvider, public afDb: AngularFireDatabase, public postProvider: PostProvider) {
+    constructor(private auth: AuthProvider, public afDb: AngularFireDatabase, public postProvider: PostProvider, public oneSignal: OneSignal) {
         console.log('Hello ChatProvider Provider');
         this.salasRef = afDb.database.ref('BR/chat/salas');
         this.msgRef = afDb.database.ref('BR/chat/menssagens');
         this.myInfo = this.auth.getUser();
     }
 
-    async sendMessage(msg, petKey, idGrouped): Promise<any> {
+    sendMessage(msg, petKey, idGrouped){
         let salasRef = this.salasRef;
         let msgRef = this.msgRef;
         let myInfo = this.myInfo;
-        let petsRef = await this.postProvider.getPetsRef();
+        let petsRef = this.postProvider.getPetsRef();
         let petData;
-        console.log(petsRef);
-        this.afDb.database.ref(`${petsRef}/${petKey}`).once('value', data => {
-            petData = data.val();
-        });
         let dono;
-        this.auth.getUserPerfil(petData.user).on('value',user => {
-            dono = user.val();
-            console.log(user.val(), 'donoooo');
-
+        this.afDb.database.ref(`${petsRef} + "/" + ${petKey}`).once('value', data => {
+            petData = data.val();
+            console.log(petData);
+            this.auth.getUserPerfil(petData.user).on('value', user => {
+                dono = user.val();
+                console.log(user.val(), 'log dono');
+            });
         });
+
 
         if (!petData && !petKey && !myInfo && !dono && !msg) {
             return {error: 'Não foi possivel encontrar informações necessárias para enviar a mensagem. Tente novamente.'}
         }
-        console.log('iddddddddddddd', idGrouped);
 
         this.salasRef.orderByChild('dono_interessado_pet').equalTo(idGrouped).once('value', function (snap) {
 
             let sala = snap.val();
+
+
             let date = new Date().toLocaleString();
             if (sala == null) {
                 let objSala = {
@@ -68,14 +70,15 @@ export class ChatProvider {
                     dono_interessado_pet: idGrouped,
                     autor: myInfo.uid,
                     token: dono.notificationToken,
+                    dono: petData.user,
                     pet: petKey
                 };
                 console.log('sala', objSala);
                 console.log('msg', objMsg);
-
                 salasRef.push(objSala);
                 msgRef.push(objMsg);
-                return objMsg;
+                console.log(objMsg);
+                this.sendNotification(objMsg);
             } else {
                 let objMsg = {
                     img: 'assets/img/IefaytxPTvmIeIUBCbFC_FarmafC3B3rmula-Pet.jpg',
@@ -85,12 +88,33 @@ export class ChatProvider {
                     dono_interessado_pet: idGrouped,
                     autor: myInfo.uid,
                     token: dono.notificationToken,
+                    dono: petData.user,
                     pet: petKey
                 };
-                console.log(date);
+                console.log(objMsg);
                 msgRef.push(objMsg);
-                return objMsg;
+                console.log(objMsg);
+                this.sendNotification(objMsg);
             }
+        });
+        return {"result": 'Mensagem enviada'};
+    }
+
+    sendNotification(objMsg) {
+        console.log('send notification');
+        //Pegar o id do dono do pet na mensagem.
+        let token = this.auth.getUserToken(objMsg.dono);
+        let msg:any = {
+
+            "app_id": "f2dc92d3-6665-406d-8e5f-e7c6e19e822d",
+            "data": {"sala": objMsg.dono_interessado_pet, "pet": objMsg.pet},
+            "contents": {"en": objMsg.content, "pt": objMsg.content},
+            "include_player_ids": [`"${token}"`]
+
+        };
+
+        this.oneSignal.postNotification(msg).then(() => {
+            alert('notificacao enviada');
         });
     }
 
