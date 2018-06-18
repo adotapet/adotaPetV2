@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {AuthProvider} from "../auth/auth";
 import {PostProvider} from "../post/post";
 import {AngularFireDatabase} from 'angularfire2/database';
-import {OneSignal, OSNotification} from "@ionic-native/onesignal";
+import {OneSignal} from "@ionic-native/onesignal";
 
 /*
   Generated class for the ChatProvider provider.
@@ -24,16 +24,16 @@ export class ChatProvider {
         this.myInfo = this.auth.getUser();
     }
 
-    sendMessage(msg, petKey, idGrouped){
+    sendMessage(msg, petKey, idGrouped) {
         let salasRef = this.salasRef;
         let msgRef = this.msgRef;
         let myInfo = this.myInfo;
         let petsRef = this.postProvider.getPetsRef();
         let petData;
         let dono;
-        this.afDb.database.ref(`${petsRef} + "/" + ${petKey}`).once('value', data => {
+        this.afDb.database.ref(petsRef + "/" + petKey).once('value', data => {
             petData = data.val();
-            console.log(petData);
+            console.log('PETDATA',petData);
             this.auth.getUserPerfil(petData.user).on('value', user => {
                 dono = user.val();
                 console.log(user.val(), 'log dono');
@@ -104,7 +104,7 @@ export class ChatProvider {
         console.log('send notification');
         //Pegar o id do dono do pet na mensagem.
         let token = this.auth.getUserToken(objMsg.dono);
-        let msg:any = {
+        let msg: any = {
 
             "app_id": "f2dc92d3-6665-406d-8e5f-e7c6e19e822d",
             "data": {"sala": objMsg.dono_interessado_pet, "pet": objMsg.pet},
