@@ -31,15 +31,16 @@ export class ChatProvider {
         let petsRef = this.postProvider.getPetsRef();
         let petData;
         let dono;
+        let signal = this.oneSignal;
         this.afDb.database.ref(petsRef + "/" + petKey).once('value', data => {
             petData = data.val();
             console.log('PETDATA',petData);
-            this.auth.getUserPerfil(petData.user).on('value', user => {
+            
+        });
+        this.auth.getUserPerfil(petData.user).on('value', user => {
                 dono = user.val();
                 console.log(user.val(), 'log dono');
-            });
-        });
-
+         });
 
         if (!petData && !petKey && !myInfo && !dono && !msg) {
             return {error: 'Não foi possivel encontrar informações necessárias para enviar a mensagem. Tente novamente.'}
@@ -73,12 +74,8 @@ export class ChatProvider {
                     dono: petData.user,
                     pet: petKey
                 };
-                console.log('sala', objSala);
-                console.log('msg', objMsg);
                 salasRef.push(objSala);
                 msgRef.push(objMsg);
-                console.log(objMsg);
-                this.sendNotification(objMsg);
             } else {
                 let objMsg = {
                     img: 'assets/img/IefaytxPTvmIeIUBCbFC_FarmafC3B3rmula-Pet.jpg',
@@ -91,32 +88,23 @@ export class ChatProvider {
                     dono: petData.user,
                     pet: petKey
                 };
-                console.log(objMsg);
                 msgRef.push(objMsg);
-                console.log(objMsg);
-                this.sendNotification(objMsg);
+                let token = dono.notificationToken;
+                let notMsg = {
+                        "app_id": "f2dc92d3-6665-406d-8e5f-e7c6e19e822d",
+                        "data": {"sala": objMsg.dono_interessado_pet, "pet": objMsg.pet},
+                        "contents": {"en": objMsg.content, "pt": objMsg.content},
+                        "include_player_ids": [`${token}`]
+                };
+                console.log('obj',notMsg);
+                signal.postNotification(notMsg).then(data => {
+                    alert('notificacao enviada', data);
+                 });
             }
         });
-        return {"result": 'Mensagem enviada'};
+        return;
     }
 
-    sendNotification(objMsg) {
-        console.log('send notification');
-        //Pegar o id do dono do pet na mensagem.
-        let token = this.auth.getUserToken(objMsg.dono);
-        let msg: any = {
-
-            "app_id": "f2dc92d3-6665-406d-8e5f-e7c6e19e822d",
-            "data": {"sala": objMsg.dono_interessado_pet, "pet": objMsg.pet},
-            "contents": {"en": objMsg.content, "pt": objMsg.content},
-            "include_player_ids": [`"${token}"`]
-
-        };
-
-        this.oneSignal.postNotification(msg).then(() => {
-            alert('notificacao enviada');
-        });
-    }
 
     getMenssagens(key) {
         console.log('getMessages service');
@@ -132,4 +120,5 @@ export class ChatProvider {
         return this.afDb.list('BR/chat/salas', ref => ref.orderByChild('id_dono').equalTo(this.myInfo.uid)).valueChanges();
 
     }
+
 }
