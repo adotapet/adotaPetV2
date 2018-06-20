@@ -53,7 +53,7 @@ export class LoginPage {
 
                     console.log(hasProfile);
                     localStorage.setItem('skipIntro', 'true');
-                  localStorage.setItem('vemajudar_filtros', JSON.stringify(hasProfile.vemajudar_filtros));
+                  localStorage.setItem('adotapet_filtros', JSON.stringify(hasProfile.adotapet_filtros));
 
 
                     this.navCtrl.setRoot(TabsControllerPage);
@@ -162,7 +162,7 @@ recuperarSenha(){
 
                               console.log(hasProfile);
                               localStorage.setItem('skipIntro', 'true');
-                              localStorage.setItem('vemajudar_filtros', JSON.stringify(hasProfile.vemajudar_filtros));
+                              localStorage.setItem('adotapet_filtros', JSON.stringify(hasProfile.adotapet_filtros));
 
 
                               this.navCtrl.setRoot(TabsControllerPage);
