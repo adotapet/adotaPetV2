@@ -1,33 +1,50 @@
 <ion-header>
+
     <ion-navbar>
-        <ion-title>
-            Chat
-        </ion-title>
+        <ion-title>{{titulo}}</ion-title>
     </ion-navbar>
+
 </ion-header>
 
-<ion-content #content padding class="chatPage">
+<ion-content>
 
-    <div *ngFor="let msg of messages">
-        <div class="chatBubble">
-            <img class="profile-pic" [ngClass]="(msg.autor != myId) ? 'left' : 'right'" src="{{msg.img}}">
-            <div class="chat-bubble" [ngClass]="(msg.autor != myId) ? 'left' : 'right'">
-                <div class="message">{{msg.content}}</div>
-                <div class="message-detail" text-wrap>
-                    <span>{{msg.time}}</span>
+    <div class="message-wrap">
+
+        <div *ngFor="let msg of messages"
+             class="message"
+             [class.left]=" msg.autor != myId"
+             [class.right]=" msg.autor === myId">
+            <img class="user-img" [src]="msg.img" alt="" src="">
+            <div class="msg-detail">
+                <div class="msg-info">
+                    <p>
+                        {{msg.senderName}}&nbsp;&nbsp;&nbsp;{{msg.time}}</p>
+                </div>
+                <div class="msg-content">
+                    <span class="triangle"></span>
+                    <p class="line-breaker ">{{msg.content}}</p>
                 </div>
             </div>
         </div>
+
     </div>
 
 </ion-content>
 
-<ion-footer class="chatPageFooter">
-    <ion-toolbar  color="light">
-        <ion-input [(ngModel)]="msgText"></ion-input>
-
-        <button  (click)="sendMessage(msgText)">
-            <ion-icon name="md-send"></ion-icon>
+<ion-footer no-border [style.height]="showEmojiPicker ? '255px' : '55px'">
+    <div class="input-wrap">
+        <button ion-button clear icon-only item-right (click)="switchEmojiPicker()">
+            <ion-icon name="md-happy"></ion-icon>
         </button>
-    </ion-toolbar>
+        <textarea #chat_input
+                  placeholder="Digite sua mensagem..."
+                  [(ngModel)]="msgText"
+                  (keyup.enter)="sendMessage(msgText)"
+                  (focusin)="onFocus()">
+    </textarea>
+        <button ion-button clear icon-only item-right (click)="sendMessage(msgText)">
+            <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
+        </button>
+    </div>
+    <emoji-picker [(ngModel)]="msgText"></emoji-picker>
 </ion-footer>

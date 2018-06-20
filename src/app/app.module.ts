@@ -1,6 +1,6 @@
 import {NgModule, ErrorHandler} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {IonicApp, IonicModule, IonicErrorHandler, NavController} from 'ionic-angular';
+import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
 import {MyApp} from './app.component';
 import {CadastrarPage} from '../pages/cadastrar/cadastrar';
 import {AdicionarPetPage} from '../pages/adicionar-pet/adicionar-pet';
@@ -27,13 +27,13 @@ import {AngularFireDatabaseModule} from 'angularfire2/database'
 import {FIREBASE_CONFIG} from "./app.firebase.config";
 import {Facebook} from "@ionic-native/facebook";
 import {Camera} from "@ionic-native/camera";
-import {GoogleAnalytics} from '@ionic-native/google-analytics';
 import {HttpClientModule} from '@angular/common/http';
 import {AuthProvider} from "../providers/auth/auth";
 import {ProfilePage} from "../pages/profile/profile";
 import {OneSignal} from "@ionic-native/onesignal";
-import {NativePageTransitions} from '@ionic-native/native-page-transitions';
 import {SocialSharing} from "@ionic-native/social-sharing";
+import {EmojiProvider} from "../providers/emoji";
+import {EmojiPickerComponent} from "../components/emoji-picker/emoji-picker";
 
 @NgModule({
     declarations: [
@@ -51,7 +51,8 @@ import {SocialSharing} from "@ionic-native/social-sharing";
         AvaliePage,
         NotificacoesPage,
         ApoioEPatrocinioPage,
-        FiltrosPage
+        FiltrosPage,
+        EmojiPickerComponent
     ],
     imports: [
         BrowserModule,
@@ -90,10 +91,9 @@ import {SocialSharing} from "@ionic-native/social-sharing";
         ChatProvider,
         Facebook,
         Camera,
-        GoogleAnalytics,
         OneSignal,
-        NativePageTransitions,
-        SocialSharing
+        SocialSharing,
+        EmojiProvider
     ]
 })
 export class AppModule {

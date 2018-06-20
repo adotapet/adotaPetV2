@@ -6,8 +6,6 @@ import {MeusPetsPage} from '../meus-pets/meus-pets';
 import {ChatPage} from '../chat/chat';
 import {MensagemPage} from '../mensagem/mensagem';
 import {AdicionarPetPage} from '../adicionar-pet/adicionar-pet';
-import {OneSignal} from "@ionic-native/onesignal";
-import {AngularFireDatabase} from "angularfire2/database";
 
 @Component({
     selector: 'page-tabs-controller',
@@ -20,17 +18,8 @@ export class TabsControllerPage {
     tab3Root: any = MeusPetsPage;
     tab4Root: any = ChatPage;
 
-    constructor(public navCtrl: NavController, public oneSignal: OneSignal, private afDb: AngularFireDatabase) {
+    constructor(public navCtrl: NavController) {
 
-       // this.oneSignal.handleNotificationReceived().subscribe(data => {
-       //     // do something when notification is received
-       //     alert(data);
-       // });
-//
-       // this.oneSignal.handleNotificationOpened().subscribe(data => {
-       //     // do something when a notification is opened
-       //     this.navCtrl.push('ChatPage');
-       // });
 
     }
 

@@ -1,88 +1,137 @@
 page-mensagem {
-  ion-content {
+
+  $userBackgroundColor: #387ef5;
+  $toUserBackgroundColor: #fff;
+
+  ion-content .scroll-content {
+    background-color: #f5f5f5;
   }
 
-  .chatBubble {
+  ion-footer {
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.11);
+    background-color: #fff;
+    height: 255px;
+  }
 
-    //position: relative;
+  .line-breaker {
+    white-space: pre-line;
+  }
 
-    // :last-child {
-    //   margin-bottom: 10px;
-    // }
-
-    img.profile-pic {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      position: absolute;
-      bottom: 10px;
+  .input-wrap {
+    padding: 5px;
+    display: flex;
+    textarea {
+      flex: 1;
+      border: 0;
+      border-bottom: 1px $userBackgroundColor;
+      border-style: solid;
     }
+  }
 
-    img.profile-pic.left {
-      left: 10px;
-    }
-
-    img.profile-pic.right {
-      right: 10px;
-    }
-
+  .message-wrap {
+    padding: 0 10px;
     .message {
-      font-size: medium;
-      word-wrap: break-word;
-      white-space: pre-wrap;
-    }
-
-    .message-detail {
-      white-space: nowrap;
-      font-size: small;
-    }
-
-    .chat-bubble {
-      border-radius: 5px;
-      display: inline-block;
-      padding: 10px 18px;
       position: relative;
-      margin: 10px;
-      max-width: 80%;
+      padding: 7px 0;
+      .user-img {
+        position: absolute;
+        border-radius: 45px;
+        width: 45px;
+        height: 45px;
+        box-shadow: 0 0 2px rgba(0, 0, 0, 0.36);
+      }
+
+      .msg-detail {
+        width: 100%;
+        display: inline-block;
+        p {
+          margin: 0;
+        }
+        .msg-info {
+          p {
+            font-size: .8em;
+            color: #888;
+          }
+        }
+
+        .msg-content {
+          position: relative;
+          margin-top: 5px;
+          border-radius: 5px;
+          padding: 8px;
+          border: 1px solid #ddd;
+          color: #fff;
+          width: auto;
+          max-width: 80%;
+          span.triangle {
+            background-color: #fff;
+            border-radius: 2px;
+            height: 8px;
+            width: 8px;
+            top: 12px;
+            display: block;
+            border-style: solid;
+            border-color: #ddd;
+            border-width: 1px;
+            -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
+            position: absolute;
+          }
+        }
+
+      }
     }
 
-    .chat-bubble:before {
-      content: "\00a0";
-      display: block;
-      height: 16px;
-      width: 9px;
-      position: absolute;
-      bottom: -7.5px;
+    .message.left {
+      .msg-content {
+        background-color: $toUserBackgroundColor;
+        float: left;
+      }
+      .msg-detail {
+        padding-left: 60px;
+      }
+      .user-img {
+        left: 0;
+      }
+      .msg-content {
+        color: #343434;
+        span.triangle {
+          border-top-width: 0;
+          border-right-width: 0;
+          left: -5px;
+        }
+      }
+
     }
 
-    .chat-bubble.left {
-      background-color: map-get($chat-bubble, background-left);
-      float: left;
-      margin-left: 45px;
+    .message.right {
+      .msg-detail {
+        padding-right: 60px;
+        .msg-info {
+          text-align: right;
+        }
+      }
+      .user-img {
+        right: 0;
+      }
+      ion-spinner {
+        position: absolute;
+        right: 10px;
+        top: 50px;
+      }
+      .msg-content {
+        background-color: $userBackgroundColor;
+        float: right;
+        span.triangle {
+          background-color: $userBackgroundColor;
+          border-bottom-width: 0;
+          border-left-width: 0;
+          right: -5px;
+        }
+      }
+
     }
 
-    .chat-bubble.left:before {
-      background-color: map-get($chat-bubble, background-left);
-      left: 10px;
-      -webkit-transform: rotate(70deg) skew(5deg);
-    }
-
-    .chat-bubble.right {
-      background-color: map-get($chat-bubble, background-right);
-      color: #000;
-      float: right;
-      margin-right: 45px;
-    }
-
-    .chat-bubble.right:before {
-      background-color: map-get($chat-bubble, background-right);
-      right: 10px;
-      -webkit-transform: rotate(118deg) skew(-5deg);
-    }
-
-    .chat-bubble.right a.autolinker {
-      color: #000;
-      font-weight: bold;
-    }
   }
+
 }

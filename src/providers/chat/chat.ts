@@ -64,7 +64,7 @@ export class ChatProvider {
                     dono_interessado_pet: idGrouped
                 };
                 let objMsg = {
-                    img: 'assets/img/IefaytxPTvmIeIUBCbFC_FarmafC3B3rmula-Pet.jpg',
+                    img: 'assets/user.jpg',
                     content: msg,
                     senderName: (myInfo.displayName ? myInfo.displayName : myInfo.email),
                     time: date,
@@ -90,7 +90,7 @@ export class ChatProvider {
                 };
                 msgRef.push(objMsg);
                 let token = dono.notificationToken;
-                let notMsg = {
+                let notMsg:any = {
                         "app_id": "f2dc92d3-6665-406d-8e5f-e7c6e19e822d",
                         "data": {"sala": objMsg.dono_interessado_pet, "pet": objMsg.pet},
                         "contents": {"en": objMsg.content, "pt": objMsg.content},
@@ -98,7 +98,7 @@ export class ChatProvider {
                 };
                 console.log('obj',notMsg);
                 signal.postNotification(notMsg).then(data => {
-                    alert('notificacao enviada', data);
+                    alert('notificacao enviada');
                  });
             }
         });

@@ -2,7 +2,6 @@ import {Component, ViewChild} from '@angular/core';
 import {Platform, Nav} from 'ionic-angular';
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
-import {GoogleAnalytics} from '@ionic-native/google-analytics';
 
 import {LoginPage} from '../pages/login/login';
 import {TabsControllerPage} from "../pages/tabs-controller/tabs-controller";
@@ -21,16 +20,7 @@ export class MyApp {
     @ViewChild(Nav) navCtrl: Nav;
     rootPage: any;
 
-    constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,
-                private ga: GoogleAnalytics, public oneSignal: OneSignal) {
-
-        this.ga.startTrackerWithId('AIzaSyAgCuNyINj93Qo3sB0ghvKxGfAwxuxSnqE')
-            .then(() => {
-                console.log('Google analytics is ready now');
-                // Tracker is ready
-                // You can now track pages or set additional information such as AppVersion or UserId
-            })
-            .catch(e => console.log('Error starting GoogleAnalytics', e));
+    constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
 
         const skipIntro = localStorage.getItem('skipIntro');
         console.log(skipIntro);
