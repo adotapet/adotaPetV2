@@ -2,11 +2,35 @@ import {AngularFireAuth} from 'angularfire2/auth';
 import {AngularFireDatabase} from 'angularfire2/database';
 import {Injectable} from '@angular/core';
 import {elementDef} from "@angular/core/src/view";
+import firebase from 'firebase';
 
 @Injectable()
 export class AuthProvider {
-    constructor(public afAuth: AngularFireAuth, private afDb: AngularFireDatabase) {
+
+    private userId: string;
+
+    constructor(public afAuth: AngularFireAuth, private afDb: AngularFireDatabase, ) {
+        this.fireAuth = firebase.auth();
     }
+
+    public fireAuth: any;
+
+    private uid: string;
+
+
+    resetPassword(email: string): any {
+        return this.fireAuth.sendPasswordResetEmail(email);
+    }
+
+    setUid(uid: string): void {
+        this.uid = uid;
+    }
+
+    getUid(): string {
+        return this.uid;
+    }
+
+
 
     getUser() {
         return this.afAuth.auth.currentUser;
@@ -24,14 +48,6 @@ export class AuthProvider {
         } catch (e) {
             console.log(e);
         }
-    }
-
-    getUserToken(userId){
-         let token;
-        this.afDb.database.ref('profile/' + userId + '/notificationToken').once('value', data => {
-            token = data.val();
-            return token;
-        });
     }
 
 }
