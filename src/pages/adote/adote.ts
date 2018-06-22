@@ -49,7 +49,7 @@ export class AdotePage {
     }
 
     async listPets() {
-        this.db.list('BR/adocao/pets').snapshotChanges().subscribe(data =>{
+        this.db.list('BR/adocao/pets', ref => ref.orderByChild('estado').equalTo('DF')).snapshotChanges().subscribe(data =>{
             this.posts = data;
         });
     }

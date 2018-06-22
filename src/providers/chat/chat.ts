@@ -99,7 +99,7 @@ export class ChatProvider {
                  });
             } else {
                 let objMsg = {
-                    img: 'assets/img/IefaytxPTvmIeIUBCbFC_FarmafC3B3rmula-Pet.jpg',
+                    img: 'assets/to-user.jpg',
                     content: msg,
                     senderName: (myInfo.displayName ? myInfo.displayName : myInfo.email),
                     time: date,

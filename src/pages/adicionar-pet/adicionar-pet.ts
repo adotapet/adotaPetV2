@@ -1,12 +1,12 @@
 import {Component} from '@angular/core';
-import {NavController, AlertController, NavParams} from 'ionic-angular';
+import {AlertController, LoadingController, Loading, NavController} from 'ionic-angular';
+
 import {Post} from "../../models/post";
 import {AuthProvider} from "../../providers/auth/auth";
 import {AngularFireDatabase} from 'angularfire2/database';
 import {Camera, CameraOptions} from "@ionic-native/camera";
 import {storage, database} from "firebase";
 import {AdotePage} from "../adote/adote";
-
 
 
 @Component({
@@ -24,11 +24,11 @@ export class AdicionarPetPage {
     especie = [];
     selectedRacas: any;
     selectedEspecie: any;
+    loading: Loading
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private alert: AlertController,
+    constructor(public navCtrl: NavController, private alert: AlertController,
                 private camera: Camera, private afDatabase: AngularFireDatabase, private auth: AuthProvider,
-               ) {
-
+                public loadingCtrl: LoadingController) {
     }
 
     onChange(newEspecie) {
@@ -241,66 +241,95 @@ export class AdicionarPetPage {
 
     async addPost(post) {
 
-            try {
-                console.log('add post log 1');
-                //Pegando uma key do database pra criar a pasta das fotos;
-                let key = database().ref('BR/adocao/pets').push().key;
+        //this.filtro = post.estado + '_' + post.categoria;
+        //console.log(post.estado + '_' + post.categoria)
+
+        try {
+            console.log('add post log 1');
+            //Pegando uma key do database pra criar a pasta das fotos;
+            let key = database().ref('BR/adocao/pets').push().key;
+            let afDb = this.afDatabase;
+            let auth = this.auth;
+            let popup = this.alert.create({
+                title: 'Pet Cadastrado com Sucesso :D',
+                subTitle: 'Desejamos Boa Sorte!',
+                buttons: [{
+                    text: 'OK',
+                    role: 'confirm',
+                    handler: () => {
+                        this.post = {} as Post;
+                        this.navCtrl.push(AdotePage);
+                    }
+                }]
+            });
+            //let ref = this.afDatabase.object(`BR/adocao/pets/${key}`);
+            if (this.photoUrls[0]) {
+                //Fazendo um loop inserindo as strings base64 das fotos e colocando no storage.
+                this.getUrls(key, post).then(data => {
+                    console.log('RETURNED', this.post);
+                    this.post.user = auth.getUser().uid;
+                    afDb.object(`BR/adocao/pets/${key}`).set(this.post).then(() => {
+                            console.log('finished log 3', this.post);
+                            this.presentWithGif();
+                            setTimeout(() => {
+                                this.loading.dismiss();
+                                popup.present();
+                            }, 4000);
+                        }
+                    );
 
 
-                //let ref = this.afDatabase.object(`BR/adocao/pets/${key}`);
-                if (this.photoUrls[0]) {
-                    //Fazendo um loop inserindo as strings base64 das fotos e colocando no storage.
-                    this.getUrls(key, post).then(post => {
-                       this.post = post.fotoUrls;
-                    });
-                    this.post.user = this.auth.getUser().uid;
+                });
 
-                    console.log('post final log 4', post);
-                    this.afDatabase.object(`BR/adocao/pets/${key}`).set(post).then(()=>
-                        console.log('finished log 5', post));
-                    let popup = this.alert.create({
-                        title: 'Pet em Adoção :D',
-                        subTitle: 'Esperamos que ele encontre um dono rápido, Boa sorte!',
-                        buttons: ['Ok']
-                    });
-                    popup.present();
-
-                    this.post = {} as Post;
-                    this.navCtrl.push(AdotePage);
-                } else {
-                    this.post = {} as Post;
-                    let popup = this.alert.create({
-                        title: 'Você precisa colocar uma foto do pet!',
-                        buttons: ['Ok']
-                    });
-                    popup.present();
-                }
-
-            } catch (e) {
-                console.log(e);
+            } else {
+                this.post = {} as Post;
+                let popup = this.alert.create({
+                    title: 'Você precisa colocar uma imagem!',
+                    buttons: ['Ok']
+                });
+                popup.present();
+                console.log(post)
             }
+
+        } catch (e) {
+            console.log(e);
+        }
 
     }
 
 
     async getUrls(key, post: Post): Promise<any> {
         let i = 0;
-        post.fotoUrls =[];
+        post.fotoUrls = [];
 
         for (let url of this.photoUrls) {
             let fileName = key + '_' + url.date;
-            let imageRef = storage().ref(`images/adocao/${key}/${fileName}`);
+            let imageRef = storage().ref('images/adocao/' + key + '/' + fileName);
             imageRef.putString(url.img, 'data_url').then(data => {
-                post.fotoUrls[i] = data.downloadURL;
+                post.fotoUrls[i] = 'https://firebasestorage.googleapis.com/v0/b/adotapet-dev.appspot.com/o/' + (data.metadata.fullPath).replace(/[/]/g, '%2f') + '?alt=media';
+                console.log('DATAAAAA', post);
                 i++;
-                this.afDatabase.object(`BR/adocao/pets/${key}`).set(post)
-                if(i == this.photoUrls.length){
+                this.afDatabase.object('BR/adocao/pets/' + key).set(post);
 
+                if (i == this.photoUrls.length) {
                     return post;
                 }
             });
+
         }
+
         console.log('returned log 2', post);
+    }
+
+    presentWithGif() {
+        this.loading = this.loadingCtrl.create({
+            spinner: 'hide',
+            content: `
+                         <div class="custom-spinner-container">
+                             <img class="loading" width="120px" height="120px" src="../../assets/coghiLoading.gif" />
+                         </div>`
+        });
+        this.loading.present();
     }
 
 }

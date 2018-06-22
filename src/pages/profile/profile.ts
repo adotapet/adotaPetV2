@@ -24,7 +24,8 @@ export class ProfilePage {
 
     createProfile() {
         //cria o perfil e direciona pra home.
-        this.login.createProfile(this.navParams.get('userId'), this.profile);
+        let id = this.navParams.get('userId');
+        this.login.createProfile(id, this.profile);
         console.log('perifl criado');
         this.navCtrl.setRoot(TabsControllerPage);
     }
