@@ -28,7 +28,7 @@ export class ChatPage {
 
     goToMensagem(sala) {
         if (!sala) sala = null;
-        this.navCtrl.push(MensagemPage, {"key": sala.pet, "idGrouped": sala.dono_interessado_pet, "titulo": sala.nomePet});
+        this.navCtrl.push(MensagemPage, {"key": sala.pet, "idGrouped": sala.dono_interessado_pet, "titulo": sala.nomePet, "id_interessado": sala.id_interessado});
     }
 
 }

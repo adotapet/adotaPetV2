@@ -16,12 +16,14 @@ export class MensagemPage {
     key: string;
     myId;
     idGrouped: string;
+    id_interessado: string;
     showEmojiPicker = false;
     titulo;
 
     constructor(public navCtrl: NavController, public params: NavParams, public viewCtrl: ViewController, private chatProvider: ChatProvider, private auth: AuthProvider,  private events: Events) {
         this.key = params.get('key');
         this.idGrouped = params.get('idGrouped');
+        this.id_interessado = params.get('id_interessado');
         let myInfo = this.auth.getUser();
         this.myId = myInfo.uid;
         this.titulo = params.get('titulo');
@@ -36,7 +38,7 @@ export class MensagemPage {
     }
 
     sendMessage(msg) {
-        this.chatProvider.sendMessage(msg, this.key, this.idGrouped);
+        this.chatProvider.sendMessage(msg, this.key, this.idGrouped, this.id_interessado);
         this.scrollToBottom();
         this.msgText = '';
     }

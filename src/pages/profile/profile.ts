@@ -50,6 +50,7 @@ export class ProfilePage {
             this.navCtrl.setRoot(TabsControllerPage);
         }
 
+}
 
-    }
+
 }
