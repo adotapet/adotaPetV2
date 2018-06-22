@@ -6,7 +6,8 @@ import {AngularFireDatabase} from 'angularfire2/database';
 import {Camera, CameraOptions} from "@ionic-native/camera";
 import {storage, database} from "firebase";
 import {AdotePage} from "../adote/adote";
-
+import {TabsControllerPage} from "../tabs-controller/tabs-controller";
+import {LoginPage} from "../login/login";
 
 
 @Component({
@@ -24,11 +25,19 @@ export class AdicionarPetPage {
     especie = [];
     selectedRacas: any;
     selectedEspecie: any;
+    filtro: any;
+    rootPage:any;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private alert: AlertController,
                 private camera: Camera, private afDatabase: AngularFireDatabase, private auth: AuthProvider,
                ) {
-
+        const skipIntro = localStorage.getItem('skipIntro');
+        console.log(skipIntro);
+        if (skipIntro) {
+            this.rootPage = TabsControllerPage;
+        } else {
+            this.rootPage = LoginPage;
+        }
     }
 
     onChange(newEspecie) {
@@ -240,6 +249,7 @@ export class AdicionarPetPage {
 
 
     async addPost(post) {
+        this.filtro = post.estado + '_' + post.especie;
 
             try {
                 console.log('add post log 1');

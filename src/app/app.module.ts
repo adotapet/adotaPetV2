@@ -18,7 +18,10 @@ import {PostProvider} from '../providers/post/post';
 import {ChatProvider} from '../providers/chat/chat';
 import {AvaliePage} from "../pages/avalie/avalie";
 import {ApoioEPatrocinioPage} from "../pages/apoio-epatrocinio/apoio-epatrocinio";
-import {FiltrosPage} from "../pages/filtros/filtros";
+
+
+
+import {FiltroPage} from "../pages/filtros/filtros";
 import {NotificacoesPage} from "../pages/notificacoes/notificacoes";
 
 import {AngularFireModule} from "angularfire2";
@@ -51,7 +54,7 @@ import {EmojiPickerComponent} from "../components/emoji-picker/emoji-picker";
         AvaliePage,
         NotificacoesPage,
         ApoioEPatrocinioPage,
-        FiltrosPage,
+        FiltroPage,
         EmojiPickerComponent
     ],
     imports: [
@@ -78,7 +81,7 @@ import {EmojiPickerComponent} from "../components/emoji-picker/emoji-picker";
         AvaliePage,
         NotificacoesPage,
         ApoioEPatrocinioPage,
-        FiltrosPage
+        FiltroPage
 
     ],
     providers: [

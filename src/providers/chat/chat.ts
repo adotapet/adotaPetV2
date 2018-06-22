@@ -1,3 +1,4 @@
+
 import {Injectable} from '@angular/core';
 import {AuthProvider} from "../auth/auth";
 import {PostProvider} from "../post/post";
@@ -6,7 +7,6 @@ import {OneSignal} from "@ionic-native/onesignal";
 
 /*
   Generated class for the ChatProvider provider.
-
   See https://angular.io/guide/dependency-injection for more info on providers
   and Angular DI.
 */
@@ -35,12 +35,12 @@ export class ChatProvider {
         this.afDb.database.ref(petsRef + "/" + petKey).once('value', data => {
             petData = data.val();
             console.log('PETDATA',petData);
-            
+
         });
         this.auth.getUserPerfil(petData.user).on('value', user => {
-                dono = user.val();
-                console.log(user.val(), 'log dono');
-         });
+            dono = user.val();
+            console.log(user.val(), 'log dono');
+        });
 
         if (!petData && !petKey && !myInfo && !dono && !msg) {
             return {error: 'Não foi possivel encontrar informações necessárias para enviar a mensagem. Tente novamente.'}
@@ -91,15 +91,15 @@ export class ChatProvider {
                 msgRef.push(objMsg);
                 let token = dono.notificationToken;
                 let notMsg:any = {
-                        "app_id": "f2dc92d3-6665-406d-8e5f-e7c6e19e822d",
-                        "data": {"sala": objMsg.dono_interessado_pet, "pet": objMsg.pet},
-                        "contents": {"en": objMsg.content, "pt": objMsg.content},
-                        "include_player_ids": [`${token}`]
+                    "app_id": "f2dc92d3-6665-406d-8e5f-e7c6e19e822d",
+                    "data": {"sala": objMsg.dono_interessado_pet, "pet": objMsg.pet},
+                    "contents": {"en": objMsg.content, "pt": objMsg.content},
+                    "include_player_ids": [`${token}`]
                 };
                 console.log('obj',notMsg);
                 signal.postNotification(notMsg).then(data => {
                     alert('notificacao enviada');
-                 });
+                });
             }
         });
         return;

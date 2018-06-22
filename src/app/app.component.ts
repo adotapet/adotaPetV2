@@ -6,7 +6,7 @@ import {SplashScreen} from '@ionic-native/splash-screen';
 import {LoginPage} from '../pages/login/login';
 import {TabsControllerPage} from "../pages/tabs-controller/tabs-controller";
 import {OneSignal} from "@ionic-native/onesignal";
-import { FiltrosPage } from '../pages/filtros/filtros';
+import { FiltroPage } from '../pages/filtros/filtros';
 import { NotificacoesPage } from '../pages/notificacoes/notificacoes';
 import {MeusPetsPage} from '../pages/meus-pets/meus-pets';
 
@@ -51,12 +51,20 @@ export class MyApp {
         });
     }
 
+    filtrar(params){
+        if (!params) params = {};
+        this.navCtrl.setRoot(FiltroPage);
+    }
+
+
+
+
     goToAvalie(params){
         if (!params) params = {};
         this.navCtrl.setRoot(AvaliePage);
     }goToFiltros(params){
         if (!params) params = {};
-        this.navCtrl.setRoot(FiltrosPage);
+        this.navCtrl.setRoot(FiltroPage);
     }goToNotificacoes(params){
         if (!params) params = {};
         this.navCtrl.setRoot(NotificacoesPage);
@@ -71,10 +79,12 @@ export class MyApp {
     }
 
 
-    logoff() {
+    logoff(params) {
+
         localStorage.clear();
-        this.rootPage = LoginPage;
+
+        if (!params) params = {};
+        this.navCtrl.setRoot(LoginPage);
 
     }
-
 }

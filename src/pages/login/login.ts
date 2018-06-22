@@ -53,6 +53,7 @@ export class LoginPage {
 
                     console.log(hasProfile);
                     localStorage.setItem('skipIntro', 'true');
+                    // Salva o estado no local storage
                   localStorage.setItem('adotapet_filtros', JSON.stringify(hasProfile.adotapet_filtros));
 
 
@@ -162,6 +163,7 @@ recuperarSenha(){
 
                               console.log(hasProfile);
                               localStorage.setItem('skipIntro', 'true');
+                              // Salva o estado em localstorage para filtros
                               localStorage.setItem('adotapet_filtros', JSON.stringify(hasProfile.adotapet_filtros));
 
 

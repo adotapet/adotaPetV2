@@ -12,7 +12,7 @@ export class LoginProvider {
     }
 
 
-    createProfile(userId, profile) {
+    createProfile(userId, profile, post) {
         this.oneSignal.getIds().then(data => {
             profile.notificationToken = data.userId;
             this.afDatabse.object(`profile/${userId}`).set(profile);

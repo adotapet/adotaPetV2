@@ -8,4 +8,5 @@ export interface Post {
     raca: string;
     fotoUrls: any[];
     user: string;
+    estado: string;
 }
