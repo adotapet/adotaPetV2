@@ -9,4 +9,5 @@ export interface Post {
     fotoUrls: any[];
     user: string;
     estado: string;
+    filtro:string;
 }
