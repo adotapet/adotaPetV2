@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-
-import {NavController, ToastController, AlertController, LoadingController} from 'ionic-angular';
+import {NavController, ToastController, LoadingController} from 'ionic-angular';
 import {PerfilPage} from '../perfil/perfil';
 import {AngularFireAuth} from "angularfire2/auth";
 import {AngularFireDatabase} from "angularfire2/database";

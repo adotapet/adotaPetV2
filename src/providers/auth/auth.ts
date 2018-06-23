@@ -1,13 +1,11 @@
 import {AngularFireAuth} from 'angularfire2/auth';
 import {AngularFireDatabase} from 'angularfire2/database';
 import {Injectable} from '@angular/core';
-import {elementDef} from "@angular/core/src/view";
 import firebase from 'firebase';
 
 @Injectable()
 export class AuthProvider {
 
-    private userId: string;
 
     constructor(public afAuth: AngularFireAuth, private afDb: AngularFireDatabase, ) {
         this.fireAuth = firebase.auth();

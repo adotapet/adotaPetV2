@@ -20,7 +20,7 @@ export class MensagemPage {
     showEmojiPicker = false;
     titulo;
 
-    constructor(public navCtrl: NavController, public params: NavParams, public viewCtrl: ViewController, private chatProvider: ChatProvider, private auth: AuthProvider, private events: Events) {
+    constructor(public navCtrl: NavController, public params: NavParams, public viewCtrl: ViewController, private chatProvider: ChatProvider, private auth: AuthProvider) {
         this.key = params.get('key');
         this.idGrouped = params.get('idGrouped');
         this.id_interessado = params.get('id_interessado');

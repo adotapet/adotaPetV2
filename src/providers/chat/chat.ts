@@ -96,7 +96,7 @@ export class ChatProvider {
                 };
                 console.log('obj', notMsg);
                 signal.postNotification(notMsg).then(data => {
-                    alert('notificacao enviada');
+                   return
                 });
             } else {
                 let objMsg = {
@@ -119,7 +119,7 @@ export class ChatProvider {
                     "include_player_ids": [`${notToken}`]
                 };
                 signal.postNotification(notMsg).then(data => {
-                    alert('notificacao enviada');
+                    return
                 });
             }
         });

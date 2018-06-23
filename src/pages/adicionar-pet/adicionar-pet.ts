@@ -336,7 +336,7 @@ export class AdicionarPetPage {
             spinner: 'hide',
             content: `
                          <div class="custom-spinner-container">
-                             <img class="loading" width="120px" height="120px" src="../../assets/coghiLoading.gif" />
+                             <img class="loading" width="120px" height="120px" src="assets/coghiLoading.gif" />
                          </div>`
         });
         this.loading.present();
