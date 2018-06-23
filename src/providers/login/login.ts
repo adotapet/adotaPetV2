@@ -13,6 +13,10 @@ export class LoginProvider {
 
 
     createProfile(userId, profile, post) {
+        profile.adotapet_filtros = {
+            "estado":  post.estado,
+            "especie": post.especie
+        };
         this.oneSignal.getIds().then(data => {
             profile.notificationToken = data.userId;
             this.afDatabse.object('profile/'+ userId).set(profile);

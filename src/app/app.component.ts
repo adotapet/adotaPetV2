@@ -1,5 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import {Platform, Nav} from 'ionic-angular';
+import {Platform, Nav, ToastController} from 'ionic-angular';
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 
@@ -9,7 +9,7 @@ import {OneSignal} from "@ionic-native/onesignal";
 import { FiltroPage } from '../pages/filtros/filtros';
 import { NotificacoesPage } from '../pages/notificacoes/notificacoes';
 import {MeusPetsPage} from '../pages/meus-pets/meus-pets';
-
+import {MensagemPage} from "../pages/mensagem/mensagem";
 import {ApoioEPatrocinioPage} from '../pages/apoio-epatrocinio/apoio-epatrocinio';
 import { AvaliePage } from '../pages/avalie/avalie';
 
@@ -20,7 +20,7 @@ export class MyApp {
     @ViewChild(Nav) navCtrl: Nav;
     rootPage: any;
 
-    constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
+    constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public toast: ToastController) {
 
         const skipIntro = localStorage.getItem('skipIntro');
         console.log(skipIntro);
@@ -39,9 +39,17 @@ export class MyApp {
             // Enable to debug issues:
             //window["plugins"].OneSignal.setLogLevel({logLevel: 4, visualLevel: 4});
             let funcaoRetorno = (data) => {
-                //colocar aqui o que fazer se a notificacao for clicada
-                console.log('Notificações: ' + JSON.stringify(data));
-                alert(JSON.stringify((data)));
+                //Direcionando para o chat pegando os dados da sala que sao enviados dentro na notificacao.
+                let msg = data.notification.payload.additionalData;
+                if(!data.notification.isAppInFocus){
+                    this.navCtrl.push(MensagemPage, {'key': msg.pet, 'idGrouped': msg.sala, 'titulo': msg.titulo, 'id_interessado': msg.id_interessado });
+                }else {
+                    this.toast.create({
+                        message: 'Você recebeu uma menssagem',
+                        duration: 2000
+                    }).present();
+                }
+                console.log('NOTIFICATION RECEIVED',data);
             };
 
             window["plugins"].OneSignal.startInit("f2dc92d3-6665-406d-8e5f-e7c6e19e822d",

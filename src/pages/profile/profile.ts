@@ -3,6 +3,7 @@ import {LoginProvider} from "../../providers/login/login";
 import {TabsControllerPage} from "../tabs-controller/tabs-controller";
 import {Post} from "../../models/post";
 import { Component} from '@angular/core';
+import {AngularFireDatabase} from "angularfire2/database";
 
 
 @Component({
@@ -17,7 +18,7 @@ export class ProfilePage {
 
 
     constructor(public navParams: NavParams, public navCtrl: NavController, private login: LoginProvider,
-                public alert: AlertController
+                public alert: AlertController, public afDb: AngularFireDatabase
 
     ) {
         console.log('profile.ts')

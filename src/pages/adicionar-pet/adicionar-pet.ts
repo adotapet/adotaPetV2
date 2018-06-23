@@ -251,7 +251,7 @@ export class AdicionarPetPage {
 
 
     async addPost(post) {
-        this.filtro = post.estado + '_' + post.especie;
+        this.post.filtro = post.estado + '_' + post.especie;
 
 
         try {

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import {NavController, ToastController, AlertController, LoadingController} from 'ionic-angular';
 import {PerfilPage} from '../perfil/perfil';
 import {AngularFireAuth} from "angularfire2/auth";
-import {AngularFireDatabase, SnapshotAction} from "angularfire2/database";
+import {AngularFireDatabase} from "angularfire2/database";
 
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/observable/combineLatest';
@@ -28,8 +28,6 @@ export class AdotePage {
                 public navCtrl: NavController,
                 public toast: ToastController,
                 private auth: AuthProvider,
-
-                private AlertCtrl: AlertController,
                 public loadingCtrl: LoadingController,
 
     ) {
@@ -64,8 +62,6 @@ export class AdotePage {
 
     async listPets() {
 
-
-
         let loading = this.loadingCtrl.create({
             content: 'Carregando...'
         });
@@ -73,8 +69,7 @@ export class AdotePage {
         loading.present();
 
         this.filtro = JSON.parse(localStorage.getItem('adotapet_filtros'));
-        console.log(this.filtro.especie)
-
+        console.log(this.filtro.especie);
 
 
         if(this.filtro.especie == "Todos"){
