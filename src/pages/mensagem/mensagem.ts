@@ -20,7 +20,7 @@ export class MensagemPage {
     showEmojiPicker = false;
     titulo;
 
-    constructor(public navCtrl: NavController, public params: NavParams, public viewCtrl: ViewController, private chatProvider: ChatProvider, private auth: AuthProvider,  private events: Events) {
+    constructor(public navCtrl: NavController, public params: NavParams, public viewCtrl: ViewController, private chatProvider: ChatProvider, private auth: AuthProvider) {
         this.key = params.get('key');
         this.idGrouped = params.get('idGrouped');
         this.id_interessado = params.get('id_interessado');
@@ -30,25 +30,29 @@ export class MensagemPage {
         this.listMessages();
     }
 
+    ionViewDidLoad() {
+        this.scrollToBottom();
+    }
+
     listMessages() {
         this.chatProvider.getMenssagens(this.idGrouped).subscribe(data => {
             this.messages = data;
-            this.content.scrollToBottom();
+            this.scrollToBottom();
         });
     }
 
     sendMessage(msg) {
         this.chatProvider.sendMessage(msg, this.key, this.idGrouped, this.id_interessado);
-        this.scrollToBottom();
         this.msgText = '';
+        this.scrollToBottom();
     }
 
     scrollToBottom() {
         setTimeout(() => {
             if (this.content.scrollToBottom) {
-                this.content.scrollToBottom();
+                this.content.scrollToBottom(200);
             }
-        }, 400)
+        }, 500)
     }
 
     private focus() {
@@ -58,7 +62,7 @@ export class MensagemPage {
     }
 
     private setTextareaScroll() {
-        const textarea =this.messageInput.nativeElement;
+        const textarea = this.messageInput.nativeElement;
         textarea.scrollTop = textarea.scrollHeight;
     }
 

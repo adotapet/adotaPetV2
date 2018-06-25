@@ -69,26 +69,26 @@ export class PerfilPage {
         let key = this.key;
         let idGrouped = `${this.pet.user}_${this.usuarioAtual}_${key}`;
         console.log(key, this.pet.user);
-        this.navCtrl.push(MensagemPage, {"key": key, "idGrouped": idGrouped});
+        this.navCtrl.push(MensagemPage, {"key": key, "idGrouped": idGrouped, "id_interessado": this.usuarioAtual});
     }
 
     marcarComoAdotado() {
         let popup = this.alert.create({
-            title: 'Tem certeza que quer excluir o Pet?',
-            subTitle: '',
+            title: 'Tem certeza que quer marcar o pet como adotado?',
+            subTitle: 'Ele não vai mais aparecer na listagem.',
             buttons: [{
                 text: 'Sim',
                 role: 'confirm',
                 handler: () => {
                     this.presentWithGif();
                     this.presentToast();
-                    //this.db.list('BR/adocao/pets/' + this.pet).remove().then(() => {
-                    //
-                    //});
+                    this.db.list('BR/adocao/pets/' + this.pet).remove().then(() => {
+
+                    });
                 }
             },
                 {
-                    text: 'Nao',
+                    text: 'Cancelar',
                     role: 'cancel',
                     handler: () => {
 

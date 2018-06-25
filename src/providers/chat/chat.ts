@@ -34,31 +34,32 @@ export class ChatProvider {
         let signal = this.oneSignal;
         let myToken;
         let tokenInteressado;
-        this.afDb.database.ref('profile/' + myInfo.uid + '/notificationToken').once('value', data =>{
+
+        this.afDb.database.ref('profile/' + myInfo.uid + '/notificationToken').once('value', data => {
             myToken = data.val();
             console.log(myToken, 'myToken');
         });
-        this.afDb.database.ref('profile/' + id_interessado + '/notificationToken').once('value', data =>{
+        this.afDb.database.ref('profile/' + id_interessado + '/notificationToken').once('value', data => {
             tokenInteressado = data.val();
             console.log(tokenInteressado, 'myToken');
         });
         this.afDb.database.ref(petsRef + "/" + petKey).once('value', data => {
             petData = data.val();
-            console.log('PETDATA',petData);
+            console.log('PETDATA', petData);
         });
         await this.auth.getUserPerfil(petData.user).on('value', user => {
-                dono = user.val();
-                console.log(user.val(), 'log dono');
-         });
-        
+            dono = user.val();
+            console.log(user.val(), 'log dono');
+        });
+
         if (!petData && !petKey && !myInfo && !dono && !msg) {
             return {error: 'Não foi possivel encontrar informações necessárias para enviar a mensagem. Tente novamente.'}
         }
 
 
         this.salasRef.orderByChild('dono_interessado_pet').equalTo(idGrouped).once('value', function (snap) {
-        let notToken  = (myToken == tokenInteressado) ? dono.notificationToken : tokenInteressado;
-        console.log('TOKEN FINAL', notToken);
+            let notToken = (myToken == tokenInteressado) ? dono.notificationToken : tokenInteressado;
+            console.log('TOKEN FINAL', notToken);
             let sala = snap.val();
 
             let date = new Date().toLocaleString();
@@ -84,19 +85,19 @@ export class ChatProvider {
                     dono: petData.user,
                     pet: petKey
                 };
-            
+
                 salasRef.push(objSala);
                 msgRef.push(objMsg);
-                let notMsg:any = {
-                        "app_id": "f2dc92d3-6665-406d-8e5f-e7c6e19e822d",
-                        "data": {"sala": objMsg.dono_interessado_pet, "pet": objMsg.pet},
-                        "contents": {"en": objMsg.content, "pt": objMsg.content},
-                        "include_player_ids": [`${notToken}`]
+                let notMsg: any = {
+                    "app_id": "f2dc92d3-6665-406d-8e5f-e7c6e19e822d",
+                    "data": {"sala": objMsg.dono_interessado_pet, "pet": objMsg.pet, 'titulo': petData.nome, "id_interessado": id_interessado},
+                    "contents": {"en": objMsg.content, "pt": objMsg.content},
+                    "include_player_ids": [`${notToken}`]
                 };
-                console.log('obj',notMsg);
+                console.log('obj', notMsg);
                 signal.postNotification(notMsg).then(data => {
-                    alert('notificacao enviada');
-                 });
+                   return
+                });
             } else {
                 let objMsg = {
                     img: 'assets/to-user.jpg',
@@ -111,15 +112,15 @@ export class ChatProvider {
                 };
                 msgRef.push(objMsg);
 
-                let notMsg:any = {
-                        "app_id": "f2dc92d3-6665-406d-8e5f-e7c6e19e822d",
-                        "data": {"sala": objMsg.dono_interessado_pet, "pet": objMsg.pet},
-                        "contents": {"en": objMsg.content, "pt": objMsg.content},
-                        "include_player_ids": [`${notToken}`]
+                let notMsg: any = {
+                    "app_id": "f2dc92d3-6665-406d-8e5f-e7c6e19e822d",
+                    "data": {"sala": objMsg.dono_interessado_pet, "pet": objMsg.pet, 'titulo': petData.nome, "id_interessado": id_interessado},
+                    "contents": {"en": objMsg.content, "pt": objMsg.content},
+                    "include_player_ids": [`${notToken}`]
                 };
                 signal.postNotification(notMsg).then(data => {
-                    alert('notificacao enviada');
-                 });
+                    return
+                });
             }
         });
         return;

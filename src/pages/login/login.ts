@@ -28,10 +28,7 @@ export class LoginPage {
                 public facebook: Facebook,
                 public AlertCtrl : AlertController,
                 public loadingCtrl: LoadingController,
-                public authProvider: AuthProvider) {
-
-
-    }
+                public authProvider: AuthProvider) {}
 
     async login(user) {
         try {
@@ -183,7 +180,7 @@ recuperarSenha(){
 
 
             }).catch((error) => {
-            console.log(error)
+            console.error(error);
 
               let alert = this.AlertCtrl.create({
                 title: 'ERRO',
@@ -191,7 +188,7 @@ recuperarSenha(){
                 buttons: ['ok']
               });
               alert.present();
-            this.loading.dismiss();
+              //alert.dismiss();
             });
 
 
