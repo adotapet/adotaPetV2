@@ -37,6 +37,8 @@ import {OneSignal} from "@ionic-native/onesignal";
 import {SocialSharing} from "@ionic-native/social-sharing";
 import {EmojiProvider} from "../providers/emoji";
 import {EmojiPickerComponent} from "../components/emoji-picker/emoji-picker";
+import {MeusPetsComponent} from "../components/meus-pets/meus-pets";
+import {SalasChatComponent} from "../components/salas-chat/salas-chat";
 
 @NgModule({
     declarations: [
@@ -55,6 +57,8 @@ import {EmojiPickerComponent} from "../components/emoji-picker/emoji-picker";
         NotificacoesPage,
         ApoioEPatrocinioPage,
         FiltroPage,
+        MeusPetsComponent,
+        SalasChatComponent,
         EmojiPickerComponent
     ],
     imports: [
@@ -81,7 +85,9 @@ import {EmojiPickerComponent} from "../components/emoji-picker/emoji-picker";
         AvaliePage,
         NotificacoesPage,
         ApoioEPatrocinioPage,
-        FiltroPage
+        FiltroPage,
+        SalasChatComponent,
+        MeusPetsComponent
 
     ],
     providers: [

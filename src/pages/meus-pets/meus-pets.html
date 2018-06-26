@@ -9,32 +9,6 @@
     </ion-navbar>
 </ion-header>
 <ion-content padding id="page6">
-    <ion-list id="meusPets-list3" *ngFor="let pet of myPets">
-        <ion-item-sliding>
-            <ion-item color="assertive" id="meusPets-list-item6">
-                <ion-avatar item-left>
-                    <img src="{{pet.payload.val().fotoUrls[0]}}"/>
-                </ion-avatar>
-                <h2>
-                    {{pet.payload.val().nome}}
-                </h2>
-
-                   <ion-icon name="trash" color="assertive" item-end (click)="deletePet(pet.payload.key, pet.payload.val().nome)"></ion-icon>
-
-            </ion-item>
-
-            <ion-item-options side="left">
-                <button ion-button color="assertive">
-                    Deletar
-                </button>
-                <button ion-button color="positive">
-                    Editar
-                </button>
-                <button ion-button color="balanced">
-                    Adotado
-                </button>
-            </ion-item-options>
-        </ion-item-sliding>
-    </ion-list>
+    <meus-pets></meus-pets>
 </ion-content>
 

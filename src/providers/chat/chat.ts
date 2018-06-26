@@ -95,9 +95,7 @@ export class ChatProvider {
                     "include_player_ids": [`${notToken}`]
                 };
                 console.log('obj', notMsg);
-                signal.postNotification(notMsg).then(data => {
-                   return
-                });
+                signal.postNotification(notMsg);
             } else {
                 let objMsg = {
                     img: 'assets/to-user.jpg',
@@ -118,9 +116,7 @@ export class ChatProvider {
                     "contents": {"en": objMsg.content, "pt": objMsg.content},
                     "include_player_ids": [`${notToken}`]
                 };
-                signal.postNotification(notMsg).then(data => {
-                    return
-                });
+                signal.postNotification(notMsg);
             }
         });
         return;
