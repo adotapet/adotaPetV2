@@ -6,6 +6,7 @@ import {MeusPetsPage} from '../meus-pets/meus-pets';
 import {ChatPage} from '../chat/chat';
 import {MensagemPage} from '../mensagem/mensagem';
 import {AdicionarPetPage} from '../adicionar-pet/adicionar-pet';
+import {NearbyPetsPage} from "../nearby-pets/nearby-pets";
 
 @Component({
     selector: 'page-tabs-controller',
@@ -17,6 +18,7 @@ export class TabsControllerPage {
     tab2Root: any = AdicionarPetPage;
     tab3Root: any = MeusPetsPage;
     tab4Root: any = ChatPage;
+    tab5Root: any = NearbyPetsPage;
 
     constructor(public navCtrl: NavController) {
 
@@ -47,5 +49,9 @@ export class TabsControllerPage {
     goToMensagem(params) {
         if (!params) params = {};
         this.navCtrl.push(MensagemPage);
+    }
+    goToMap(params) {
+        if (!params) params = {};
+        this.navCtrl.push(NearbyPetsPage);
     }
 }

@@ -278,6 +278,9 @@ export class AdicionarPetPage {
                 this.getUrls(key, post).then(data => {
                     console.log('RETURNED', this.post);
                     this.post.user = auth.getUser().uid;
+                    auth.getUserPerfil(this.post.user).on('value', data =>{
+                        this.post.coordenadas = data.val().location;
+                    });
                     afDb.object(`BR/adocao/pets/${key}`).set(this.post).then(() => {
                             console.log('finished log 3', this.post);
                             this.presentWithGif();

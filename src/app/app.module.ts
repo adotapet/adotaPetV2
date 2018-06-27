@@ -20,7 +20,6 @@ import {AvaliePage} from "../pages/avalie/avalie";
 import {ApoioEPatrocinioPage} from "../pages/apoio-epatrocinio/apoio-epatrocinio";
 
 
-
 import {FiltroPage} from "../pages/filtros/filtros";
 import {NotificacoesPage} from "../pages/notificacoes/notificacoes";
 
@@ -39,6 +38,12 @@ import {EmojiProvider} from "../providers/emoji";
 import {EmojiPickerComponent} from "../components/emoji-picker/emoji-picker";
 import {MeusPetsComponent} from "../components/meus-pets/meus-pets";
 import {SalasChatComponent} from "../components/salas-chat/salas-chat";
+import {ConnectivityProvider} from '../providers/connectivity/connectivity';
+import {GoogleMapsProvider} from '../providers/google-maps/google-maps';
+import {LocationsProvider} from '../providers/locations/locations';
+import {NearbyPetsPage} from "../pages/nearby-pets/nearby-pets";
+import { Network } from '@ionic-native/network';
+import { Geolocation } from '@ionic-native/geolocation';
 
 @NgModule({
     declarations: [
@@ -57,6 +62,7 @@ import {SalasChatComponent} from "../components/salas-chat/salas-chat";
         NotificacoesPage,
         ApoioEPatrocinioPage,
         FiltroPage,
+        NearbyPetsPage,
         MeusPetsComponent,
         SalasChatComponent,
         EmojiPickerComponent
@@ -87,7 +93,8 @@ import {SalasChatComponent} from "../components/salas-chat/salas-chat";
         ApoioEPatrocinioPage,
         FiltroPage,
         SalasChatComponent,
-        MeusPetsComponent
+        MeusPetsComponent,
+        NearbyPetsPage
 
     ],
     providers: [
@@ -102,7 +109,12 @@ import {SalasChatComponent} from "../components/salas-chat/salas-chat";
         Camera,
         OneSignal,
         SocialSharing,
-        EmojiProvider
+        EmojiProvider,
+        Network,
+        Geolocation,
+        ConnectivityProvider,
+        GoogleMapsProvider,
+        LocationsProvider
     ]
 })
 export class AppModule {
