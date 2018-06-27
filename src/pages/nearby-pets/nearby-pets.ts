@@ -42,7 +42,8 @@ export class NearbyPetsPage {
                 let locations = result[1];
 
                 for (let location of locations) {
-                    this.maps.addMarker(location.latitude, location.longitude);
+                    console.log('NEARBY',location);
+                    this.maps.addMarker(location.lat, location.lng);
                 }
 
             });

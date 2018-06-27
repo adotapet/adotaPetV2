@@ -105,7 +105,7 @@ export class GoogleMapsProvider {
                     center: latLng,
                     zoom: 15,
                     mapTypeId: google.maps.MapTypeId.ROADMAP
-                }
+                };
 
                 this.map = new google.maps.Map(this.mapElement, mapOptions);
                 resolve(true);

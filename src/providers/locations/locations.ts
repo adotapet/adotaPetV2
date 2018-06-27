@@ -34,19 +34,20 @@ export class LocationsProvider {
             let coordenadas = [];
             this.afDb.list('BR/adocao/pets').valueChanges().subscribe(dados => {
                 dados.forEach(function (item: any) {
-                    console.log('itemmmmmm');
                     if (item.coordenadas) {
                         coordenadas.splice(0, 0, item.coordenadas);
                     }
                 });
-            });
 
-            this.data = this.applyHaversine(coordenadas);
-            this.data.sort((locationA, locationB) => {
-                return locationA.distance - locationB.distance;
-            });
+                this.data = this.applyHaversine(coordenadas);
+                console.log("THIS.DATA", this.data);
+                this.data.sort((locationA, locationB) => {
+                    return locationA.distance - locationB.distance;
+                });
 
-            resolve(this.data);
+
+                resolve(this.data);
+            });
         });
 
     }
@@ -54,13 +55,11 @@ export class LocationsProvider {
     applyHaversine(locations) {
 
         let usersLocation = localStorage.getItem("currentLocation");
-        console.log('locations222222222222', usersLocation);
-
         locations.map((location) => {
 
             let placeLocation = {
-                lat: location.latitude,
-                lng: location.longitude
+                lat: location.lat,
+                lng: location.lng
             };
 
             location.distance = this.getDistanceBetweenPoints(
@@ -69,12 +68,14 @@ export class LocationsProvider {
                 'miles'
             ).toFixed(2);
         });
+        console.log("LOCATIONS", locations);
 
         return locations;
 
     }
 
     getDistanceBetweenPoints(start, end, units) {
+        console.log("PARAMETROS__DISTANCIA", start, end, units);
 
         let earthRadius = {
             miles: 3958.8,
@@ -96,6 +97,7 @@ export class LocationsProvider {
         let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         let d = R * c;
 
+        console.log("DISTANCIA", d);
         return d;
 
     }
