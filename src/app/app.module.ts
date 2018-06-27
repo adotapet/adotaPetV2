@@ -44,7 +44,9 @@ import {LocationsProvider} from '../providers/locations/locations';
 import {NearbyPetsPage} from "../pages/nearby-pets/nearby-pets";
 import { Network } from '@ionic-native/network';
 import { Geolocation } from '@ionic-native/geolocation';
-
+import {UserPerfilPage} from "../pages/user-perfil/user-perfil";
+import { ShrinkingSegmentHeader } from '../components/shrinking-segment-header/shrinking-segment-header';
+ 
 @NgModule({
     declarations: [
         MyApp,
@@ -63,9 +65,11 @@ import { Geolocation } from '@ionic-native/geolocation';
         ApoioEPatrocinioPage,
         FiltroPage,
         NearbyPetsPage,
+        UserPerfilPage,
         MeusPetsComponent,
         SalasChatComponent,
-        EmojiPickerComponent
+        EmojiPickerComponent,
+        ShrinkingSegmentHeader
     ],
     imports: [
         BrowserModule,
@@ -92,8 +96,10 @@ import { Geolocation } from '@ionic-native/geolocation';
         NotificacoesPage,
         ApoioEPatrocinioPage,
         FiltroPage,
+        UserPerfilPage,
         SalasChatComponent,
         MeusPetsComponent,
+        ShrinkingSegmentHeader,
         NearbyPetsPage
 
     ],
