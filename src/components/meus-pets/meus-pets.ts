@@ -3,12 +3,6 @@ import {AlertController, NavController, ToastController} from 'ionic-angular';
 import {AuthProvider} from "../../providers/auth/auth";
 import {AngularFireDatabase} from "angularfire2/database";
 
-/**
- * Generated class for the MeusPetsComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
- */
 @Component({
     selector: 'meus-pets',
     templateUrl: 'meus-pets.html'
@@ -17,6 +11,7 @@ export class MeusPetsComponent {
 
     myPets = {"ativos": [], "adotados": []};
     myId: string;
+    searchParam: string;
 
     constructor(private db: AngularFireDatabase,
                 public navCtrl: NavController,
@@ -29,19 +24,23 @@ export class MeusPetsComponent {
     }
 
 
-    async listPets() {
-        this.db.list('BR/adocao/pets', ref => ref.orderByChild('user').equalTo(this.myId)).snapshotChanges().subscribe(data => {
-            this.myPets.ativos = data;
-            console.log('PETS', this.myPets);
+    listPets() {
+        console.log('log1');
+        return new Promise(resolve => {
+            this.db.list('BR/adocao/pets', ref => ref.orderByChild('user').equalTo(this.myId)).snapshotChanges().subscribe(data => {
+                this.myPets.ativos = data;
+                console.log('PETS', this.myPets);
+                this.db.list('BR/adocao/adotados', ref => ref.orderByChild('user').equalTo(this.myId)).snapshotChanges().subscribe(data => {
+                    this.myPets.adotados = data;
+                    console.log('PETS', this.myPets);
+                    resolve(this.myPets);
+                });
+            });
         });
-        this.db.list('BR/adocao/adotados', ref => ref.orderByChild('user').equalTo(this.myId)).snapshotChanges().subscribe(data => {
-            this.myPets.adotados = data;
-            console.log('PETS', this.myPets);
-        });
+
     }
 
     deletePet(id, pet) {
-        console.log('pet deleeete', pet);
 
         let popup = this.alert.create({
             title: 'Tem certeza que quer marcar o Pet como adotado?',
@@ -77,6 +76,40 @@ export class MeusPetsComponent {
             position: 'bottom'
         });
         toast.present();
+    }
+
+    onCancel(ev: any) {
+        this.listPets();
+    }
+
+    onInput(ev: any) {
+        const val = ev.target.value;
+
+        this.listPets().then(data => {
+            console.log('log2', data);
+
+            if (val && val.trim() != '') {
+                this.myPets.ativos = this.myPets.ativos.filter((item) => {
+                    let nome = item.payload.val().nome;
+                    let pet = (nome.toLowerCase().indexOf(val.toLowerCase()) > -1);
+                    if (pet) {
+                        console.log(item);
+                        return item;
+                    }
+                });
+                this.myPets.adotados = this.myPets.adotados.filter((item) => {
+                    let nome = item.payload.val().nome;
+                    let pet = (nome.toLowerCase().indexOf(val.toLowerCase()) > -1);
+                    if (pet) {
+                        console.log(item);
+                        return item;
+                    }
+
+                });
+            }
+
+        });
+
     }
 
 }

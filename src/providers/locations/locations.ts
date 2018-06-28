@@ -17,13 +17,17 @@ export class LocationsProvider {
 
     load() {
 
-        this.geolocation.getCurrentPosition().then((position) => {
-            let usersLocation = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            };
-            localStorage.setItem("currentLocation", JSON.stringify(usersLocation));
+        let locationPromise = new Promise(resolve => {
+            this.geolocation.getCurrentPosition().then((position) => {
+                let usersLocation = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                localStorage.setItem("currentLocation", JSON.stringify(usersLocation));
+                resolve(usersLocation);
+            });
         });
+
 
         if (this.data) {
             return Promise.resolve(this.data);
@@ -32,29 +36,35 @@ export class LocationsProvider {
         return new Promise(resolve => {
 
             let coordenadas = [];
-            this.afDb.list('BR/adocao/pets').valueChanges().subscribe(dados => {
-                dados.forEach(function (item: any) {
-                    if (item.coordenadas) {
-                        coordenadas.splice(0, 0, item.coordenadas);
-                    }
+
+            locationPromise.then(usersLocation => {
+
+                this.afDb.list('BR/adocao/pets').valueChanges().subscribe(dados => {
+                    dados.forEach(function (item: any) {
+                        if (item.coordenadas) {
+                            coordenadas.splice(0, 0, item.coordenadas);
+                        }
+                    });
+
+                    this.data = this.applyHaversine(coordenadas, usersLocation);
+                    console.log("THIS.DATA", this.data);
+                    this.data.sort((locationA, locationB) => {
+                        return locationA.distance - locationB.distance;
+                    });
+
+                    resolve(this.data);
                 });
 
-                this.data = this.applyHaversine(coordenadas);
-                console.log("THIS.DATA", this.data);
-                this.data.sort((locationA, locationB) => {
-                    return locationA.distance - locationB.distance;
-                });
 
-
-                resolve(this.data);
             });
+
         });
 
     }
 
-    applyHaversine(locations) {
+    applyHaversine(locations, usersLocation) {
 
-        let usersLocation = localStorage.getItem("currentLocation");
+        console.log('usersLocation', usersLocation);
         locations.map((location) => {
 
             let placeLocation = {
@@ -62,10 +72,9 @@ export class LocationsProvider {
                 lng: location.lng
             };
 
-            location.distance = this.getDistanceBetweenPoints(
+            location.distance = this.getDistanceFromLatLonInKm(
                 usersLocation,
-                placeLocation,
-                'miles'
+                placeLocation
             ).toFixed(2);
         });
         console.log("LOCATIONS", locations);
@@ -74,35 +83,21 @@ export class LocationsProvider {
 
     }
 
-    getDistanceBetweenPoints(start, end, units) {
-        console.log("PARAMETROS__DISTANCIA", start, end, units);
 
-        let earthRadius = {
-            miles: 3958.8,
-            km: 6371
-        };
+    getDistanceFromLatLonInKm(userLocation, placeLocation) {
 
-        let R = earthRadius[units || 'miles'];
-        let lat1 = start.lat;
-        let lon1 = start.lng;
-        let lat2 = end.lat;
-        let lon2 = end.lng;
+        let lat1 = userLocation.lat;
+        let lon1 = userLocation.lng;
+        let lat2 = placeLocation.lat;
+        let lon2 = placeLocation.lng;
 
-        let dLat = this.toRad((lat2 - lat1));
-        let dLon = this.toRad((lon2 - lon1));
-        let a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-            Math.cos(this.toRad(lat1)) * Math.cos(this.toRad(lat2)) *
-            Math.sin(dLon / 2) *
-            Math.sin(dLon / 2);
-        let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        let d = R * c;
+        let p = 0.017453292519943295;    // Math.PI / 180
+        let c = Math.cos;
+        let a = 0.5 - c((lat1 - lat2) * p) / 2 + c(lat2 * p) * c((lat1) * p) * (1 - c(((lon1 - lon2) * p))) / 2;
+        console.log('a', a);
 
-        console.log("DISTANCIA", d);
-        return d;
-
+        let dis = (12742 * Math.asin(Math.sqrt(a))); // 2 * R; R = 6371 km
+        return dis;
     }
 
-    toRad(x) {
-        return x * Math.PI / 180;
-    }
 }

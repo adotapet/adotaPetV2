@@ -1,27 +1,46 @@
+<ion-searchbar
+        [(ngModel)]="searchParam"
+        [showCancelButton]="shouldShowCancel"
+        (ionCancel)="onCancel($event)"
+        (ionInput)="onInput($event)"
+        (keyup.enter)="dismiss()">
+</ion-searchbar>
 <ion-list id="meusPets-list3" *ngFor="let pet of myPets.ativos">
     <ion-item color="assertive" id="meusPets-list-item6">
-      <ion-avatar item-left>
-        <img src="{{pet.payload.val().fotoUrls[0]}}"/>
-      </ion-avatar>
-      <h2>
-        {{pet.payload.val().nome}}
-      </h2>
+        <ion-avatar item-left>
+            <img src="{{pet.payload.val().fotoUrls[0]}}"/>
+        </ion-avatar>
+        <h2>
+            {{pet.payload.val().nome}}
+        </h2>
 
-      <ion-icon name="trash" color="assertive" item-end (click)="deletePet(pet.payload.key, pet.payload.val())"></ion-icon>
+        <ion-icon name="ios-paw-outline" color="assertive" item-end
+                  (click)="deletePet(pet.payload.key, pet.payload.val())"></ion-icon>
+
+        <ion-icon name="remove" color="assertive" item-end></ion-icon>
+
+        <ion-icon name="trash" color="assertive" item-end
+                  (click)="deletePet(pet.payload.key, pet.payload.val())"></ion-icon>
 
     </ion-item>
 </ion-list>
 
 <ion-list id="meusPets-adotados" *ngFor="let pet of myPets.adotados">
-  <ion-item color="assertive" id="meusPets-list-item">
-    <ion-avatar item-left>
-      <img src="{{pet.payload.val().fotoUrls[0]}}"/>
-    </ion-avatar>
-    <h2>
-      {{pet.payload.val().nome}}
-    </h2>
+    <ion-item color="assertive" id="meusPets-list-item">
+        <ion-avatar item-left>
+            <img src="{{pet.payload.val().fotoUrls[0]}}"/>
+        </ion-avatar>
+        <h2>
+            {{pet.payload.val().nome}}
+        </h2>
 
-    <ion-icon name="trash" color="assertive" item-end (click)="deletePet(pet.payload.key, pet.payload.val())"></ion-icon>
+        <ion-icon name="ios-paw" color="assertive" item-end
+                  (click)="deletePet(pet.payload.key, pet.payload.val())"></ion-icon>
 
-  </ion-item>
+        <ion-icon name="remove" color="assertive" item-end></ion-icon>
+
+        <ion-icon name="trash" color="assertive" item-end
+                  (click)="deletePet(pet.payload.key, pet.payload.val())"></ion-icon>
+
+    </ion-item>
 </ion-list>

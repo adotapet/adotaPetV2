@@ -46,7 +46,7 @@ import { Network } from '@ionic-native/network';
 import { Geolocation } from '@ionic-native/geolocation';
 import {UserPerfilPage} from "../pages/user-perfil/user-perfil";
 import { ShrinkingSegmentHeader } from '../components/shrinking-segment-header/shrinking-segment-header';
- 
+
 @NgModule({
     declarations: [
         MyApp,
@@ -77,7 +77,7 @@ import { ShrinkingSegmentHeader } from '../components/shrinking-segment-header/s
         AngularFireModule.initializeApp(FIREBASE_CONFIG),
         AngularFireDatabaseModule,
         AngularFireAuthModule,
-        HttpClientModule
+        HttpClientModule,
     ],
     bootstrap: [IonicApp],
     entryComponents: [
