@@ -69,7 +69,7 @@ export class PerfilPage {
         let key = this.key;
         let idGrouped = `${this.pet.user}_${this.usuarioAtual}_${key}`;
         console.log(key, this.pet.user);
-        this.navCtrl.push(MensagemPage, {"key": key, "idGrouped": idGrouped, "id_interessado": this.usuarioAtual});
+        this.navCtrl.push(MensagemPage, {"key": key, "idGrouped": idGrouped, "id_interessado": this.usuarioAtual, "titulo": this.pet.nome});
     }
 
     marcarComoAdotado() {
