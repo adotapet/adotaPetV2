@@ -24,8 +24,10 @@
     "@ionic-native/core": "4.3.2",
     "@ionic-native/facebook": "^4.4.2",
     "@ionic-native/fcm": "^4.4.2",
+    "@ionic-native/geolocation": "^4.8.0",
     "@ionic-native/google-plus": "^4.4.2",
     "@ionic-native/http": "^4.4.2",
+    "@ionic-native/network": "^4.8.0",
     "@ionic-native/onesignal": "^4.5.2",
     "@ionic-native/push": "^4.4.2",
     "@ionic-native/social-sharing": "^4.7.0",
@@ -35,16 +37,19 @@
     "android-versions": "^1.3.0",
     "angularfire2": "^5.0.0-rc.6",
     "cordova-android": "^6.3.0",
-    "cordova-browser": "~5.0.1",
+    "cordova-browser": "5.0.3",
     "cordova-plugin-advanced-http": "^1.8.1",
     "cordova-plugin-camera": "^3.0.0",
     "cordova-plugin-device": "^1.1.7",
     "cordova-plugin-facebook4": "^1.9.1",
     "cordova-plugin-file": "^5.0.0",
+    "cordova-plugin-firebase": "^1.0.5",
+    "cordova-plugin-geolocation": "^4.0.1",
     "cordova-plugin-ionic-webview": "^1.1.16",
+    "cordova-plugin-network-information": "^2.0.1",
     "cordova-plugin-splashscreen": "^4.1.0",
     "cordova-plugin-whitelist": "^1.3.3",
-    "cordova-windows": "~5.0.0",
+    "cordova-windows": "^5.0.0",
     "firebase": "^5.0.4",
     "ionic-angular": "3.9.2",
     "ionic-plugin-keyboard": "^2.2.1",
@@ -72,12 +77,17 @@
         "APP_NAME": "AdotaPet"
       },
       "cordova-plugin-advanced-http": {},
-      "onesignal-cordova-plugin": {}
+      "onesignal-cordova-plugin": {},
+      "cordova-plugin-firebase": {},
+      "cordova-plugin-network-information": {},
+      "cordova-plugin-geolocation": {
+        "GEOLOCATION_USAGE_DESCRIPTION": "To locate you"
+      }
     },
     "platforms": [
       "windows",
-      "browser",
-      "android"
+      "android",
+      "browser"
     ]
   }
 }
