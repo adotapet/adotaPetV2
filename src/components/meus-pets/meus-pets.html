@@ -15,7 +15,7 @@
         </h2>
 
         <ion-icon name="ios-paw-outline" color="assertive" item-end
-                  (click)="deletePet(pet.payload.key, pet.payload.val())"></ion-icon>
+                  (click)="marcarComoAdotado(pet.payload.key, pet.payload.val())"></ion-icon>
 
         <ion-icon name="remove" color="assertive" item-end></ion-icon>
 
@@ -35,7 +35,7 @@
         </h2>
 
         <ion-icon name="ios-paw" color="assertive" item-end
-                  (click)="deletePet(pet.payload.key, pet.payload.val())"></ion-icon>
+                  (click)="marcarComoAtivo(pet.payload.key, pet.payload.val())"></ion-icon>
 
         <ion-icon name="remove" color="assertive" item-end></ion-icon>
 

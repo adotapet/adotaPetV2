@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {AlertController, NavController, ToastController} from 'ionic-angular';
 import {AuthProvider} from "../../providers/auth/auth";
 import {AngularFireDatabase} from "angularfire2/database";
+;import {AngularFireStorage} from "angularfire2/storage"
 
 @Component({
     selector: 'meus-pets',
@@ -17,7 +18,8 @@ export class MeusPetsComponent {
                 public navCtrl: NavController,
                 private authProvider: AuthProvider,
                 private alert: AlertController,
-                private toastCtrl: ToastController) {
+                private toastCtrl: ToastController,
+                private storage: AngularFireStorage) {
         this.myId = this.authProvider.getUser().uid;
         this.listPets();
         console.log("Meus pets component");
@@ -41,11 +43,43 @@ export class MeusPetsComponent {
     }
 
     deletePet(id, pet) {
+        let popup = this.alert.create({
+            title: 'Tem certeza que quer deletar o pet?',
+            buttons: [{
+                text: 'Tenho certeza',
+                role: 'confirm',
+                handler: () => {
+                    this.db.list('BR/adocao/pets/' + id).remove().then(() => {
+                        this.db.list('BR/adocao/chat/salas/', ref => ref.orderByChild('pet').equalTo(id)).remove();
+                        this.db.list('BR/adocao/chat/menssagens/', ref => ref.orderByChild('pet').equalTo(id)).remove();
+                        this.storage.ref('images/adocao/' + id).delete().subscribe(()=>{
+                            this.presentToast('Pet removido do aplicativo!');
+                        });
+
+                    }).catch(erro =>{
+                        this.presentToast('Ação não permitida');
+                    });
+
+                }
+            },
+                {
+                    text: 'Nao',
+                    role: 'cancel',
+                    handler: () => {
+
+                    }
+                }
+            ]
+        });
+        popup.present();
+    }
+
+    marcarComoAdotado(id, pet) {
 
         let popup = this.alert.create({
             title: 'Tem certeza que quer marcar o Pet como adotado?',
             buttons: [{
-                text: 'Sim',
+                text: 'Tenho certeza',
                 role: 'confirm',
                 handler: () => {
                     this.db.object('BR/adocao/adotados/' + id).set(pet).then(() => {
@@ -69,9 +103,38 @@ export class MeusPetsComponent {
 
     }
 
-    presentToast(pet) {
+    marcarComoAtivo(id, pet) {
+
+        let popup = this.alert.create({
+            title: 'Você deseja colocar o pet em adoção novamente?',
+            buttons: [{
+                text: 'Tenho certeza',
+                role: 'confirm',
+                handler: () => {
+                    this.db.object('BR/adocao/pets/' + id).set(pet).then(() => {
+                        this.db.list('BR/adocao/adotados/' + id).remove().then(() => {
+                            this.presentToast('O(a) ' + pet.nome + ' voltou para a adoção!');
+                        });
+                    });
+
+                }
+            },
+                {
+                    text: 'Nao',
+                    role: 'cancel',
+                    handler: () => {
+
+                    }
+                }
+            ]
+        });
+        popup.present();
+
+    }
+
+    presentToast(msg) {
         let toast = this.toastCtrl.create({
-            message: 'O ' + pet + ' foi removido!',
+            message: msg,
             duration: 2000,
             position: 'bottom'
         });

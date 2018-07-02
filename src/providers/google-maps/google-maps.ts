@@ -165,18 +165,30 @@ export class GoogleMapsProvider {
 
     }
 
-    addMarker(lat: number, lng: number): void {
+    addMarker(lat: number, lng: number, img: string): void {
+
+        let html = "<ion-item><ion-avatar><img src="+img+"></ion-avatar></ion-item>";
 
         let latLng = new google.maps.LatLng(lat, lng);
 
         let marker = new google.maps.Marker({
             map: this.map,
             animation: google.maps.Animation.DROP,
-            position: latLng
+            position: latLng,
+            title: 'TESTE',
+            html: html
         });
 
         this.markers.push(marker);
 
-    }
+        let info_window = new google.maps.InfoWindow({
+            content: 'loading'
+        });
 
+        marker.addListener('click', function () {
+            info_window.setContent(this.html);
+            info_window.open(this.map, marker);
+        });
+
+    }
 }

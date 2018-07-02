@@ -36,13 +36,13 @@ export class LocationsProvider {
         return new Promise(resolve => {
 
             let coordenadas = [];
-
             locationPromise.then(usersLocation => {
 
                 this.afDb.list('BR/adocao/pets').valueChanges().subscribe(dados => {
                     dados.forEach(function (item: any) {
+                        let objCoords = {"coordenadas": item.coordenadas, "icon": item.fotoUrls[0]};
                         if (item.coordenadas) {
-                            coordenadas.splice(0, 0, item.coordenadas);
+                            coordenadas.splice(0, 0, objCoords);
                         }
                     });
 
@@ -68,14 +68,15 @@ export class LocationsProvider {
         locations.map((location) => {
 
             let placeLocation = {
-                lat: location.lat,
-                lng: location.lng
+                lat: location.coordenadas.lat,
+                lng: location.coordenadas.lng
             };
 
             location.distance = this.getDistanceFromLatLonInKm(
                 usersLocation,
                 placeLocation
             ).toFixed(2);
+
         });
         console.log("LOCATIONS", locations);
 
