@@ -7,7 +7,7 @@ import firebase from 'firebase';
 export class AuthProvider {
 
 
-    constructor(public afAuth: AngularFireAuth, private afDb: AngularFireDatabase, ) {
+    constructor(public afAuth: AngularFireAuth, private afDb: AngularFireDatabase,) {
         this.fireAuth = firebase.auth();
     }
 
@@ -29,9 +29,12 @@ export class AuthProvider {
     }
 
 
+    getUser(): Promise<any> {
 
-    getUser() {
-        return this.afAuth.auth.currentUser;
+        return new Promise((resolve) => {
+            let currentUser = this.afAuth.auth.currentUser;
+            resolve(currentUser);
+        })
     }
 
     getUserPerfil(userId = null) {

@@ -21,8 +21,11 @@ export class ChatProvider {
         console.log('Hello ChatProvider Provider');
         this.salasRef = afDb.database.ref('BR/chat/salas');
         this.msgRef = afDb.database.ref('BR/chat/menssagens');
-        this.myInfo = this.auth.getUser();
+        this.auth.getUser().then(data =>{
+            this.myInfo = data;
+        });
     }
+
 
     async sendMessage(msg, petKey, idGrouped, id_interessado) {
         let myInfo = this.myInfo;
@@ -90,7 +93,12 @@ export class ChatProvider {
                 msgRef.push(objMsg);
                 let notMsg: any = {
                     "app_id": "f2dc92d3-6665-406d-8e5f-e7c6e19e822d",
-                    "data": {"sala": objMsg.dono_interessado_pet, "pet": objMsg.pet, 'titulo': petData.nome, "id_interessado": id_interessado},
+                    "data": {
+                        "sala": objMsg.dono_interessado_pet,
+                        "pet": objMsg.pet,
+                        'titulo': petData.nome,
+                        "id_interessado": id_interessado
+                    },
                     "contents": {"en": objMsg.content, "pt": objMsg.content},
                     "include_player_ids": [`${notToken}`]
                 };
@@ -112,7 +120,12 @@ export class ChatProvider {
 
                 let notMsg: any = {
                     "app_id": "f2dc92d3-6665-406d-8e5f-e7c6e19e822d",
-                    "data": {"sala": objMsg.dono_interessado_pet, "pet": objMsg.pet, 'titulo': petData.nome, "id_interessado": id_interessado},
+                    "data": {
+                        "sala": objMsg.dono_interessado_pet,
+                        "pet": objMsg.pet,
+                        'titulo': petData.nome,
+                        "id_interessado": id_interessado
+                    },
                     "contents": {"en": objMsg.content, "pt": objMsg.content},
                     "include_player_ids": [`${notToken}`]
                 };

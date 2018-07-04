@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
 import {ConnectivityProvider} from '../connectivity/connectivity'
 import {Geolocation} from '@ionic-native/geolocation';
+import {ToastController} from "ionic-angular";
+import {getCss} from "ionic-angular/es2015/util/dom";
 
 /*
   Generated class for the GoogleMapsProvider provider.
@@ -165,7 +167,7 @@ export class GoogleMapsProvider {
 
     }
 
-    addMarker(lat: number, lng: number, img: string): void {
+    addMarker(lat: number, lng: number, img: string) {
 
         let html = "<ion-item><ion-avatar><img src="+img+"></ion-avatar></ion-item>";
 
@@ -186,8 +188,8 @@ export class GoogleMapsProvider {
         });
 
         marker.addListener('click', function () {
-            info_window.setContent(this.html);
-            info_window.open(this.map, marker);
+
+
         });
 
     }

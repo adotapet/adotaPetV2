@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AlertController, LoadingController, Loading, NavController} from 'ionic-angular';
+import {AlertController, LoadingController, Loading, NavController, ToastController} from 'ionic-angular';
 
 import {Post} from "../../models/post";
 import {AuthProvider} from "../../providers/auth/auth";
@@ -8,7 +8,6 @@ import {Camera, CameraOptions} from "@ionic-native/camera";
 import {storage, database} from "firebase";
 import {AdotePage} from "../adote/adote";
 import {TabsControllerPage} from "../tabs-controller/tabs-controller";
-import {LoginPage} from "../login/login";
 
 
 @Component({
@@ -22,24 +21,33 @@ export class AdicionarPetPage {
     post = {} as Post;
     photoUrls = [];
     fotoUrls: any[];
-    uploadUrls = {};
     especie = [];
     selectedRacas: any;
     selectedEspecie: any;
-    filtro: any;
-    rootPage:any;
-    loading: Loading
-
+    rootPage: any;
+    loading: Loading;
+    canEnter: boolean;
     constructor(public navCtrl: NavController, private alert: AlertController,
                 private camera: Camera, private afDatabase: AngularFireDatabase, private auth: AuthProvider,
-                public loadingCtrl: LoadingController) {
-        const skipIntro = localStorage.getItem('skipIntro');
-        console.log(skipIntro);
-        if (skipIntro) {
-            this.rootPage = TabsControllerPage;
-        } else {
-            this.rootPage = LoginPage;
-        }
+                public loadingCtrl: LoadingController, public toastCtrl: ToastController) {
+
+    }
+
+    ionViewCanEnter() {
+        this.auth.getUser().then(user => {
+            let result = !!user;
+            let toast = this.toastCtrl.create({
+                message: 'Faça login para continuar',
+                duration: 2000,
+                position: 'bottom'
+            });
+            if (!result) {
+                toast.present();
+                this.canEnter = false;
+            }else {
+                this.canEnter = true;
+            }
+        })
     }
 
     onChange(newEspecie) {
@@ -268,7 +276,7 @@ export class AdicionarPetPage {
                     role: 'confirm',
                     handler: () => {
                         this.post = {} as Post;
-                        this.navCtrl.push(AdotePage);
+                        this.navCtrl.push(AdotePage, null, {animation: 'md-transition'});
                     }
                 }]
             });
@@ -277,8 +285,10 @@ export class AdicionarPetPage {
                 //Fazendo um loop inserindo as strings base64 das fotos e colocando no storage.
                 this.getUrls(key, post).then(data => {
                     console.log('RETURNED', this.post);
-                    this.post.user = auth.getUser().uid;
-                    auth.getUserPerfil(this.post.user).on('value', data =>{
+                    auth.getUser().then(user => {
+                        this.post.user = user.uid;
+                    });
+                    auth.getUserPerfil(this.post.user).on('value', data => {
                         this.post.coordenadas = data.val().location;
                     });
                     afDb.object(`BR/adocao/pets/${key}`).set(this.post).then(() => {

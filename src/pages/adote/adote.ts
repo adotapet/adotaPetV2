@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {NavController, ToastController, LoadingController} from 'ionic-angular';
 import {PerfilPage} from '../perfil/perfil';
 import {AngularFireAuth} from "angularfire2/auth";
@@ -9,6 +9,7 @@ import 'rxjs/add/observable/combineLatest';
 
 
 import {AuthProvider} from "../../providers/auth/auth";
+import {LocationsProvider} from "../../providers/locations/locations";
 
 @Component({
     selector: 'page-adote',
@@ -16,10 +17,10 @@ import {AuthProvider} from "../../providers/auth/auth";
 })
 export class AdotePage {
 
-    posts:any;
+    posts: any;
     user: any;
-    filtro:any;
-    list:any;
+    filtro: any;
+    list: any;
     private path = 'BR/adocao/pets';
 
     constructor(private afAuth: AngularFireAuth,
@@ -27,15 +28,15 @@ export class AdotePage {
                 public navCtrl: NavController,
                 public toast: ToastController,
                 private auth: AuthProvider,
-                public loadingCtrl: LoadingController,
-
-    ) {
+                public loadingCtrl: LoadingController, public location: LocationsProvider) {
 
     }
 
 
     ionViewDidLoad() {
-        this.user = this.auth.getUser();
+        this.auth.getUser().then(user => {
+            this.user = user;
+        });
         console.log(this.user);
         this.listPets();
 
@@ -59,7 +60,7 @@ export class AdotePage {
         });
     }
 
-    async listPets() {
+    listPets() {
 
         let loading = this.loadingCtrl.create({
             content: 'Carregando...'
@@ -67,24 +68,29 @@ export class AdotePage {
 
         loading.present();
 
-        this.filtro = JSON.parse(localStorage.getItem('adotapet_filtros'));
+        let filtros = JSON.parse(localStorage.getItem('adotapet_filtros'));
+        if (filtros) {
+            this.filtro = filtros;
+        } else {
+            this.filtro = {"estado": "DF", "especie": 'Todos'};
+
+        }
         console.log(this.filtro.especie);
 
 
-        if(this.filtro.especie == "Todos"){
+        if (this.filtro.especie == "Todos") {
 
-
-            this.db.list( this.path,  ref => ref.orderByChild('estado').equalTo(this.filtro.estado))
+            this.db.list(this.path, ref => ref.orderByChild('estado').equalTo(this.filtro.estado))
                 .snapshotChanges()
-                .subscribe((data)  => {
+                .subscribe((data) => {
 
 
                     this.posts = data.sort();
 
                     // console.log(data.values())
-                    data.forEach( data =>{
+                    data.forEach(data => {
 
-                        this.list =  Array.of(data.payload.val())
+                        this.list = Array.of(data.payload.val())
 
                     });
                     console.log(this.list)
@@ -96,13 +102,13 @@ export class AdotePage {
 
             loading.dismiss();
         }
-        else{
+        else {
 
             this.db.list(this.path, ref => ref.orderByChild('filtro')
                 .equalTo(this.filtro.estado + '_' + this.filtro.especie)).snapshotChanges()
                 .subscribe((data) => {
                     console.log(data)
-                    console.log(this.filtro.estado +'_'+ this.filtro.especie)
+                    console.log(this.filtro.estado + '_' + this.filtro.especie)
 
                     this.posts = data;
                     //
@@ -112,17 +118,9 @@ export class AdotePage {
                     // console.log(this.ordernar.payload.val());
 
 
-
-
-
                 });
             loading.dismiss();
         }
-
-
-
-
-
 
 
         // this.db.list('BR/adocao/pets').snapshotChanges().subscribe( (data) => {

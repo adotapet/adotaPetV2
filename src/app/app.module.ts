@@ -47,6 +47,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import {UserPerfilPage} from "../pages/user-perfil/user-perfil";
 import { ShrinkingSegmentHeader } from '../components/shrinking-segment-header/shrinking-segment-header';
 import {AngularFireStorageModule} from "angularfire2/storage";
+import {PleaseLoginComponent} from "../components/please-login/please-login";
 
 @NgModule({
     declarations: [
@@ -70,7 +71,8 @@ import {AngularFireStorageModule} from "angularfire2/storage";
         MeusPetsComponent,
         SalasChatComponent,
         EmojiPickerComponent,
-        ShrinkingSegmentHeader
+        ShrinkingSegmentHeader,
+        PleaseLoginComponent
     ],
     imports: [
         BrowserModule,
@@ -102,7 +104,9 @@ import {AngularFireStorageModule} from "angularfire2/storage";
         SalasChatComponent,
         MeusPetsComponent,
         ShrinkingSegmentHeader,
-        NearbyPetsPage
+        NearbyPetsPage,
+        PleaseLoginComponent
+
 
     ],
     providers: [

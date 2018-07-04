@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {AlertController, NavController, ToastController} from 'ionic-angular';
 import {AuthProvider} from "../../providers/auth/auth";
 import {AngularFireDatabase} from "angularfire2/database";
-;import {AngularFireStorage} from "angularfire2/storage"
+import {AngularFireStorage} from "angularfire2/storage"
 
 @Component({
     selector: 'meus-pets',
@@ -20,9 +20,12 @@ export class MeusPetsComponent {
                 private alert: AlertController,
                 private toastCtrl: ToastController,
                 private storage: AngularFireStorage) {
-        this.myId = this.authProvider.getUser().uid;
-        this.listPets();
-        console.log("Meus pets component");
+
+        this.authProvider.getUser().then(user => {
+            this.myId = user.uid;
+            this.listPets();
+        });
+
     }
 
 
@@ -52,11 +55,11 @@ export class MeusPetsComponent {
                     this.db.list('BR/adocao/pets/' + id).remove().then(() => {
                         this.db.list('BR/adocao/chat/salas/', ref => ref.orderByChild('pet').equalTo(id)).remove();
                         this.db.list('BR/adocao/chat/menssagens/', ref => ref.orderByChild('pet').equalTo(id)).remove();
-                        this.storage.ref('images/adocao/' + id).delete().subscribe(()=>{
+                        this.storage.ref('images/adocao/' + id).delete().subscribe(() => {
                             this.presentToast('Pet removido do aplicativo!');
                         });
 
-                    }).catch(erro =>{
+                    }).catch(erro => {
                         this.presentToast('Ação não permitida');
                     });
 

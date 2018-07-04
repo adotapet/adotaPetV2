@@ -24,8 +24,9 @@ export class MensagemPage {
         this.key = params.get('key');
         this.idGrouped = params.get('idGrouped');
         this.id_interessado = params.get('id_interessado');
-        let myInfo = this.auth.getUser();
-        this.myId = myInfo.uid;
+        this.auth.getUser().then(user => {
+            this.myId = user.uid;
+        });
         this.titulo = params.get('titulo');
         this.listMessages();
     }

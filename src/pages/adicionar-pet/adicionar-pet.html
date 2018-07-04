@@ -1,177 +1,187 @@
 <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>
-      Adicionar Pet
-    </ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>
+            Adicionar Pet
+        </ion-title>
+    </ion-navbar>
 </ion-header>
-<ion-content padding id="page3">
-  <img *ngIf="photoUrls.length == 0" src="assets/img/NsepPTAR9CVtubPYQpQ5_noimglarge.png" style="display:block;width:100%;height:auto;margin-left:auto;margin-right:auto;" />
+<ion-content padding id="page3" *ngIf="!canEnter">
+    <please-login></please-login>
+</ion-content>
+
+
+<ion-content padding id="page3" *ngIf="canEnter">
+
+    <img *ngIf="photoUrls.length == 0" src="assets/img/NsepPTAR9CVtubPYQpQ5_noimglarge.png"
+         style="display:block;width:100%;height:auto;margin-left:auto;margin-right:auto;"/>
     <ion-slides pager="true" *ngIf="photoUrls.length">
         <ion-slide *ngFor="let photo of photoUrls">
-            <img [src]="photo.img" />
+            <img [src]="photo.img"/>
         </ion-slide>
     </ion-slides>
-  <form id="adicionarPet-form2">
+    <form id="adicionarPet-form2">
 
-      <div style="width: 50%; float: left;">
-          <button cid="adicionarPet-button4" (click)="takePhoto()" ion-button icon-left  color="assertive" style="width: 100%;">
-              <ion-icon name="camera"> </ion-icon>
-       Câmera
-   </button>
-      </div>
-      <div style="width: 50%; float: left;">
-      <button id="adicionarPet-button4"  (click)="takeGallery()"  ion-button icon-left  color="assertive" style="width: 100%;">
-          <ion-icon name="images"> </ion-icon>
-            Galeria
-      </button>
-      </div>
-      <div class="spacer" style="width:300px;height:100px;" id="adicionarPet-spacer3"></div>
-    <ion-item id="adicionarPet-input3">
-      <ion-label>
-        Nome do Pet
-      </ion-label>
-      <ion-input type="text" name="nome" placeholder="" [(ngModel)]="post.nome"></ion-input>
-    </ion-item>
-    <div class="spacer" style="width:300px;height:45px;" id="adicionarPet-spacer3"></div>
-    <ion-item id="adicionarPet-select1">
-      <ion-label>
-        Espécie
-      </ion-label>
-      <ion-select name="especie" [(ngModel)]="post.especie" (ngModelChange)="onChange($event)">
-        <ion-option value="Canina">
-          Canina
-        </ion-option>
-        <ion-option value="Felina">
-          Felina
-        </ion-option>
-        <ion-option value="Outros">
-          Outros
-        </ion-option>
-      </ion-select>
-    </ion-item>
-    <ion-item id="adicionarPet-select2">
-      <ion-label>
-        Raça
-
-
-      </ion-label>
-
-      <ion-select name="raca" id="raca" (change)="onItemChange($event.target.value)"
-                  [(ngModel)]="post.raca" required="required">
-          <ion-option checked value="">empty</ion-option>
-          <!--<ion-option aria-checked="undefined" *ngFor="let selectedRaca of selectedRacas" [value]="" >{{selectedRaca}} </ion-option>-->
-          <ion-option  *ngFor="let item of selectedRacas" [value]="" >{{item}} </ion-option>
+        <div style="width: 50%; float: left;">
+            <button cid="adicionarPet-button4" (click)="takePhoto()" ion-button icon-left color="assertive"
+                    style="width: 100%;">
+                <ion-icon name="camera"></ion-icon>
+                Câmera
+            </button>
+        </div>
+        <div style="width: 50%; float: left;">
+            <button id="adicionarPet-button4" (click)="takeGallery()" ion-button icon-left color="assertive"
+                    style="width: 100%;">
+                <ion-icon name="images"></ion-icon>
+                Galeria
+            </button>
+        </div>
+        <div class="spacer" style="width:300px;height:100px;" id="adicionarPet-spacer3"></div>
+        <ion-item id="adicionarPet-input3">
+            <ion-label>
+                Nome do Pet
+            </ion-label>
+            <ion-input type="text" name="nome" placeholder="" [(ngModel)]="post.nome"></ion-input>
+        </ion-item>
+        <div class="spacer" style="width:300px;height:45px;" id="adicionarPet-spacer3"></div>
+        <ion-item id="adicionarPet-select1">
+            <ion-label>
+                Espécie
+            </ion-label>
+            <ion-select name="especie" [(ngModel)]="post.especie" (ngModelChange)="onChange($event)">
+                <ion-option value="Canina">
+                    Canina
+                </ion-option>
+                <ion-option value="Felina">
+                    Felina
+                </ion-option>
+                <ion-option value="Outros">
+                    Outros
+                </ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item id="adicionarPet-select2">
+            <ion-label>
+                Raça
 
 
-      </ion-select>
+            </ion-label>
 
-    </ion-item>
-    <ion-item id="adicionarPet-select4">
-      <ion-label>
-        Estado
-      </ion-label>
-      <ion-select name="estado" [(ngModel)]="post.estado">
-        
-          <ion-option value="">Selecione</ion-option>
-          <ion-option value="AC">Acre</ion-option>
-          <ion-option value="AL">Alagoas</ion-option>
-          <ion-option value="AP">Amapá</ion-option>
-          <ion-option value="AM">Amazonas</ion-option>
-          <ion-option value="BA">Bahia</ion-option>
-          <ion-option value="CE">Ceará</ion-option>
-          <ion-option value="DF">Distrito Federal</ion-option>
-          <ion-option value="ES">Espirito Santo</ion-option>
-          <ion-option value="GO">Goiás</ion-option>
-          <ion-option value="MA">Maranhão</ion-option>
-          <ion-option value="MS">Mato Grosso do Sul</ion-option>
-          <ion-option value="MT">Mato Grosso</ion-option>
-          <ion-option value="MG">Minas Gerais</ion-option>
-          <ion-option value="PA">Pará</ion-option>
-          <ion-option value="PB">Paraíba</ion-option>
-          <ion-option value="PR">Paraná</ion-option>
-          <ion-option value="PE">Pernambuco</ion-option>
-          <ion-option value="PI">Piauí</ion-option>
-          <ion-option value="RJ">Rio de Janeiro</ion-option>
-          <ion-option value="RN">Rio Grande do Norte</ion-option>
-          <ion-option value="RS">Rio Grande do Sul</ion-option>
-          <ion-option value="RO">Rondônia</ion-option>
-          <ion-option value="RR">Roraima</ion-option>
-          <ion-option value="SC">Santa Catarina</ion-option>
-          <ion-option value="SP">São Paulo</ion-option>
-          <ion-option value="SE">Sergipe</ion-option>
-          <ion-option value="TO">Tocantins</ion-option>
-     
-      </ion-select>
+            <ion-select name="raca" id="raca" (change)="onItemChange($event.target.value)"
+                        [(ngModel)]="post.raca" required="required">
+                <ion-option checked value="">empty</ion-option>
+                <!--<ion-option aria-checked="undefined" *ngFor="let selectedRaca of selectedRacas" [value]="" >{{selectedRaca}} </ion-option>-->
+                <ion-option *ngFor="let item of selectedRacas" [value]="">{{item}}</ion-option>
 
-    </ion-item>
-    <div class="spacer" style="width:300px;height:45px;" id="adicionarPet-spacer4"></div>
-    <ion-item id="adicionarPet-select3">
-      <ion-label>
-        Idade
-      </ion-label>
-      <ion-select name="idade" [(ngModel)]="post.idade">
-        <ion-option value="1 a 3 meses">
-          1 a 3 meses
-        </ion-option>
-        <ion-option value="3 a 6 meses" >
-          3 a 6 meses
-        </ion-option>
-        <ion-option value="6 a 9 meses">
-          6 a 9 meses
-        </ion-option>
-        <ion-option value="9 a 12 meses">
-          9 a 12 meses
-        </ion-option>
-        <ion-option value="1 a 3 anos">
-          1 a 3 anos
-        </ion-option>
-        <ion-option value="Acima de 3 anos">
-          Acima de 3 anos
-        </ion-option>
 
-      </ion-select>
+            </ion-select>
 
-    </ion-item>
+        </ion-item>
+        <ion-item id="adicionarPet-select4">
+            <ion-label>
+                Estado
+            </ion-label>
+            <ion-select name="estado" [(ngModel)]="post.estado">
 
-    <ion-item id="adicionarPet-select5">
-      <ion-label>
-        Sexo
-      </ion-label>
-      <ion-select name="sexo" [(ngModel)]="post.sexo">
-        <ion-option value="Mâcho">
-          Macho
-        </ion-option>
-        <ion-option value="Femêa">
-          Femêa
-        </ion-option>
-        <ion-option value="Desconhecido">
-          Desconhecido
-        </ion-option>
-      </ion-select>
-    </ion-item>
+                <ion-option value="">Selecione</ion-option>
+                <ion-option value="AC">Acre</ion-option>
+                <ion-option value="AL">Alagoas</ion-option>
+                <ion-option value="AP">Amapá</ion-option>
+                <ion-option value="AM">Amazonas</ion-option>
+                <ion-option value="BA">Bahia</ion-option>
+                <ion-option value="CE">Ceará</ion-option>
+                <ion-option value="DF">Distrito Federal</ion-option>
+                <ion-option value="ES">Espirito Santo</ion-option>
+                <ion-option value="GO">Goiás</ion-option>
+                <ion-option value="MA">Maranhão</ion-option>
+                <ion-option value="MS">Mato Grosso do Sul</ion-option>
+                <ion-option value="MT">Mato Grosso</ion-option>
+                <ion-option value="MG">Minas Gerais</ion-option>
+                <ion-option value="PA">Pará</ion-option>
+                <ion-option value="PB">Paraíba</ion-option>
+                <ion-option value="PR">Paraná</ion-option>
+                <ion-option value="PE">Pernambuco</ion-option>
+                <ion-option value="PI">Piauí</ion-option>
+                <ion-option value="RJ">Rio de Janeiro</ion-option>
+                <ion-option value="RN">Rio Grande do Norte</ion-option>
+                <ion-option value="RS">Rio Grande do Sul</ion-option>
+                <ion-option value="RO">Rondônia</ion-option>
+                <ion-option value="RR">Roraima</ion-option>
+                <ion-option value="SC">Santa Catarina</ion-option>
+                <ion-option value="SP">São Paulo</ion-option>
+                <ion-option value="SE">Sergipe</ion-option>
+                <ion-option value="TO">Tocantins</ion-option>
 
-    <ion-item id="adicionarPet-input4">
-      <ion-label>
-        WhatsApp
-      </ion-label>
-      <ion-input type="number" placeholder=""  name="whats" [(ngModel)]="post.whatsapp"></ion-input>
-    </ion-item>
-    <ion-item id="adicionarPet-input5">
-      <ion-label stacked>
-        Informações Adicionais
-      </ion-label>
-      <ion-input name="informacoes" type="text"  placeholder="Conte-nos um pouco sobre o Pet" [(ngModel)]="post.informacoes">
-      </ion-input>
-    </ion-item>
+            </ion-select>
 
-    <button id="adicionarPet-button6" ion-button color="assertive" ion-button block color="assertive"
-            style="border-radius:100px 100px 100px 100px;" (click)="addPost(post)">
-      Publicar
-    </button>
+        </ion-item>
+        <div class="spacer" style="width:300px;height:45px;" id="adicionarPet-spacer4"></div>
+        <ion-item id="adicionarPet-select3">
+            <ion-label>
+                Idade
+            </ion-label>
+            <ion-select name="idade" [(ngModel)]="post.idade">
+                <ion-option value="1 a 3 meses">
+                    1 a 3 meses
+                </ion-option>
+                <ion-option value="3 a 6 meses">
+                    3 a 6 meses
+                </ion-option>
+                <ion-option value="6 a 9 meses">
+                    6 a 9 meses
+                </ion-option>
+                <ion-option value="9 a 12 meses">
+                    9 a 12 meses
+                </ion-option>
+                <ion-option value="1 a 3 anos">
+                    1 a 3 anos
+                </ion-option>
+                <ion-option value="Acima de 3 anos">
+                    Acima de 3 anos
+                </ion-option>
 
-  </form>
+            </ion-select>
+
+        </ion-item>
+
+        <ion-item id="adicionarPet-select5">
+            <ion-label>
+                Sexo
+            </ion-label>
+            <ion-select name="sexo" [(ngModel)]="post.sexo">
+                <ion-option value="Mâcho">
+                    Macho
+                </ion-option>
+                <ion-option value="Femêa">
+                    Femêa
+                </ion-option>
+                <ion-option value="Desconhecido">
+                    Desconhecido
+                </ion-option>
+            </ion-select>
+        </ion-item>
+
+        <ion-item id="adicionarPet-input4">
+            <ion-label>
+                WhatsApp
+            </ion-label>
+            <ion-input type="number" placeholder="" name="whats" [(ngModel)]="post.whatsapp"></ion-input>
+        </ion-item>
+        <ion-item id="adicionarPet-input5">
+            <ion-label stacked>
+                Informações Adicionais
+            </ion-label>
+            <ion-input name="informacoes" type="text" placeholder="Conte-nos um pouco sobre o Pet"
+                       [(ngModel)]="post.informacoes">
+            </ion-input>
+        </ion-item>
+
+        <button id="adicionarPet-button6" ion-button color="assertive" ion-button block color="assertive"
+                style="border-radius:100px 100px 100px 100px;" (click)="addPost(post)">
+            Publicar
+        </button>
+
+    </form>
 </ion-content>

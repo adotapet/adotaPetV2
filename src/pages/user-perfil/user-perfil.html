@@ -6,15 +6,12 @@
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
-        <ion-fab right edge #fab>
-            <button ion-fab>Share</button>
-            <ion-fab-list side="left">
-                <button ion-fab (click)="share('facebook', fab)">Facebook</button>
-                <button ion-fab (click)="share('twitter', fab)">Twitter</button>
-            </ion-fab-list>
-        </ion-fab>
     </ion-navbar>
-
+</ion-header>
+<ion-content padding *ngIf="!canEnter">
+    <please-login></please-login>
+</ion-content>
+<ion-content fullscreen #myContent *ngIf="canEnter">
     <ion-toolbar color="light" mode="md">
         <ion-segment color="dark" mode="md" [(ngModel)]="section">
             <ion-segment-button value="one">
@@ -25,11 +22,6 @@
             </ion-segment-button>
         </ion-segment>
     </ion-toolbar>
-
-</ion-header>
-
-<ion-content fullscreen #myContent>
-
     <div [ngSwitch]="section">
 
         <div *ngSwitchCase="'one'">
