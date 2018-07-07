@@ -3,7 +3,7 @@ import {ConnectivityProvider} from '../connectivity/connectivity'
 import {Geolocation} from '@ionic-native/geolocation';
 import {ToastController} from "ionic-angular";
 import {getCss} from "ionic-angular/es2015/util/dom";
-
+import {PerfilPage} from "../../pages/perfil/perfil";
 /*
   Generated class for the GoogleMapsProvider provider.
   See https://angular.io/docs/ts/latest/guide/dependency-injection.html
@@ -169,7 +169,12 @@ export class GoogleMapsProvider {
 
     addMarker(lat: number, lng: number, img: string) {
 
-        let html = "<ion-item><ion-avatar><img src=" + img + "></ion-avatar></ion-item>";
+        let html = "<ion-card> " +
+            "<ion-item><ion-avatar item-start style=\"width: 130px;float: left;\" >" +
+            "<img src=" + img + " style='border-radius: 50%;overflow: hidden; width: 50px; height: 50px;'> " +
+            "</ion-avatar> <p style=\"text-align: center;position: absolute;left: 58px;top: 2px;\">Bobby</p> " +
+            "<button onclick=\"goToPerfil()\" value='goToPerfil' id='goToPerfil' color=\"danger\" ion-button=\"\" round=\"\" class=\"disable-hover button button-ios button-default button-default-ios button-round button-round-ios button-ios-danger\" style=\"background-color: #f53d3d;height: 1.8em;font-size: 1.6rem;color: #fff;position: relative;top: 6px;\">" +
+            "<span class=\"button-inner\">Ver Perfil</span><div class=\"button-effect\"></div></button></ion-item></ion-card>";
 
         let latLng = new google.maps.LatLng(lat, lng);
 
@@ -191,5 +196,8 @@ export class GoogleMapsProvider {
             info_window.open(this.map, marker);
         });
 
+
     }
+
+
 }
