@@ -14,4 +14,9 @@ page-tabs-controller {
   .tabs-md .tab-button:hover:not(.disable-hover), .tabs-ios .tab-button[aria-selected=true] {
     color: #e6322e;
   }
+
+  .tabs-md .tab-button[aria-selected=true] {
+    color: #ff0000;
+    padding: 0;
+  }
 }
