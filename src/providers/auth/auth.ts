@@ -42,7 +42,9 @@ export class AuthProvider {
         if (userId) {
             id = userId;
         } else {
-            id = this.getUser().uid;
+            this.getUser().then(user => {
+                id = user.uid;
+            });
         }
         try {
             return this.afDb.database.ref('profile/' + id);

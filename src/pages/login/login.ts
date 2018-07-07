@@ -18,17 +18,18 @@ import {AuthProvider} from "../../providers/auth/auth";
 export class LoginPage {
 
     user = {} as User;
-  loading: any;
-  email:string;
+    loading: any;
+    email: string;
 
 
     constructor(private afAuth: AngularFireAuth, private afDatabase: AngularFireDatabase,
                 public navCtrl: NavController,
                 public navParams: NavParams,
                 public facebook: Facebook,
-                public AlertCtrl : AlertController,
+                public AlertCtrl: AlertController,
                 public loadingCtrl: LoadingController,
-                public authProvider: AuthProvider) {}
+                public authProvider: AuthProvider) {
+    }
 
     async login(user) {
         try {
@@ -51,7 +52,7 @@ export class LoginPage {
                     console.log(hasProfile);
                     localStorage.setItem('skipIntro', 'true');
                     // Salva o estado no local storage
-                  localStorage.setItem('adotapet_filtros', JSON.stringify(hasProfile.adotapet_filtros));
+                    localStorage.setItem('adotapet_filtros', JSON.stringify(hasProfile.adotapet_filtros));
 
 
                     this.navCtrl.setRoot(TabsControllerPage);
@@ -60,14 +61,14 @@ export class LoginPage {
                     this.navCtrl.setRoot(ProfilePage, {"userId": userId});
                 }
             }
-        } catch (e){
+        } catch (e) {
             console.error(e);
 
 
             let alert = this.AlertCtrl.create({
-              title: 'ERRO',
-              subTitle: e,
-              buttons: ['ok']
+                title: 'ERRO',
+                subTitle: e,
+                buttons: ['ok']
             });
             alert.present();
 
@@ -79,74 +80,72 @@ export class LoginPage {
         this.navCtrl.push(CadastrarPage);
     }
 
-recuperarSenha(){
-  let alert = this.AlertCtrl.create({
-    title: 'Recuperar Senha',
-    inputs: [
-      {
-        name: 'email',
-        placeholder: 'email',
-        type: 'email'
-      }
-    ],
-    buttons: [
-      {
-        text: 'Cancel',
-        role: 'cancel',
-        handler: data => {
-          console.log('Cancel clicked');
-        }
-      },
-      {
-        text: 'Recuperar',
-        handler: data => {
-          if (data.email) {
-              this.authProvider.resetPassword(data.email);
-              // this.authProvider.afAuth.auth.sendPasswordResetEmail(data.email);
-            let alert = this.AlertCtrl.create({
-              title: 'Sucesso',
-              subTitle: 'Verifique sua caixa de email',
-              buttons: ['ok']
-            });
-            alert.present();
+    recuperarSenha() {
+        let alert = this.AlertCtrl.create({
+            title: 'Recuperar Senha',
+            inputs: [
+                {
+                    name: 'email',
+                    placeholder: 'email',
+                    type: 'email'
+                }
+            ],
+            buttons: [
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    handler: data => {
+                        console.log('Cancel clicked');
+                    }
+                },
+                {
+                    text: 'Recuperar',
+                    handler: data => {
+                        if (data.email) {
+                            this.authProvider.resetPassword(data.email);
+                            // this.authProvider.afAuth.auth.sendPasswordResetEmail(data.email);
+                            let alert = this.AlertCtrl.create({
+                                title: 'Sucesso',
+                                subTitle: 'Verifique sua caixa de email',
+                                buttons: ['ok']
+                            });
+                            alert.present();
 
-          } else {
-            // invalid login
-            return false;
-          }
-        }
-      }
-    ]
-  });
-  alert.present();
-}
-  // anonimo() {
-  //   this.navCtrl.push(TabsControllerPage);
-  // }
+                        } else {
+                            // invalid login
+                            return false;
+                        }
+                    }
+                }
+            ]
+        });
+        alert.present();
+    }
+
+    // anonimo() {
+    //   this.navCtrl.push(TabsControllerPage);
+    // }
 
     //Login com Facebook
 
     facebookLogin(): Promise<any> {
 
 
-
-
         return this.facebook.login(['public_profile', 'email'])
             .then(response => {
 
 
-
                 const facebookCredential = firebase.auth.FacebookAuthProvider
                     .credential(response.authResponse.accessToken);
-              this.loading = this.loadingCtrl.create({
-                content: 'Autenticando...'
-              });
+                this.loading = this.loadingCtrl.create({
+                    content: 'Autenticando...'
+                });
 
-              this.loading.present();
+                this.loading.present();
 
-              setTimeout(() => {
-                this.loading.dismiss();
-              }, 5000);
+                setTimeout(() => {
+                    this.loading.dismiss();
+                }, 5000);
 
                 firebase.auth().signInWithCredential(facebookCredential)
                     .then(success => {
@@ -158,40 +157,36 @@ recuperarSenha(){
                             hasProfile = data.val();
                             if (hasProfile) {
 
-                              console.log(hasProfile);
-                              localStorage.setItem('skipIntro', 'true');
-                              // Salva o estado em localstorage para filtros
-                              localStorage.setItem('adotapet_filtros', JSON.stringify(hasProfile.adotapet_filtros));
+                                console.log(hasProfile);
+                                localStorage.setItem('skipIntro', 'true');
+                                // Salva o estado em localstorage para filtros
+                                localStorage.setItem('adotapet_filtros', JSON.stringify(hasProfile.adotapet_filtros));
 
 
-                              this.navCtrl.setRoot(TabsControllerPage);
-                              this.loading.dismiss();
+                                this.navCtrl.setRoot(TabsControllerPage);
+                                this.loading.dismiss();
                             } else {
 
                                 console.log('!hasProfile');
                                 this.navCtrl.setRoot(ProfilePage, {"userId": success.uid});
-                              this.loading.dismiss();
+                                this.loading.dismiss();
                             }
                         });
 
                     });
 
 
-
-
             }).catch((error) => {
-            console.error(error);
+                console.error(error);
 
-              let alert = this.AlertCtrl.create({
-                title: 'ERRO',
-                subTitle: error,
-                buttons: ['ok']
-              });
-              alert.present();
-              //alert.dismiss();
+                let alert = this.AlertCtrl.create({
+                    title: 'ERRO',
+                    subTitle: error,
+                    buttons: ['ok']
+                });
+                alert.present();
+                //alert.dismiss();
             });
-
-
 
 
     }

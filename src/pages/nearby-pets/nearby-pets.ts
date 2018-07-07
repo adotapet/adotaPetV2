@@ -44,7 +44,7 @@ export class NearbyPetsPage {
 
                 for (let location of locations) {
                     console.log('NEARBY', location);
-                    if(location.distance){
+                    if(location.distance <= 5){
                         this.maps.addMarker(location.coordenadas.lat, location.coordenadas.lng, location.icon);
                     }
                 }

@@ -10,6 +10,7 @@ import 'rxjs/add/observable/combineLatest';
 
 import {AuthProvider} from "../../providers/auth/auth";
 import {LocationsProvider} from "../../providers/locations/locations";
+import {Geolocation} from "@ionic-native/geolocation";
 
 @Component({
     selector: 'page-adote',
@@ -21,19 +22,20 @@ export class AdotePage {
     user: any;
     filtro: any;
     list: any;
-    private path = 'BR/adocao/pets';
 
     constructor(private afAuth: AngularFireAuth,
                 private db: AngularFireDatabase,
                 public navCtrl: NavController,
                 public toast: ToastController,
                 private auth: AuthProvider,
-                public loadingCtrl: LoadingController, public location: LocationsProvider) {
+                public loadingCtrl: LoadingController, public location: LocationsProvider, public geolocation: Geolocation) {
+
 
     }
 
 
     ionViewDidLoad() {
+
         this.auth.getUser().then(user => {
             this.user = user;
         });
@@ -67,74 +69,49 @@ export class AdotePage {
         });
 
         loading.present();
+        this.db.list('BR/adocao/pets/').snapshotChanges().subscribe(pets => {
+            let petsData = [];
 
-        let filtros = JSON.parse(localStorage.getItem('adotapet_filtros'));
-        if (filtros) {
-            this.filtro = filtros;
-        } else {
-            this.filtro = {"estado": "DF", "especie": 'Todos'};
-
-        }
-        console.log(this.filtro.especie);
-
-
-        if (this.filtro.especie == "Todos") {
-
-            this.db.list(this.path, ref => ref.orderByChild('estado').equalTo(this.filtro.estado))
-                .snapshotChanges()
-                .subscribe((data) => {
-
-
-                    this.posts = data.sort();
-
-                    // console.log(data.values())
-                    data.forEach(data => {
-
-                        this.list = Array.of(data.payload.val())
-
+            let map = pets.map((pet) => {
+                let petKey = pet.key;
+                let payload = pet.payload.val();
+                let coords = pet.payload.val().coordenadas;
+                let coordenadas = {"coordenadas": coords};
+                this.getDistancia(coordenadas).then(dist => {
+                    petsData.splice(0, 0, {"petKey": petKey, "payload": payload, "distancia": dist[0].distance});
+                    petsData.sort((locationA, locationB) => {
+                        return locationA.distancia - locationB.distancia
                     });
-                    console.log(this.list)
-
-                    console.log(this.posts)
-
-
                 });
 
+            });
+
+            console.log(map.length, petsData);
+
+
+
+            this.posts = petsData;
+
+
             loading.dismiss();
-        }
-        else {
-
-            this.db.list(this.path, ref => ref.orderByChild('filtro')
-                .equalTo(this.filtro.estado + '_' + this.filtro.especie)).snapshotChanges()
-                .subscribe((data) => {
-                    console.log(data)
-                    console.log(this.filtro.estado + '_' + this.filtro.especie)
-
-                    this.posts = data;
-                    //
-                    //
-                    // this.ordernar =  data;
-                    // this.posts = this.ordernar.payload.val().sort(function(a,b){return  a.timestamp - b.timestamp});
-                    // console.log(this.ordernar.payload.val());
+        })
+    }
 
 
-                });
-            loading.dismiss();
-        }
+    getDistancia(petCoords) {
+        petCoords = [petCoords];
 
+        return new Promise(resolve => {
+            this.geolocation.getCurrentPosition().then((position) => {
+                let userLocation = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                let distancia = this.location.applyHaversine(petCoords, userLocation);
+                resolve(distancia);
+            });
 
-        // this.db.list('BR/adocao/pets').snapshotChanges().subscribe( (data) => {
-        //
-        //
-        //   console.log(data);
-        //
-        //
-        //   this.posts =  data.reverse();
-        //
-        // });
-        // this.posts = data;
-        // console.log(data);
-        // });
+        });
     }
 
     goToPerfil(key, data) {

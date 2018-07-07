@@ -169,7 +169,7 @@ export class GoogleMapsProvider {
 
     addMarker(lat: number, lng: number, img: string) {
 
-        let html = "<ion-item><ion-avatar><img src="+img+"></ion-avatar></ion-item>";
+        let html = "<ion-item><ion-avatar><img src=" + img + "></ion-avatar></ion-item>";
 
         let latLng = new google.maps.LatLng(lat, lng);
 
@@ -184,12 +184,11 @@ export class GoogleMapsProvider {
         this.markers.push(marker);
 
         let info_window = new google.maps.InfoWindow({
-            content: 'loading'
+            content: html
         });
 
         marker.addListener('click', function () {
-
-
+            info_window.open(this.map, marker);
         });
 
     }

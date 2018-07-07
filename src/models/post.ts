@@ -11,4 +11,5 @@ export interface Post {
     estado: string;
     filtro: string;
     coordenadas: any[];
+    data: string;
 }

@@ -30,7 +30,6 @@ export class AdicionarPetPage {
     constructor(public navCtrl: NavController, private alert: AlertController,
                 private camera: Camera, private afDatabase: AngularFireDatabase, private auth: AuthProvider,
                 public loadingCtrl: LoadingController, public toastCtrl: ToastController) {
-
     }
 
     ionViewCanEnter() {
@@ -280,8 +279,8 @@ export class AdicionarPetPage {
                     }
                 }]
             });
-            //let ref = this.afDatabase.object(`BR/adocao/pets/${key}`);
             if (this.photoUrls[0]) {
+
                 //Fazendo um loop inserindo as strings base64 das fotos e colocando no storage.
                 this.getUrls(key, post).then(data => {
                     console.log('RETURNED', this.post);
@@ -290,6 +289,8 @@ export class AdicionarPetPage {
                     });
                     auth.getUserPerfil(this.post.user).on('value', data => {
                         this.post.coordenadas = data.val().location;
+                        this.post.data = new Date().toLocaleDateString();
+
                     });
                     afDb.object(`BR/adocao/pets/${key}`).set(this.post).then(() => {
                             console.log('finished log 3', this.post);
@@ -332,7 +333,7 @@ export class AdicionarPetPage {
                 post.fotoUrls[i] = 'https://firebasestorage.googleapis.com/v0/b/adotapet-dev.appspot.com/o/' + (data.metadata.fullPath).replace(/[/]/g, '%2f') + '?alt=media';
                 console.log('DATAAAAA', post);
                 i++;
-                this.afDatabase.object('BR/adocao/pets/' + key).set(post);
+                this.afDatabase.object('BR/adocao/pets/' + key).update(post);
 
                 if (i == this.photoUrls.length) {
                     return post;
