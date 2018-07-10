@@ -7,13 +7,13 @@ import {PleaseLoginComponent} from './please-login/please-login';
     declarations: [
         SalasChatComponent,
         MeusPetsComponent,
-        PleaseLoginComponent
+        PleaseLoginComponent,
     ],
     imports: [],
     exports: [
         SalasChatComponent,
         MeusPetsComponent,
-        PleaseLoginComponent
+        PleaseLoginComponent,
     ]
 })
 export class ComponentsModule {

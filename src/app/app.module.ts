@@ -45,7 +45,6 @@ import {NearbyPetsPage} from "../pages/nearby-pets/nearby-pets";
 import { Network } from '@ionic-native/network';
 import { Geolocation } from '@ionic-native/geolocation';
 import {UserPerfilPage} from "../pages/user-perfil/user-perfil";
-import { ShrinkingSegmentHeader } from '../components/shrinking-segment-header/shrinking-segment-header';
 import {AngularFireStorageModule} from "angularfire2/storage";
 import {PleaseLoginComponent} from "../components/please-login/please-login";
 
@@ -71,7 +70,6 @@ import {PleaseLoginComponent} from "../components/please-login/please-login";
         MeusPetsComponent,
         SalasChatComponent,
         EmojiPickerComponent,
-        ShrinkingSegmentHeader,
         PleaseLoginComponent
     ],
     imports: [
@@ -103,11 +101,8 @@ import {PleaseLoginComponent} from "../components/please-login/please-login";
         UserPerfilPage,
         SalasChatComponent,
         MeusPetsComponent,
-        ShrinkingSegmentHeader,
         NearbyPetsPage,
         PleaseLoginComponent
-
-
     ],
     providers: [
         StatusBar,

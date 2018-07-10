@@ -1,14 +1,26 @@
 page-chat {
-  .chatPage {
-    //because chat-bubbles are wrapped inside ion-label when ion-item is rendered
-    ion-label {
-      margin: 0px 8px 13px 0;
-    }
+  #avatar {
+    width: 130px;
+    float: left;
   }
-
-  .chatPageFooter {
-    .toolbar-background {
-      background: map-get($colors, background-color);
-    }
+  #goToPerfil {
+    background-color: #f53d3d;
+    height: 1.8em;
+    font-size: 1.6rem;
+    color: #fff;
+    position: relative;
+    top: 6px;
+  }
+  #nome {
+    text-align: center;
+    position: absolute;
+    left: 58px;
+    top: 2px;
+  }
+  #img {
+    border-radius: 50%;
+    overflow: hidden;
+    width: 50px;
+    height: 50px;
   }
 }

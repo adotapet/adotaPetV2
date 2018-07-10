@@ -2,8 +2,6 @@ import {Component, ViewChild} from '@angular/core';
 import {Platform, Nav, ToastController} from 'ionic-angular';
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
-
-import {LoginPage} from '../pages/login/login';
 import {TabsControllerPage} from "../pages/tabs-controller/tabs-controller";
 import {OneSignal} from "@ionic-native/onesignal";
 import {FiltroPage} from '../pages/filtros/filtros';

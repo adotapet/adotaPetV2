@@ -126,3 +126,65 @@ $menu_separator_line_color:#4f0306;
 $menu_avatar_bg_color:color($colors, light);
 $menu_avatar_font_color:color($colors, dark);
 $menu_avatar_text_color:color($colors, light);
+ion-modal {
+  &.my-modal-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    ion-backdrop {
+      visibility: visible;
+    }
+
+    .modal-wrapper {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      overflow: auto;
+      width: auto;
+      height: auto;
+      left: auto;
+      top: auto;
+      contain: content;
+
+      max-width: 70%;
+      max-height: 70%;
+
+      border-radius: 2px;
+      box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+
+      > .ion-page {
+        position: relative;
+        display: block;
+        width: auto;
+        height: auto;
+        contain: content;
+        box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+      }
+    }
+
+    &.my-stretch {
+      .modal-wrapper {
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+
+        > .ion-page {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+
+  &.my-fullscreen {
+    .modal-wrapper {
+      position: absolute;
+      display: block;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}

@@ -1,1 +1,11 @@
-<salas-chat></salas-chat>
+<ion-card>
+    <ion-item>
+        <ion-avatar item-start id="avatar">
+            <img id="img" src="../../assets/user.jpg">
+        </ion-avatar>
+        <p id="nome">{{text}}</p>
+        <button id="goToPerfil" (click)="goToPerfil()" ion-button round>
+            <span class="button-inner">Ver Perfil</span>
+        </button>
+    </ion-item>
+</ion-card>

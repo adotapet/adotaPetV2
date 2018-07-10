@@ -38,10 +38,14 @@ export class LocationsProvider {
             let coordenadas = [];
             locationPromise.then(usersLocation => {
 
-                this.afDb.list('BR/adocao/pets').valueChanges().subscribe(dados => {
-                    dados.forEach(function (item: any) {
-                        let objCoords = {"coordenadas": item.coordenadas, "icon": item.fotoUrls[0]};
-                        if (item.coordenadas) {
+                this.afDb.list('BR/adocao/pets').snapshotChanges().subscribe(dados => {
+                    dados.map((item: any) => {
+                        let key = item.key;
+                        let item2 = item.payload.val();
+                        console.log('item', item2);
+
+                        let objCoords = {"coordenadas": item2.coordenadas, "icon": item2.fotoUrls[0], "pet": item2, "key": key};
+                        if (item2.coordenadas) {
                             coordenadas.splice(0, 0, objCoords);
                         }
                     });
