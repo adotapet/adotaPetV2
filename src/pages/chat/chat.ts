@@ -28,4 +28,8 @@ export class ChatPage {
         this.viewCtrl.dismiss();
     }
 
+    closeModal() {
+        this.navCtrl.pop();
+    }
+
 }

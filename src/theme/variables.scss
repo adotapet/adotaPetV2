@@ -126,11 +126,13 @@ $menu_separator_line_color:#4f0306;
 $menu_avatar_bg_color:color($colors, light);
 $menu_avatar_font_color:color($colors, dark);
 $menu_avatar_text_color:color($colors, light);
+
 ion-modal {
   &.my-modal-inner {
     display: flex;
     align-items: center;
     justify-content: center;
+
 
     ion-backdrop {
       visibility: visible;

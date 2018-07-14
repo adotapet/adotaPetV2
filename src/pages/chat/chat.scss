@@ -1,4 +1,47 @@
 page-chat {
+
+  .card-md {
+    margin: 10px;
+    border-radius: 2px;
+    width: calc(100% - 20px);
+    font-size: 1.4rem;
+    background: #fff;
+    bottom: 57px;
+    position: absolute;
+    -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  }
+
+  .label-md {
+    margin: 0px;
+  }
+
+  #nome {
+    text-align: center;
+    position: absolute;
+    left: 79px;
+    top: 25px;
+  }
+
+  .bar-buttons-md[end] {
+    text-align: right;
+    text-align: end;
+    -webkit-box-ordinal-group: 6;
+    -webkit-order: 5;
+    -ms-flex-order: 5;
+    order: 5;
+    top: 0px;
+    right: 0px;
+    position: absolute;
+  }
+  page-chat #goToPerfil {
+    background-color: #f53d3d;
+    height: 1.8em;
+    font-size: 1.6rem;
+    color: #fff;
+    position: relative;
+
+  }
   #avatar {
     width: 130px;
     float: left;
@@ -9,18 +52,15 @@ page-chat {
     font-size: 1.6rem;
     color: #fff;
     position: relative;
-    top: 6px;
+
   }
-  #nome {
-    text-align: center;
-    position: absolute;
-    left: 58px;
-    top: 2px;
-  }
+
   #img {
     border-radius: 50%;
     overflow: hidden;
     width: 50px;
     height: 50px;
   }
+
+  .item-md [item-left], .item-md [item-right], .item-md [item-start], .item-md [item-end] { margin: 9px 0px 9px 0; }
 }
