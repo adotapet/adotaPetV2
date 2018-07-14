@@ -28,7 +28,9 @@ export class AdotePage {
                 public navCtrl: NavController,
                 public toast: ToastController,
                 private auth: AuthProvider,
-                public loadingCtrl: LoadingController, public location: LocationsProvider, public geolocation: Geolocation) {
+                public loadingCtrl: LoadingController,
+                public location: LocationsProvider,
+                public geolocation: Geolocation) {
 
 
     }

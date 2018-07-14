@@ -9,6 +9,7 @@ import {PerfilPage} from "../perfil/perfil";
 export class ChatPage {
 
     text: string;
+    img:any;
     pet;
     key;
 
@@ -17,7 +18,8 @@ export class ChatPage {
         this.pet = params.get('pet');
         this.key = params.get('key');
         this.text = this.pet.nome;
-
+        this.img = this.pet.fotoUrls;
+console.log(this.pet)
     }
 
     goToPerfil(key, data) {

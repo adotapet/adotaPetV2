@@ -185,13 +185,24 @@ export class GoogleMapsProvider {
 
         //let that = this;
         marker.addListener('click', (event) => {
+
+
+
+            const myModalOptions: ModalOptions = {
+
+                cssClass : 'pricebreakup'
+
+            };
+
             console.log('clicked', event);
-            let modal = this.modalCtrl.create(ChatPage, {"pet": pet, "key": key});
+            let modal = this.modalCtrl.create(ChatPage, {"pet": pet, "key": key}, myModalOptions);
             modal.present();
+
         });
 
-
     }
+
+
 
 
 }

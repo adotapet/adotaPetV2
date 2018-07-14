@@ -6,7 +6,7 @@ page-chat {
     width: calc(100% - 20px);
     font-size: 1.4rem;
     background: #fff;
-    bottom: 57px;
+    bottom: 0px;
     position: absolute;
     -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
@@ -60,6 +60,27 @@ page-chat {
     overflow: hidden;
     width: 50px;
     height: 50px;
+  }
+
+  .modal-backdrop-bg {
+    transition: opacity 300ms ease-in-out;
+    -webkit-transition: opacity 300ms ease-in-out;
+    background-color: #000;
+    opacity: 0;
+  }
+
+  .active .modal-backdrop-bg {
+    opacity: 0.5;
+  }
+
+  #ion-modal {
+    left: 0;
+    bottom: 0;
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 13%;
+    contain: strict;
   }
 
   .item-md [item-left], .item-md [item-right], .item-md [item-start], .item-md [item-end] { margin: 9px 0px 9px 0; }

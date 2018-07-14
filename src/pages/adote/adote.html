@@ -16,7 +16,7 @@
             <ion-item color="assertive" id="adote-list-item4">
                 <ion-icon name="logo-octocat" item-left><h5>{{post.payload.nome}}</h5></ion-icon>
                 <ion-icon name="paw" item-left><h5>{{post.payload.raca}}</h5></ion-icon>
-                <ion-icon name="pin" item-left><h5>{{post.payload.estado}}</h5></ion-icon>
+                <ion-icon name="pin" item-left><h5>{{post.distancia | number:'1.0-0'}} KM</h5></ion-icon>
             </ion-item>
         </ion-list>
     </ion-card>

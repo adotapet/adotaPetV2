@@ -14,10 +14,13 @@
             {{pet.payload.val().nome}}
         </h2>
 
-        <ion-icon name="ios-paw-outline" color="assertive" item-end
-                  (click)="marcarComoAdotado(pet.payload.key, pet.payload.val())"></ion-icon>
+        <button ion-button end (click)="marcarComoAdotado(pet.payload.key, pet.payload.val())" style="position: absolute; right: 51px; height: 30px; bottom: 8px;">
+            <ion-icon icon-start name="md-paw"></ion-icon>
+           Adotado
+        </button>
 
-        <ion-icon name="remove" color="assertive" item-end></ion-icon>
+
+
 
         <ion-icon name="trash" color="assertive" item-end
                   (click)="deletePet(pet.payload.key, pet.payload.val())"></ion-icon>
