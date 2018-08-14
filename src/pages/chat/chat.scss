@@ -73,6 +73,11 @@ page-chat {
     opacity: 0.5;
   }
 
+  ion-backdrop {
+    visibility: initial !important;
+    background: transparent;
+  }
+
   #ion-modal {
     left: 0;
     bottom: 0;
