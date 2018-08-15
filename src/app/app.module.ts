@@ -2,6 +2,7 @@ import {NgModule, ErrorHandler} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
 import {MyApp} from './app.component';
+
 import {CadastrarPage} from '../pages/cadastrar/cadastrar';
 import {AdicionarPetPage} from '../pages/adicionar-pet/adicionar-pet';
 import {MeusPetsPage} from '../pages/meus-pets/meus-pets';
@@ -16,12 +17,7 @@ import {SplashScreen} from '@ionic-native/splash-screen';
 import {LoginProvider} from '../providers/login/login';
 import {PostProvider} from '../providers/post/post';
 import {ChatProvider} from '../providers/chat/chat';
-import {AvaliePage} from "../pages/avalie/avalie";
-import {ApoioEPatrocinioPage} from "../pages/apoio-epatrocinio/apoio-epatrocinio";
 
-
-import {FiltroPage} from "../pages/filtros/filtros";
-import {NotificacoesPage} from "../pages/notificacoes/notificacoes";
 
 import {AngularFireModule} from "angularfire2";
 import {AngularFireAuthModule} from "angularfire2/auth";
@@ -61,10 +57,6 @@ import {PleaseLoginComponent} from "../components/please-login/please-login";
         MensagemPage,
         AdotePage,
         ProfilePage,
-        AvaliePage,
-        NotificacoesPage,
-        ApoioEPatrocinioPage,
-        FiltroPage,
         NearbyPetsPage,
         UserPerfilPage,
         MeusPetsComponent,
@@ -94,10 +86,7 @@ import {PleaseLoginComponent} from "../components/please-login/please-login";
         MensagemPage,
         AdotePage,
         ProfilePage,
-        AvaliePage,
-        NotificacoesPage,
-        ApoioEPatrocinioPage,
-        FiltroPage,
+
         UserPerfilPage,
         SalasChatComponent,
         MeusPetsComponent,
