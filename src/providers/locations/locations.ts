@@ -38,7 +38,7 @@ export class LocationsProvider {
             let coordenadas = [];
             locationPromise.then(usersLocation => {
 
-                this.afDb.list('BR/adocao/pets').snapshotChanges().subscribe(dados => {
+                this.afDb.list('BR/perdidos/pets').snapshotChanges().subscribe(dados => {
                     dados.map((item: any) => {
                         let key = item.key;
                         let item2 = item.payload.val();

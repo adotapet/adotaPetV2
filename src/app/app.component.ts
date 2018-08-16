@@ -4,12 +4,9 @@ import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {TabsControllerPage} from "../pages/tabs-controller/tabs-controller";
 import {OneSignal} from "@ionic-native/onesignal";
-import {FiltroPage} from '../pages/filtros/filtros';
-import {NotificacoesPage} from '../pages/notificacoes/notificacoes';
 import {MeusPetsPage} from '../pages/meus-pets/meus-pets';
 import {MensagemPage} from "../pages/mensagem/mensagem";
-import {ApoioEPatrocinioPage} from '../pages/apoio-epatrocinio/apoio-epatrocinio';
-import {AvaliePage} from '../pages/avalie/avalie';
+
 import {AngularFireAuth} from "angularfire2/auth";
 
 @Component({
@@ -57,38 +54,6 @@ export class MyApp {
                 .endInit();
         });
     }
-
-    filtrar(params) {
-        if (!params) params = {};
-        this.navCtrl.setRoot(FiltroPage, null, {animation: 'md-transition'});
-    }
-
-
-    goToAvalie(params) {
-        if (!params) params = {};
-        this.navCtrl.setRoot(AvaliePage, null, {animation: 'md-transition'});
-    }
-
-    goToFiltros(params) {
-        if (!params) params = {};
-        this.navCtrl.setRoot(FiltroPage, null, {animation: 'md-transition'});
-    }
-
-    goToNotificacoes(params) {
-        if (!params) params = {};
-        this.navCtrl.setRoot(NotificacoesPage, null, {animation: 'md-transition'});
-    }
-
-    goToMeusPets(params) {
-        if (!params) params = {};
-        this.navCtrl.setRoot(MeusPetsPage, null, {animation: 'md-transition'});
-    }
-
-    goToApoioEPatrocinio(params) {
-        if (!params) params = {};
-        this.navCtrl.setRoot(ApoioEPatrocinioPage, null, {animation: 'md-transition'});
-    }
-
 
     logoff(params) {
         this.afAuth.auth.signOut().then(()=>{

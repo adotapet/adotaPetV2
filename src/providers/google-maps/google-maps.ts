@@ -102,11 +102,264 @@ export class GoogleMapsProvider {
                 let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                 //let latLng = new google.maps.LatLng(40.713744, -74.009056);
 
+                let main_color = '#d40f00',
+                    saturation_value= -20,
+                    brightness_value= 5;
+
+                let style = [
+                    {
+                        "featureType": "administrative.locality",
+                        "elementType": "all",
+                        "stylers": [
+                            {
+                                "hue": "#ff0200"
+                            },
+                            {
+                                "saturation": 7
+                            },
+                            {
+                                "lightness": 19
+                            },
+                            {
+                                "visibility": "on"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "administrative.locality",
+                        "elementType": "labels.text",
+                        "stylers": [
+                            {
+                                "visibility": "on"
+                            },
+                            {
+                                "saturation": "-3"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "administrative.locality",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                            {
+                                "color": "#748ca3"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "landscape",
+                        "elementType": "all",
+                        "stylers": [
+                            {
+                                "hue": "#ff0200"
+                            },
+                            {
+                                "saturation": -100
+                            },
+                            {
+                                "lightness": 100
+                            },
+                            {
+                                "visibility": "simplified"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "poi",
+                        "elementType": "all",
+                        "stylers": [
+                            {
+                                "hue": "#ff0200"
+                            },
+                            {
+                                "saturation": "23"
+                            },
+                            {
+                                "lightness": "20"
+                            },
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "poi.school",
+                        "elementType": "geometry.fill",
+                        "stylers": [
+                            {
+                                "color": "#ffdbda"
+                            },
+                            {
+                                "saturation": "0"
+                            },
+                            {
+                                "visibility": "on"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road",
+                        "elementType": "geometry",
+                        "stylers": [
+                            {
+                                "hue": "#ff0200"
+                            },
+                            {
+                                "saturation": "100"
+                            },
+                            {
+                                "lightness": 31
+                            },
+                            {
+                                "visibility": "simplified"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road",
+                        "elementType": "geometry.stroke",
+                        "stylers": [
+                            {
+                                "color": "#f39247"
+                            },
+                            {
+                                "saturation": "0"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road",
+                        "elementType": "labels",
+                        "stylers": [
+                            {
+                                "hue": "#008eff"
+                            },
+                            {
+                                "saturation": -93
+                            },
+                            {
+                                "lightness": 31
+                            },
+                            {
+                                "visibility": "on"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.arterial",
+                        "elementType": "geometry.stroke",
+                        "stylers": [
+                            {
+                                "visibility": "on"
+                            },
+                            {
+                                "color": "#ffe5e5"
+                            },
+                            {
+                                "saturation": "0"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.arterial",
+                        "elementType": "labels",
+                        "stylers": [
+                            {
+                                "hue": "#bbc0c4"
+                            },
+                            {
+                                "saturation": -93
+                            },
+                            {
+                                "lightness": -2
+                            },
+                            {
+                                "visibility": "simplified"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.arterial",
+                        "elementType": "labels.text",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.local",
+                        "elementType": "geometry",
+                        "stylers": [
+                            {
+                                "hue": "#ff0200"
+                            },
+                            {
+                                "saturation": -90
+                            },
+                            {
+                                "lightness": -8
+                            },
+                            {
+                                "visibility": "simplified"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "transit",
+                        "elementType": "all",
+                        "stylers": [
+                            {
+                                "hue": "#e9ebed"
+                            },
+                            {
+                                "saturation": 10
+                            },
+                            {
+                                "lightness": 69
+                            },
+                            {
+                                "visibility": "on"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "water",
+                        "elementType": "all",
+                        "stylers": [
+                            {
+                                "hue": "#e9ebed"
+                            },
+                            {
+                                "saturation": -78
+                            },
+                            {
+                                "lightness": 67
+                            },
+                            {
+                                "visibility": "simplified"
+                            }
+                        ]
+                    }
+                ]
+
                 let mapOptions = {
                     center: latLng,
                     zoom: 15,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                    mapTypeId: google.maps.MapTypeId.ROADMAP,
+                    panControl: false,
+                    mapTypeControl: false,
+                    streetViewControl: false,
+
+                    styles: style,
+
                 };
+
+                // let mapElement = {
+                //     elementType: geometry,
+                //     "stylers": [
+                //     { "color": "#CCFFFF" }
+                // ]
 
                 this.map = new google.maps.Map(this.mapElement, mapOptions);
                 resolve(true);
@@ -175,27 +428,21 @@ export class GoogleMapsProvider {
             animation: google.maps.Animation.DROP,
             position: latLng,
             title: 'TESTE',
+            // icon: img
+
         });
 
         this.markers.push(marker);
 
-        let info_window = new google.maps.InfoWindow({
-            content: "Loading..."
-        });
+        // let info_window = new google.maps.InfoWindow({
+        //     content: "Loading..."
+        // });
 
         //let that = this;
         marker.addListener('click', (event) => {
 
-
-
-            const myModalOptions: ModalOptions = {
-
-                cssClass : 'pricebreakup'
-
-            };
-
             console.log('clicked', event);
-            let modal = this.modalCtrl.create(ChatPage, {"pet": pet, "key": key}, myModalOptions);
+            let modal = this.modalCtrl.create(ChatPage, {"pet": pet, "key": key});
             modal.present();
 
         });
