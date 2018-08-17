@@ -15,6 +15,15 @@ export class LocationsProvider {
 
     }
 
+
+
+
+
+
+
+
+
+
     load() {
 
         let locationPromise = new Promise(resolve => {
@@ -26,6 +35,7 @@ export class LocationsProvider {
                 localStorage.setItem("currentLocation", JSON.stringify(usersLocation));
                 resolve(usersLocation);
             });
+
         });
 
 

@@ -6,7 +6,7 @@ import {TabsControllerPage} from "../pages/tabs-controller/tabs-controller";
 import {OneSignal} from "@ionic-native/onesignal";
 import {MeusPetsPage} from '../pages/meus-pets/meus-pets';
 import {MensagemPage} from "../pages/mensagem/mensagem";
-
+import {AndroidPermissions} from "@ionic-native/android-permissions";
 import {AngularFireAuth} from "angularfire2/auth";
 
 @Component({
@@ -16,7 +16,9 @@ export class MyApp {
     @ViewChild(Nav) navCtrl: Nav;
     rootPage: any;
 
-    constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public toast: ToastController, public afAuth: AngularFireAuth) {
+    constructor(platform: Platform, statusBar: StatusBar,
+                splashScreen: SplashScreen, public toast: ToastController,
+                public afAuth: AngularFireAuth, private androidPermissions: AndroidPermissions) {
 
         this.rootPage = TabsControllerPage;
 
@@ -47,6 +49,38 @@ export class MyApp {
                 }
                 console.log('NOTIFICATION RECEIVED', data);
             };
+
+            this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.GEOLOCATION).then(
+                result => console.log('Has permission?',result.hasPermission),
+                err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.GEOLOCATION)
+            );
+
+                this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.GEOLOCATION,
+                    this.androidPermissions.PERMISSION.GET_ACCOUNTS]);
+            }
+            const onSuccess = function(position) {
+                console.log('Latitude: '          + position.coords.latitude          + '\n' +
+                    'Longitude: '         + position.coords.longitude         + '\n' +
+                    'Altitude: '          + position.coords.altitude          + '\n' +
+                    'Accuracy: '          + position.coords.accuracy          + '\n' +
+                    'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+                    'Heading: '           + position.coords.heading           + '\n' +
+                    'Speed: '             + position.coords.speed             + '\n' +
+                    'Timestamp: '         + position.timestamp                + '\n');
+            };
+
+            function onError(error) {
+                alert('Este APP funciona pela localizacão, listando PETS em adoção proxímo a você! ' +
+                    'Permita a localizacao para listar os PETS   ');
+                this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.GEOLOCATION, this.androidPermissions.PERMISSION.GET_ACCOUNTS]);
+            };
+
+            navigator.geolocation.getCurrentPosition(onSuccess, onError);
+
+
+
+
+
 
             window["plugins"].OneSignal.startInit("f2dc92d3-6665-406d-8e5f-e7c6e19e822d",
                 "534848323519")

@@ -44,6 +44,8 @@ import {UserPerfilPage} from "../pages/user-perfil/user-perfil";
 import {AngularFireStorageModule} from "angularfire2/storage";
 import {PleaseLoginComponent} from "../components/please-login/please-login";
 
+import {AndroidPermissions} from "@ionic-native/android-permissions";
+
 @NgModule({
     declarations: [
         MyApp,
@@ -110,7 +112,8 @@ import {PleaseLoginComponent} from "../components/please-login/please-login";
         Geolocation,
         ConnectivityProvider,
         GoogleMapsProvider,
-        LocationsProvider
+        LocationsProvider,
+        AndroidPermissions
     ]
 })
 export class AppModule {

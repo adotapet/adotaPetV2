@@ -28,30 +28,29 @@ export class ProfilePage {
 
     createProfile() {
 
-        if (this.post.estado == null) {
-
-            let alert = this.alert.create({
-                title: 'Selecione um Estado',
-                buttons: ['OK']
-            });
-            alert.present();
-
-        } else {
-            this.post.especie = "Todos";
-
-
-            localStorage.setItem('skipIntro', 'true');
-            localStorage.setItem('adotapet_filtros', JSON.stringify(this.post));
-
-
-            //cria o perfil e direciona pra home.
-            this.login.createProfile(this.navParams.get('userId'), this.profile, this.post);
-
-            console.log('perifl criado');
-            this.navCtrl.setRoot(TabsControllerPage);
-        }
-
-}
+//         if (this.post.estado == null) {
+//
+//             let alert = this.alert.create({
+//                 title: 'Selecione um Estado',
+//                 buttons: ['OK']
+//             });
+//             alert.present();
+//
+//         } else {
+//             this.post.especie = "Todos";
+//
+//
+//             localStorage.setItem('skipIntro', 'true');
+//             localStorage.setItem('adotapet_filtros', JSON.stringify(this.post));
+//
+//
+//             //cria o perfil e direciona pra home.
+//             this.login.createProfile(this.navParams.get('userId'), this.profile, this.post);
+//
+//             console.log('perifl criado');
+//             this.navCtrl.setRoot(TabsControllerPage);
+//         }
+     }
 
 
 }
