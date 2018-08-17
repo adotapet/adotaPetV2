@@ -102,10 +102,6 @@ export class GoogleMapsProvider {
                 let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                 //let latLng = new google.maps.LatLng(40.713744, -74.009056);
 
-                let main_color = '#d40f00',
-                    saturation_value= -20,
-                    brightness_value= 5;
-
                 let style = [
                     {
                         "featureType": "administrative.locality",
