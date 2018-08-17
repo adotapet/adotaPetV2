@@ -57,7 +57,7 @@ export class MyApp {
 
                 this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.GEOLOCATION,
                     this.androidPermissions.PERMISSION.GET_ACCOUNTS]);
-            }
+
             const onSuccess = function(position) {
                 console.log('Latitude: '          + position.coords.latitude          + '\n' +
                     'Longitude: '         + position.coords.longitude         + '\n' +
