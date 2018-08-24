@@ -9,6 +9,8 @@ import {MensagemPage} from "../pages/mensagem/mensagem";
 import {AndroidPermissions} from "@ionic-native/android-permissions";
 import {AngularFireAuth} from "angularfire2/auth";
 
+import { TranslateService } from '@ngx-translate/core';
+
 @Component({
     templateUrl: 'app.html'
 })
@@ -16,9 +18,15 @@ export class MyApp {
     @ViewChild(Nav) navCtrl: Nav;
     rootPage: any;
 
-    constructor(platform: Platform, statusBar: StatusBar,
-                splashScreen: SplashScreen, public toast: ToastController,
-                public afAuth: AngularFireAuth, private androidPermissions: AndroidPermissions) {
+    constructor(platform: Platform,
+                statusBar: StatusBar,
+                splashScreen: SplashScreen,
+                public toast: ToastController,
+                public afAuth: AngularFireAuth,
+                private androidPermissions: AndroidPermissions,
+                translate: TranslateService
+
+                ) {
 
         this.rootPage = TabsControllerPage;
 
@@ -55,7 +63,9 @@ export class MyApp {
                 err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.GEOLOCATION)
             );
 
-                this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.GEOLOCATION,
+
+
+            this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.GEOLOCATION,
                     this.androidPermissions.PERMISSION.GET_ACCOUNTS]);
 
             const onSuccess = function(position) {
@@ -77,7 +87,11 @@ export class MyApp {
 
             navigator.geolocation.getCurrentPosition(onSuccess, onError);
 
-
+            // substitui o navigator.globalization e obtendo a linguagem do celular
+            const language = window.navigator.language;
+            console.log(language);
+            // Insere a lingua como padrao
+            translate.setDefaultLang(language);
 
 
 

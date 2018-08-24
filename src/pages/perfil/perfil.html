@@ -4,7 +4,7 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>
-      Perfil
+      {{ "Perfil" | translate }}
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -32,23 +32,23 @@
       </div>
       <ion-item color="none" id="perfil-list-item11">
         <ion-icon name="paw" item-left></ion-icon>
-        Espécie: {{pet.especie}}
+        {{ "Espécie" | translate }} : {{pet.especie}}
       </ion-item>
       <ion-item color="none" id="perfil-list-item12">
         <ion-icon name="logo-octocat" item-left></ion-icon>
-        Raça: {{pet.raca}}
+        {{ "Raça" | translate }} : {{pet.raca}}
       </ion-item>
       <ion-item color="none" id="perfil-list-item13">
         <ion-icon name="female" item-left></ion-icon>
-        sexo: {{pet.sexo}}
+        {{"Sexo" | translate }} :  {{pet.sexo}}
       </ion-item>
       <ion-item color="none" id="perfil-list-item14">
         <ion-icon name="information-circle" item-left></ion-icon>
-        Idade: {{pet.idade}}
+        {{"Idade" | translate }} : {{pet.idade}}
       </ion-item>
       <ion-item color="none" id="perfil-list-item15">
         <ion-icon name="whatsapp" item-left></ion-icon>
-        Whats: {{pet.whatsapp}}
+        {{"Whats" | translate }} : {{pet.whatsapp}}
       </ion-item>
     </ion-list>
   </ion-card>
@@ -64,13 +64,13 @@
 
   <div *ngIf="!donoDaPostagem">
     <button id="abrirChat" ion-button color="assertive" block (click)="goToChat()">
-      Abrir Chat
+      {{ "Abrir Chat" | translate }}
     </button>
   </div>
 
   <div *ngIf="donoDaPostagem">
     <button id="adotado" ion-button style="background-color: #32db64;" block (click)="marcarComoAdotado()">
-       Marcar Como Adotado
+       {{ "Marcar Como Adotado" | translate }}
     </button>
 
   </div>
@@ -79,7 +79,7 @@
 
   <div id="perfil-markdown4" style="text-align:center;" class="show-list-numbers-and-dots">
     <p style="color:#000000;">
-      Responsável
+      {{ "Responsável" | translate }}
     </p>
   </div>
   <ion-list id="perfil-list5">
@@ -88,7 +88,7 @@
         <img />
       </ion-avatar>
       <h2>
-        Nome: {{pet.user}}
+        {{ "Nome" | translate }} : {{pet.user}}
       </h2>
     </ion-item>
     <ion-item color="none" id="perfil-list-item10">
@@ -97,10 +97,10 @@
     </ion-item>
     <ion-item color="none" id="perfil-list-item16">
       <ion-icon name="pin" item-left></ion-icon>
-      Localizacao
+      {{ "Localização" | translate }}
     </ion-item>
   </ion-list>
- <p style="text-align:center;"> Você pode compartilhar em grupos ou com amigos, isso ajudará o PET a ser adotado rapidamente.</p>
+ <p style="text-align:center;"> {{"Compartilhe em grupos ou amigos, ajude o PET a ser adotado rapidamente." | translate}}</p>
 
     <button ion-button block style="background: limegreen;"  (click)="whatsappShare()"> <ion-icon name="logo-whatsapp"></ion-icon>  WhatsApp</button>
     <button ion-button block style="background: royalblue;"  (click)="facebookShare()"> <ion-icon name="logo-facebook"></ion-icon>  Facebook</button>

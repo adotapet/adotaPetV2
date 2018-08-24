@@ -3,6 +3,7 @@ import {AlertController, NavController, ToastController} from 'ionic-angular';
 import {AuthProvider} from "../../providers/auth/auth";
 import {AngularFireDatabase} from "angularfire2/database";
 import {AngularFireStorage} from "angularfire2/storage"
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'meus-pets',
@@ -19,7 +20,9 @@ export class MeusPetsComponent {
                 private authProvider: AuthProvider,
                 private alert: AlertController,
                 private toastCtrl: ToastController,
-                private storage: AngularFireStorage) {
+                private storage: AngularFireStorage,
+                private translate: TranslateService
+                ) {
 
         this.authProvider.getUser().then(user => {
             this.myId = user.uid;
@@ -46,10 +49,16 @@ export class MeusPetsComponent {
     }
 
     deletePet(id, pet) {
+
+        const translationTitle:string = this.translate.instant('Você tem certeza que deseja deletar?');
+        const translationText:string = this.translate.instant('Tenho certeza');
+        const translationNo:string = this.translate.instant('Não');
+
         let popup = this.alert.create({
-            title: 'Tem certeza que quer deletar o pet?',
+
+            title: translationTitle,
             buttons: [{
-                text: 'Tenho certeza',
+                text: translationText,
                 role: 'confirm',
                 handler: () => {
                     this.db.list('BR/adocao/pets/' + id).remove().then(() => {
@@ -60,13 +69,13 @@ export class MeusPetsComponent {
                         });
 
                     }).catch(erro => {
-                        this.presentToast('Ação não permitida');
+                        this.presentToast('An error has occurred. Try Again');
                     });
 
                 }
             },
                 {
-                    text: 'Nao',
+                    text: translationNo,
                     role: 'cancel',
                     handler: () => {
 
@@ -78,11 +87,14 @@ export class MeusPetsComponent {
     }
 
     marcarComoAdotado(id, pet) {
+        const translationTitle:string = this.translate.instant('Tem certeza que quer marcar o Pet como adotado?');
+        const translationText:string = this.translate.instant('Tenho certeza');
+        const translationNo:string = this.translate.instant('Não');
 
         let popup = this.alert.create({
-            title: 'Tem certeza que quer marcar o Pet como adotado?',
+            title: translationTitle,
             buttons: [{
-                text: 'Tenho certeza',
+                text: translationText,
                 role: 'confirm',
                 handler: () => {
                     this.db.object('BR/adocao/adotados/' + id).set(pet).then(() => {
@@ -94,7 +106,7 @@ export class MeusPetsComponent {
                 }
             },
                 {
-                    text: 'Nao',
+                    text: translationNo,
                     role: 'cancel',
                     handler: () => {
 
@@ -107,23 +119,28 @@ export class MeusPetsComponent {
     }
 
     marcarComoAtivo(id, pet) {
+        const translationTitle:string = this.translate.instant('Você deseja colocar o pet em adoção novamente?');
+        const translationText:string = this.translate.instant('Tenho certeza');
+        const translationNo:string = this.translate.instant('Não');
+        const translationBack:string = this.translate.instant('voltou para a adoção!');
+
 
         let popup = this.alert.create({
-            title: 'Você deseja colocar o pet em adoção novamente?',
+            title: translationTitle,
             buttons: [{
-                text: 'Tenho certeza',
+                text: translationText,
                 role: 'confirm',
                 handler: () => {
                     this.db.object('BR/adocao/pets/' + id).set(pet).then(() => {
                         this.db.list('BR/adocao/adotados/' + id).remove().then(() => {
-                            this.presentToast('O(a) ' + pet.nome + ' voltou para a adoção!');
+                            this.presentToast(pet.nome + translationBack);
                         });
                     });
 
                 }
             },
                 {
-                    text: 'Nao',
+                    text: translationNo,
                     role: 'cancel',
                     handler: () => {
 

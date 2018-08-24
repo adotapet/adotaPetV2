@@ -19,9 +19,15 @@ export class PerfilPage {
     donoDaPostagem: boolean;
     loading: Loading;
 
-    constructor(public navCtrl: NavController, public params: NavParams, private afAuth: AngularFireAuth,
-                private socialSharing: SocialSharing, private db: AngularFireDatabase, private alert: AlertController,
-                private toastCtrl: ToastController, public loadingCtrl: LoadingController) {
+    constructor(public navCtrl: NavController,
+                public params: NavParams,
+                private afAuth: AngularFireAuth,
+                private socialSharing: SocialSharing,
+                private db: AngularFireDatabase,
+                private alert: AlertController,
+                private toastCtrl: ToastController,
+                public loadingCtrl: LoadingController
+                ) {
 
         this.pet = params.get('pet');
         this.key = params.get('key');

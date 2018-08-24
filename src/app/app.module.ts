@@ -25,7 +25,7 @@ import {AngularFireDatabaseModule} from 'angularfire2/database'
 import {FIREBASE_CONFIG} from "./app.firebase.config";
 import {Facebook} from "@ionic-native/facebook";
 import {Camera} from "@ionic-native/camera";
-import {HttpClientModule} from '@angular/common/http';
+
 import {AuthProvider} from "../providers/auth/auth";
 import {ProfilePage} from "../pages/profile/profile";
 import {OneSignal} from "@ionic-native/onesignal";
@@ -45,6 +45,15 @@ import {AngularFireStorageModule} from "angularfire2/storage";
 import {PleaseLoginComponent} from "../components/please-login/please-login";
 
 import {AndroidPermissions} from "@ionic-native/android-permissions";
+
+import {HttpClientModule, HttpClient} from '@angular/common/http';
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+
+export function HttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
+}
+
 
 @NgModule({
     declarations: [
@@ -73,7 +82,16 @@ import {AndroidPermissions} from "@ionic-native/android-permissions";
         AngularFireDatabaseModule,
         AngularFireStorageModule,
         AngularFireAuthModule,
+
         HttpClientModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        })
+
     ],
     bootstrap: [IonicApp],
     entryComponents: [
