@@ -18,6 +18,9 @@
       vertical-align: middle;
       border: #ff0000 1px solid;
     }
+    ion-backdrop {
+      display: none;
+    }
 
     .item {
       border: $border-color 1px solid !important;
