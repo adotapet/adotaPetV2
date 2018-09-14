@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {NavController, ToastController} from 'ionic-angular'
 import {AuthProvider} from "../../providers/auth/auth";
 import {TranslateService} from "@ngx-translate/core";
+import {AngularFireAuth} from "angularfire2/auth";
 
 /**
  * Generated class for the UserPerfilPage page.
@@ -21,6 +22,7 @@ export class UserPerfilPage {
 
     constructor(public navCtrl: NavController,
                 public auth: AuthProvider,
+                public afAuth: AngularFireAuth,
                 public toastCtrl: ToastController,
                 private translate: TranslateService
 
@@ -32,11 +34,12 @@ export class UserPerfilPage {
         this.auth.getUser().then(user => {
             let translation:string = this.translate.instant('Faça login para continuar');
             let result = !!user;
+            console.log('auth',result, user);
             let toast = this.toastCtrl.create({
                 message: translation,
                 duration: 2000,
                 position: 'bottom'
-            });""
+            });
             if (!result) {
                 toast.present();
                 this.canEnter = false;

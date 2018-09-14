@@ -35,10 +35,9 @@ export class MeusPetsComponent {
     listPets() {
         console.log('log1');
         return new Promise(resolve => {
-            this.db.list('BR/adocao/pets', ref => ref.orderByChild('user').equalTo(this.myId)).snapshotChanges().subscribe(data => {
+            this.db.list('adocao/pets', ref => ref.orderByChild('user').equalTo(this.myId)).snapshotChanges().subscribe(data => {
                 this.myPets.ativos = data;
-                console.log('PETS', this.myPets);
-                this.db.list('BR/adocao/adotados', ref => ref.orderByChild('user').equalTo(this.myId)).snapshotChanges().subscribe(data => {
+                this.db.list('adocao/adotados', ref => ref.orderByChild('user').equalTo(this.myId)).snapshotChanges().subscribe(data => {
                     this.myPets.adotados = data;
                     console.log('PETS', this.myPets);
                     resolve(this.myPets);
@@ -61,9 +60,9 @@ export class MeusPetsComponent {
                 text: translationText,
                 role: 'confirm',
                 handler: () => {
-                    this.db.list('BR/adocao/pets/' + id).remove().then(() => {
-                        this.db.list('BR/adocao/chat/salas/', ref => ref.orderByChild('pet').equalTo(id)).remove();
-                        this.db.list('BR/adocao/chat/menssagens/', ref => ref.orderByChild('pet').equalTo(id)).remove();
+                    this.db.list('adocao/pets/' + id).remove().then(() => {
+                        this.db.list('adocao/chat/salas/', ref => ref.orderByChild('pet').equalTo(id)).remove();
+                        this.db.list('adocao/chat/menssagens/', ref => ref.orderByChild('pet').equalTo(id)).remove();
                         this.storage.ref('images/adocao/' + id).delete().subscribe(() => {
                             this.presentToast('Pet removido do aplicativo!');
                         });
@@ -97,8 +96,8 @@ export class MeusPetsComponent {
                 text: translationText,
                 role: 'confirm',
                 handler: () => {
-                    this.db.object('BR/adocao/adotados/' + id).set(pet).then(() => {
-                        this.db.list('BR/adocao/pets/' + id).remove().then(() => {
+                    this.db.object('adocao/adotados/' + id).set(pet).then(() => {
+                        this.db.list('adocao/pets/' + id).remove().then(() => {
                             this.presentToast(pet.nome);
                         });
                     });
@@ -131,8 +130,8 @@ export class MeusPetsComponent {
                 text: translationText,
                 role: 'confirm',
                 handler: () => {
-                    this.db.object('BR/adocao/pets/' + id).set(pet).then(() => {
-                        this.db.list('BR/adocao/adotados/' + id).remove().then(() => {
+                    this.db.object('adocao/pets/' + id).set(pet).then(() => {
+                        this.db.list('adocao/adotados/' + id).remove().then(() => {
                             this.presentToast(pet.nome + translationBack);
                         });
                     });

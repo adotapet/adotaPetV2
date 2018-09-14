@@ -1,6 +1,5 @@
 import {NavController, NavParams, AlertController} from 'ionic-angular';
 import {LoginProvider} from "../../providers/login/login";
-import {TabsControllerPage} from "../tabs-controller/tabs-controller";
 import {Post} from "../../models/post";
 import { Component} from '@angular/core';
 import {AngularFireDatabase} from "angularfire2/database";

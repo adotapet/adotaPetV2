@@ -15,15 +15,6 @@ export class LocationsProvider {
 
     }
 
-
-
-
-
-
-
-
-
-
     load() {
 
         let locationPromise = new Promise(resolve => {
@@ -48,13 +39,19 @@ export class LocationsProvider {
             let coordenadas = [];
             locationPromise.then(usersLocation => {
 
-                this.afDb.list('BR/perdidos/pets').snapshotChanges().subscribe(dados => {
+                this.afDb.list('perdidos/pets').snapshotChanges().subscribe(dados => {
                     dados.map((item: any) => {
                         let key = item.key;
                         let item2 = item.payload.val();
-                        console.log('item', item2);
+                        console.log('item', item2.foto);
 
-                        let objCoords = {"coordenadas": item2.coordenadas, "icon": item2.fotoUrls[0], "pet": item2, "key": key};
+                        let objCoords = {
+                            "coordenadas": item2.coordenadas,
+                            "icon": item2.foto,
+                            "pet": item2,
+                            "key": key
+                        };
+
                         if (item2.coordenadas) {
                             coordenadas.splice(0, 0, objCoords);
                         }

@@ -2,6 +2,7 @@ import {Component, ElementRef, ViewChild} from '@angular/core';
 import {LocationsProvider} from '../../providers/locations/locations';
 import {GoogleMapsProvider} from '../../providers/google-maps/google-maps';
 import {IonicPage, ModalController, NavController, Platform} from 'ionic-angular';
+import {PetsPerdidosPage} from "../pets-perdidos/pets-perdidos";
 
 /**
  * Generated class for the NearbyPetsPage page.
@@ -39,12 +40,13 @@ export class NearbyPetsPage {
                 mapLoaded,
                 locationsLoaded
             ]).then((result) => {
+                console.log('MAPA CARREGOU');
 
                 let locations = result[1];
 
                 for (let location of locations) {
                     console.log('NEARBY', location);
-                    if(location.distance <= 50){
+                    if (location.distance <= 50) {
                         this.maps.addMarker(location.coordenadas.lat, location.coordenadas.lng, location.icon, location.pet, location.key);
                     }
                 }
@@ -53,6 +55,11 @@ export class NearbyPetsPage {
 
         });
 
+    }
+
+    newLostPet(tipo: number) {
+        console.log(tipo);
+        this.navCtrl.push(PetsPerdidosPage, {"tipo": tipo})
     }
 
 }

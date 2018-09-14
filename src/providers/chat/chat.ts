@@ -19,9 +19,9 @@ export class ChatProvider {
 
     constructor(public auth: AuthProvider, public afDb: AngularFireDatabase, public postProvider: PostProvider, public oneSignal: OneSignal) {
         console.log('Hello ChatProvider Provider');
-        this.salasRef = afDb.database.ref('BR/chat/salas');
-        this.msgRef = afDb.database.ref('BR/chat/menssagens');
-        this.auth.getUser().then(data =>{
+        this.salasRef = afDb.database.ref('chat/salas');
+        this.msgRef = afDb.database.ref('chat/menssagens');
+        this.auth.getUser().then(data => {
             this.myInfo = data;
         });
     }
@@ -138,16 +138,24 @@ export class ChatProvider {
 
     getMenssagens(key) {
         console.log('getMessages service');
-        return this.afDb.list('BR/chat/menssagens', ref => ref.orderByChild('dono_interessado_pet').equalTo(key)).valueChanges();
+        return this.afDb.list('chat/menssagens', ref => ref.orderByChild('dono_interessado_pet').equalTo(key)).valueChanges();
     }
 
-    getConversasEnviadas() {
-        return this.afDb.list('BR/chat/salas', ref => ref.orderByChild('id_interessado').equalTo(this.myInfo.uid)).valueChanges();
+    getConversasEnviadas(): Promise<any> {
+        return new Promise(resolve => {
+            this.auth.getUser().then(myInfo => {
+                resolve(this.afDb.list('chat/salas', ref => ref.orderByChild('id_interessado').equalTo(myInfo.uid)).valueChanges());
+            });
+        });
 
     }
 
-    getConversasRecebidas() {
-        return this.afDb.list('BR/chat/salas', ref => ref.orderByChild('id_dono').equalTo(this.myInfo.uid)).valueChanges();
+    getConversasRecebidas(): Promise<any> {
+        return new Promise(resolve => {
+            this.auth.getUser().then(myInfo => {
+                resolve(this.afDb.list('chat/salas', ref => ref.orderByChild('id_dono').equalTo(myInfo.uid)).valueChanges());
+            });
+        });
 
     }
 

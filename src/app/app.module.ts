@@ -38,8 +38,8 @@ import {ConnectivityProvider} from '../providers/connectivity/connectivity';
 import {GoogleMapsProvider} from '../providers/google-maps/google-maps';
 import {LocationsProvider} from '../providers/locations/locations';
 import {NearbyPetsPage} from "../pages/nearby-pets/nearby-pets";
-import { Network } from '@ionic-native/network';
-import { Geolocation } from '@ionic-native/geolocation';
+import {Network} from '@ionic-native/network';
+import {Geolocation} from '@ionic-native/geolocation';
 import {UserPerfilPage} from "../pages/user-perfil/user-perfil";
 import {AngularFireStorageModule} from "angularfire2/storage";
 import {PleaseLoginComponent} from "../components/please-login/please-login";
@@ -49,6 +49,7 @@ import {AndroidPermissions} from "@ionic-native/android-permissions";
 import {HttpClientModule, HttpClient} from '@angular/common/http';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {PetsPerdidosPage} from "../pages/pets-perdidos/pets-perdidos";
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
@@ -69,6 +70,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         AdotePage,
         ProfilePage,
         NearbyPetsPage,
+        PetsPerdidosPage,
         UserPerfilPage,
         MeusPetsComponent,
         SalasChatComponent,
@@ -106,7 +108,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         MensagemPage,
         AdotePage,
         ProfilePage,
-
+        PetsPerdidosPage,
         UserPerfilPage,
         SalasChatComponent,
         MeusPetsComponent,

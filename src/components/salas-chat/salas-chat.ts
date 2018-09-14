@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {NavController, NavParams} from 'ionic-angular';
 import {MensagemPage} from '../../pages/mensagem/mensagem'
 import {ChatProvider} from "../../providers/chat/chat";
+
 /**
  * Generated class for the SalasChatComponent component.
  *
@@ -20,11 +21,20 @@ export class SalasChatComponent {
     conversasRecebidas: any[];
 
     constructor(public navCtrl: NavController, public params: NavParams, public chat: ChatProvider) {
-        this.chat.getConversasRecebidas().subscribe(data => {
-            this.conversasRecebidas = data;
+        this.chat.getConversasRecebidas().then(data => {
+            data.subscribe(data => {
+                this.conversasRecebidas = data;
+                console.log(data, 'minha info --recebidas');
+
+            });
         });
-        this.chat.getConversasEnviadas().subscribe(data => {
-            this.conversasEnviadas = data;
+        this.chat.getConversasEnviadas().then(data => {
+            data.subscribe(data => {
+                this.conversasEnviadas = data;
+                console.log(data, 'minha info --enviadas');
+
+            });
+
         });
     }
 

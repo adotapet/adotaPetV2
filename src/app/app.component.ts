@@ -9,7 +9,7 @@ import {MensagemPage} from "../pages/mensagem/mensagem";
 import {AndroidPermissions} from "@ionic-native/android-permissions";
 import {AngularFireAuth} from "angularfire2/auth";
 
-import { TranslateService } from '@ngx-translate/core';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     templateUrl: 'app.html'
@@ -25,8 +25,7 @@ export class MyApp {
                 public afAuth: AngularFireAuth,
                 private androidPermissions: AndroidPermissions,
                 translate: TranslateService
-
-                ) {
+    ) {
 
         this.rootPage = TabsControllerPage;
 
@@ -59,24 +58,25 @@ export class MyApp {
             };
 
             this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.GEOLOCATION).then(
-                result => console.log('Has permission?',result.hasPermission),
+                result => console.log('Has permission?', result.hasPermission),
                 err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.GEOLOCATION)
             );
 
 
+            this.androidPermissions.requestPermissions([
+                this.androidPermissions.PERMISSION.GEOLOCATION,
+                this.androidPermissions.PERMISSION.GET_ACCOUNTS
+            ]);
 
-            this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.GEOLOCATION,
-                    this.androidPermissions.PERMISSION.GET_ACCOUNTS]);
-
-            const onSuccess = function(position) {
-                console.log('Latitude: '          + position.coords.latitude          + '\n' +
-                    'Longitude: '         + position.coords.longitude         + '\n' +
-                    'Altitude: '          + position.coords.altitude          + '\n' +
-                    'Accuracy: '          + position.coords.accuracy          + '\n' +
-                    'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
-                    'Heading: '           + position.coords.heading           + '\n' +
-                    'Speed: '             + position.coords.speed             + '\n' +
-                    'Timestamp: '         + position.timestamp                + '\n');
+            const onSuccess = function (position) {
+                console.log('Latitude: ' + position.coords.latitude + '\n' +
+                    'Longitude: ' + position.coords.longitude + '\n' +
+                    'Altitude: ' + position.coords.altitude + '\n' +
+                    'Accuracy: ' + position.coords.accuracy + '\n' +
+                    'Altitude Accuracy: ' + position.coords.altitudeAccuracy + '\n' +
+                    'Heading: ' + position.coords.heading + '\n' +
+                    'Speed: ' + position.coords.speed + '\n' +
+                    'Timestamp: ' + position.timestamp + '\n');
             };
 
             function onError(error) {
@@ -94,8 +94,6 @@ export class MyApp {
             translate.setDefaultLang(language);
 
 
-
-
             window["plugins"].OneSignal.startInit("f2dc92d3-6665-406d-8e5f-e7c6e19e822d",
                 "534848323519")
                 .handleNotificationOpened(funcaoRetorno)
@@ -104,7 +102,7 @@ export class MyApp {
     }
 
     logoff(params) {
-        this.afAuth.auth.signOut().then(()=>{
+        this.afAuth.auth.signOut().then(() => {
             localStorage.clear();
             if (!params) params = {};
             this.navCtrl.push(TabsControllerPage, null, {animation: 'md-transition'});

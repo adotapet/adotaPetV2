@@ -57,7 +57,7 @@ export class GoogleMapsProvider {
                         });
 
                         this.enableMap();
-                    }
+                    };
 
                     let script = document.createElement("script");
                     script.id = "googleMaps";
@@ -75,7 +75,9 @@ export class GoogleMapsProvider {
             else {
 
                 if (this.connectivityService.isOnline()) {
-                    this.initMap();
+                    this.initMap().then(()=>{
+                        resolve(true);
+                    });
                     this.enableMap();
                 }
                 else {
@@ -418,23 +420,20 @@ export class GoogleMapsProvider {
     addMarker(lat: number, lng: number, img: string, pet, key) {
 
         let latLng = new google.maps.LatLng(lat, lng);
-
+        let icon = '';
+        if (pet.tipo == 1) {
+            icon = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+        } else {
+            icon = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
+        }
         let marker = new google.maps.Marker({
             map: this.map,
             animation: google.maps.Animation.DROP,
             position: latLng,
-            title: 'TESTE',
-            // icon: img
-
+            icon: icon
         });
 
         this.markers.push(marker);
-
-        // let info_window = new google.maps.InfoWindow({
-        //     content: "Loading..."
-        // });
-
-        //let that = this;
         marker.addListener('click', (event) => {
 
             console.log('clicked', event);
@@ -445,7 +444,29 @@ export class GoogleMapsProvider {
 
     }
 
+    getClickedCoords(tipo): Promise<any> {
+        let icon = '';
+        if (tipo = 1) {
+            icon = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+        } else {
+            icon = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
+        }
+        return new Promise((resolve) => {
+            this.map.addListener('click', data => {
+                console.log('latitue e longitude clicadas', data.latLng);
+                this.placeMarkerAndPanTo(data.latLng ,icon);
+                resolve(data.latLng.toJSON());
+            });
+        });
+    }
 
-
+    placeMarkerAndPanTo(latLng, icon) {
+        let marker = new google.maps.Marker({
+            position: latLng,
+            map: this.map,
+            setIcon: icon
+        });
+        this.map.panTo(latLng);
+    }
 
 }

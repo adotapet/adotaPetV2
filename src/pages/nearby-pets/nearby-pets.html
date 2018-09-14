@@ -1,18 +1,28 @@
 <ion-header>
-  <ion-navbar color="secondary">
-    <ion-title>
-      Maps
-    </ion-title>
-  </ion-navbar>
+    <ion-navbar color="secondary">
+        <ion-title>
+            Maps
+        </ion-title>
+    </ion-navbar>
 
 </ion-header>
 
 <ion-content>
 
-  <div #pleaseConnect id="please-connect">
-    <p>Connecting...</p>
-  </div>
+    <div #pleaseConnect id="please-connect">
+        <p>Connecting...</p>
+    </div>
 
-  <div #map id="map"></div>
+    <div #map id="map"></div>
 
+    <ion-fab bottom left>
+        <button ion-fab>
+            <ion-icon ios="ios-add" md="md-add"></ion-icon>
+        </button>
+        <ion-fab-list side="right">
+            <!-- tipo "1" é para pet perdido e tipo "2" é para pet que foi achado -->
+            <button ion-button (click)="newLostPet(1)">Pet Perdido</button>
+            <button ion-button (click)="newLostPet(2)">Pet Encontrado</button>
+        </ion-fab-list>
+    </ion-fab>
 </ion-content>

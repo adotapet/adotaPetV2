@@ -39,6 +39,7 @@ export class LoginPage {
                 let hasProfile;
                 //se logou pega o uid do usuario
                 await result.then(data => {
+                    console.log(data, 'dataaaa');
                     userId = data.user.uid;
                 });
                 //verifica se o usuario ja tem uma profile;

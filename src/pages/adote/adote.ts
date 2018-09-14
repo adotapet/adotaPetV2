@@ -22,6 +22,7 @@ export class AdotePage {
     user: any;
     filtro: any;
     list: any;
+    listCount: number = 5;
 
     constructor(private afAuth: AngularFireAuth,
                 private db: AngularFireDatabase,
@@ -71,10 +72,10 @@ export class AdotePage {
         });
 
         loading.present();
-        this.db.list('BR/adocao/pets/').snapshotChanges().subscribe(pets => {
+        this.db.list('adocao/pets/', ref => ref.limitToFirst(this.listCount)).snapshotChanges().subscribe(pets => {
             let petsData = [];
 
-            let map = pets.map((pet) => {
+            let map = pets.map((pet: any) => {
                 let petKey = pet.key;
                 let payload = pet.payload.val();
                 let coords = pet.payload.val().coordenadas;
@@ -91,12 +92,20 @@ export class AdotePage {
             console.log(map.length, petsData);
 
 
-
             this.posts = petsData;
 
 
             loading.dismiss();
         })
+    }
+
+    doInfinite(event) {
+        console.log('event', event);
+        this.listCount = this.listCount + 10;
+
+        this.posts = [];
+        this.listPets();
+        event.complete();
     }
 
 

@@ -7,7 +7,6 @@ import {AngularFireDatabase} from 'angularfire2/database';
 import {Camera, CameraOptions} from "@ionic-native/camera";
 import {storage, database} from "firebase";
 import {AdotePage} from "../adote/adote";
-import {TabsControllerPage} from "../tabs-controller/tabs-controller";
 
 
 @Component({
@@ -264,7 +263,7 @@ export class AdicionarPetPage {
         try {
             console.log('add post log 1');
             //Pegando uma key do database pra criar a pasta das fotos;
-            let key = database().ref('BR/adocao/pets').push().key;
+            let key = database().ref('adocao/pets').push().key;
             let afDb = this.afDatabase;
             let auth = this.auth;
             let popup = this.alert.create({
@@ -292,7 +291,7 @@ export class AdicionarPetPage {
                         this.post.data = new Date().toLocaleDateString();
 
                     });
-                    afDb.object(`BR/adocao/pets/${key}`).set(this.post).then(() => {
+                    afDb.object(`adocao/pets/${key}`).set(this.post).then(() => {
                             console.log('finished log 3', this.post);
                             this.presentWithGif();
                             setTimeout(() => {
@@ -333,7 +332,7 @@ export class AdicionarPetPage {
                 post.fotoUrls[i] = 'https://firebasestorage.googleapis.com/v0/b/adotapet-dev.appspot.com/o/' + (data.metadata.fullPath).replace(/[/]/g, '%2f') + '?alt=media';
                 console.log('DATAAAAA', post);
                 i++;
-                this.afDatabase.object('BR/adocao/pets/' + key).update(post);
+                this.afDatabase.object('adocao/pets/' + key).update(post);
 
                 if (i == this.photoUrls.length) {
                     return post;
