@@ -7,6 +7,8 @@ import {AngularFireDatabase} from 'angularfire2/database';
 import {Camera, CameraOptions} from "@ionic-native/camera";
 import {storage, database} from "firebase";
 import {AdotePage} from "../adote/adote";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {LocationsProvider} from "../../providers/locations/locations";
 
 
 @Component({
@@ -17,7 +19,7 @@ import {AdotePage} from "../adote/adote";
 
 export class AdicionarPetPage {
 
-    post = {} as Post;
+    post: FormGroup;
     photoUrls = [];
     fotoUrls: any[];
     especie = [];
@@ -26,9 +28,22 @@ export class AdicionarPetPage {
     rootPage: any;
     loading: Loading;
     canEnter: boolean;
-    constructor(public navCtrl: NavController, private alert: AlertController,
-                private camera: Camera, private afDatabase: AngularFireDatabase, private auth: AuthProvider,
-                public loadingCtrl: LoadingController, public toastCtrl: ToastController) {
+
+    constructor(
+        public navCtrl: NavController, private alert: AlertController,
+        private camera: Camera, private afDatabase: AngularFireDatabase, private auth: AuthProvider,
+        public loadingCtrl: LoadingController, public toastCtrl: ToastController, public formBuilder: FormBuilder,
+        public locations: LocationsProvider
+    ) {
+        this.post = this.formBuilder.group({
+            nome: ['', Validators.required],
+            especie: ['', Validators.required],
+            raca: ['', Validators.required],
+            idade: ['', Validators.required],
+            sexo: ['', Validators.required],
+            whatsapp: ['', Validators.required],
+            informacoes: ['', Validators.required]
+        });
     }
 
     ionViewCanEnter() {
@@ -42,7 +57,7 @@ export class AdicionarPetPage {
             if (!result) {
                 toast.present();
                 this.canEnter = false;
-            }else {
+            } else {
                 this.canEnter = true;
             }
         })
@@ -256,16 +271,11 @@ export class AdicionarPetPage {
     }
 
 
-    async addPost(post) {
-        this.post.filtro = post.estado + '_' + post.especie;
-
-
+    addPost() {
         try {
             console.log('add post log 1');
             //Pegando uma key do database pra criar a pasta das fotos;
             let key = database().ref('adocao/pets').push().key;
-            let afDb = this.afDatabase;
-            let auth = this.auth;
             let popup = this.alert.create({
                 title: 'Pet Cadastrado com Sucesso :D',
                 subTitle: 'Desejamos Boa Sorte!',
@@ -273,7 +283,7 @@ export class AdicionarPetPage {
                     text: 'OK',
                     role: 'confirm',
                     handler: () => {
-                        this.post = {} as Post;
+                        this.post.reset();
                         this.navCtrl.push(AdotePage, null, {animation: 'md-transition'});
                     }
                 }]
@@ -281,37 +291,32 @@ export class AdicionarPetPage {
             if (this.photoUrls[0]) {
 
                 //Fazendo um loop inserindo as strings base64 das fotos e colocando no storage.
-                this.getUrls(key, post).then(data => {
-                    console.log('RETURNED', this.post);
-                    auth.getUser().then(user => {
-                        this.post.user = user.uid;
+                this.getUrls(key, this.post.value).then(data => {
+                    this.auth.getUser().then(user => {
+                        this.post.value.user = user.uid;
+                        this.locations.getCurrentPosition().then(coordenadas => {
+                            console.log('log 3', coordenadas);
+                            this.post.value.coordenadas = coordenadas;
+                            this.post.value.data = new Date().toLocaleDateString();
+                            this.afDatabase.object(`adocao/pets/${key}`).set(this.post.value).then(() => {
+                                    console.log('finished log 4', this.post.value);
+                                    this.presentWithGif();
+                                    setTimeout(() => {
+                                        this.loading.dismiss();
+                                        popup.present();
+                                    }, 4000);
+                                }
+                            );
+                        })
                     });
-                    auth.getUserPerfil(this.post.user).on('value', data => {
-                        this.post.coordenadas = data.val().location;
-                        this.post.data = new Date().toLocaleDateString();
-
-                    });
-                    afDb.object(`adocao/pets/${key}`).set(this.post).then(() => {
-                            console.log('finished log 3', this.post);
-                            this.presentWithGif();
-                            setTimeout(() => {
-                                this.loading.dismiss();
-                                popup.present();
-                            }, 4000);
-                        }
-                    );
-
-
                 });
 
             } else {
-                this.post = {} as Post;
                 let popup = this.alert.create({
                     title: 'Você precisa colocar uma imagem!',
                     buttons: ['Ok']
                 });
                 popup.present();
-                console.log(post)
             }
 
         } catch (e) {

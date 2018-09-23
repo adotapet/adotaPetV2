@@ -10,6 +10,6 @@ export interface Post {
     user: string;
     estado: string
     filtro: string;
-    coordenadas: any[];
+    coordenadas: any;
     data: string;
 }

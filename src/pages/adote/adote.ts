@@ -24,14 +24,16 @@ export class AdotePage {
     list: any;
     listCount: number = 5;
 
-    constructor(private afAuth: AngularFireAuth,
-                private db: AngularFireDatabase,
-                public navCtrl: NavController,
-                public toast: ToastController,
-                private auth: AuthProvider,
-                public loadingCtrl: LoadingController,
-                public location: LocationsProvider,
-                public geolocation: Geolocation) {
+    constructor(
+        private afAuth: AngularFireAuth,
+        private db: AngularFireDatabase,
+        public navCtrl: NavController,
+        public toast: ToastController,
+        private auth: AuthProvider,
+        public loadingCtrl: LoadingController,
+        public location: LocationsProvider,
+        public geolocation: Geolocation
+    ) {
 
 
     }

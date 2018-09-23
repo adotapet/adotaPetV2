@@ -39,8 +39,8 @@ export class LoginPage {
                 let hasProfile;
                 //se logou pega o uid do usuario
                 await result.then(data => {
-                    console.log(data, 'dataaaa');
-                    userId = data.user.uid;
+                    console.log(data.uid, 'dataaaa');
+                    userId = data.uid;
                 });
                 //verifica se o usuario ja tem uma profile;
                 await this.afDatabase.database.ref(`profile/${userId}`).once('value', data => {

@@ -3,35 +3,31 @@ import {AngularFireDatabase} from 'angularfire2/database';
 import {AngularFireAuth} from "angularfire2/auth";
 import {OneSignal} from "@ionic-native/onesignal";
 import {Geolocation} from "@ionic-native/geolocation";
+import {Observable} from "rxjs";
 
 @Injectable()
 export class LoginProvider {
 
     userLocation: any;
 
-    constructor(private afDatabse: AngularFireDatabase, public afAuth: AngularFireAuth, private oneSignal: OneSignal, public geolocation: Geolocation) {
+    constructor(private afDb: AngularFireDatabase, public afAuth: AngularFireAuth, private oneSignal: OneSignal, public geolocation: Geolocation) {
         console.log('Hello LoginProvider Provider');
     }
 
 
-    createProfile(userId, profile, post) {
-
-        this.geolocation.getCurrentPosition().then((position) => {
-            this.userLocation = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            };
+    createProfile(userId): Promise<any> {
+        localStorage.setItem('skipIntro', 'true');
+        return new Promise((resolve, reject) => {
+            this.oneSignal.getIds().then((user) => {
+                let promise = this.afDb.object('profile/' + userId).set(user);
+                console.log(user, 'onesignal bune');
+                resolve(promise);
+            }).catch(erro => {
+                console.error(erro);
+                reject('Nao foi possivel pegar o token de notificação');
+            });
         });
-        profile.adotapet_filtros = {
-            "estado": post.estado,
-            "especie": post.especie
-        };
-        profile.location = this.userLocation;
 
-        this.oneSignal.getIds().then(data => {
-            profile.notificationToken = data.userId;
-            this.afDatabse.object('profile/' + userId).set(profile);
-        });
     }
 
 }

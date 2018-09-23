@@ -22,35 +22,38 @@
             <img [src]="photo.img"/>
         </ion-slide>
     </ion-slides>
-    <form id="adicionarPet-form2">
+
+
+    <form [formGroup]="post">
 
         <div style="width: 50%; float: left;">
-            <button cid="adicionarPet-button4" (click)="takePhoto()" ion-button icon-left color="assertive"
+            <button (click)="takePhoto()" ion-button icon-left color="assertive"
                     style="width: 100%;">
                 <ion-icon name="camera"></ion-icon>
                 {{ "Câmera" | translate }}
             </button>
         </div>
         <div style="width: 50%; float: left;">
-            <button id="adicionarPet-button4" (click)="takeGallery()" ion-button icon-left color="assertive"
+            <button (click)="takeGallery()" ion-button icon-left color="assertive"
                     style="width: 100%;">
                 <ion-icon name="images"></ion-icon>
                 {{ "Galeria" | translate }}
             </button>
         </div>
-        <div class="spacer" style="width:300px;height:100px;" id="adicionarPet-spacer3"></div>
-        <ion-item id="adicionarPet-input3">
+        <div class="spacer" style="width:300px;height:100px;"></div>
+        <ion-item>
             <ion-label>
                 {{ "Nome do Pet" | translate }}
             </ion-label>
-            <ion-input type="text" name="nome" placeholder="" [(ngModel)]="post.nome"></ion-input>
+            <ion-input type="text" name="nome" formControlName="nome" [(ngModel)]="post.nome"></ion-input>
         </ion-item>
         <div class="spacer" style="width:300px;height:45px;" id="adicionarPet-spacer3"></div>
         <ion-item id="adicionarPet-select1">
             <ion-label>
                 {{ "Espécie" | translate }}
             </ion-label>
-            <ion-select name="especie" [(ngModel)]="post.especie" (ngModelChange)="onChange($event)">
+            <ion-select name="especie" formControlName="especie" [(ngModel)]="post.especie"
+                        (ngModelChange)="onChange($event)">
                 <ion-option value="Canina">
                     {{ "Canina" | translate }}
                 </ion-option>
@@ -62,30 +65,25 @@
                 </ion-option>
             </ion-select>
         </ion-item>
-        <ion-item id="adicionarPet-select2">
+        <ion-item>
             <ion-label>
                 {{ "Raça" | translate }}
-
-
             </ion-label>
 
             <ion-select name="raca" id="raca" (change)="onItemChange($event.target.value)"
-                        [(ngModel)]="post.raca" required="required">
+                        [(ngModel)]="post.raca" formControlName="raca">
                 <ion-option checked value="">empty</ion-option>
                 <!--<ion-option aria-checked="undefined" *ngFor="let selectedRaca of selectedRacas" [value]="" >{{selectedRaca}} </ion-option>-->
                 <ion-option *ngFor="let item of selectedRacas" [value]="">{{item}}</ion-option>
-
-
             </ion-select>
-
         </ion-item>
 
-        <div class="spacer" style="width:300px;height:45px;" id="adicionarPet-spacer4"></div>
-        <ion-item id="adicionarPet-select3">
+        <div class="spacer" style="width:300px;height:45px;"></div>
+        <ion-item>
             <ion-label>
                 {{ "Idade" | translate }}
             </ion-label>
-            <ion-select name="idade" [(ngModel)]="post.idade">
+            <ion-select name="idade" formControlName="idade" [(ngModel)]="post.idade">
                 <ion-option value="{{ '1 a 3 meses' | translate }}">
                     {{ "1 a 3 meses" | translate }}
                 </ion-option>
@@ -109,40 +107,40 @@
 
         </ion-item>
 
-        <ion-item id="adicionarPet-select5">
+        <ion-item>
             <ion-label>
                 {{ "Sexo" | translate }}
             </ion-label>
-            <ion-select name="sexo" [(ngModel)]="post.sexo">
+            <ion-select name="sexo" formControlName="sexo" [(ngModel)]="post.sexo">
                 <ion-option value="Mâcho">
-                   {{ "Macho" | translate }}
+                    {{ "Macho" | translate }}
                 </ion-option>
                 <ion-option value="Femêa">
-                   {{ "Femêa" | translate }}
+                    {{ "Femêa" | translate }}
                 </ion-option>
                 <ion-option value="Desconhecido">
-                   {{ "Desconhecido" | translate }}
+                    {{ "Desconhecido" | translate }}
                 </ion-option>
             </ion-select>
         </ion-item>
 
-        <ion-item id="adicionarPet-input4">
+        <ion-item>
             <ion-label>
                 WhatsApp
             </ion-label>
-            <ion-input type="number" placeholder="" name="whats" [(ngModel)]="post.whatsapp"></ion-input>
+            <ion-input type="number" name="whats" formControlName="whatsapp" [(ngModel)]="post.whatsapp"></ion-input>
         </ion-item>
-        <ion-item id="adicionarPet-input5">
+        <ion-item>
             <ion-label stacked>
                 {{ "Informações Adicionais" | translate }}
             </ion-label>
             <ion-input name="informacoes" type="text" placeholder="{{'Conte-nos um pouco sobre o Pet' | translate}}"
-                       [(ngModel)]="post.informacoes">
+                       formControlName="informacoes" [(ngModel)]="post.informacoes">
             </ion-input>
         </ion-item>
 
-        <button id="adicionarPet-button6" ion-button color="assertive" ion-button block color="assertive"
-                style="border-radius:100px 100px 100px 100px;" (click)="addPost(post)">
+        <button ion-button color="assertive" block type="submit" [disabled]="!post.valid" (click)="addPost()"
+                style="border-radius:100px 100px 100px 100px;">
             {{"Publicar" | translate}}
         </button>
 

@@ -3,6 +3,7 @@ import {NavController, ToastController} from 'ionic-angular'
 import {AuthProvider} from "../../providers/auth/auth";
 import {TranslateService} from "@ngx-translate/core";
 import {AngularFireAuth} from "angularfire2/auth";
+import {TabsControllerPage} from "../tabs-controller/tabs-controller";
 
 /**
  * Generated class for the UserPerfilPage page.
@@ -25,16 +26,15 @@ export class UserPerfilPage {
                 public afAuth: AngularFireAuth,
                 public toastCtrl: ToastController,
                 private translate: TranslateService
-
-                ) {
+    ) {
 
     }
 
     ionViewCanEnter() {
         this.auth.getUser().then(user => {
-            let translation:string = this.translate.instant('Faça login para continuar');
+            let translation: string = this.translate.instant('Faça login para continuar');
             let result = !!user;
-            console.log('auth',result, user);
+            console.log('auth', result, user);
             let toast = this.toastCtrl.create({
                 message: translation,
                 duration: 2000,
@@ -47,5 +47,12 @@ export class UserPerfilPage {
                 this.canEnter = true;
             }
         })
+    }
+
+    logOf(): void {
+        this.afAuth.auth.signOut().then(() => {
+            localStorage.clear();
+            this.navCtrl.setRoot(TabsControllerPage, null, {animation: 'md-transition'});
+        });
     }
 }

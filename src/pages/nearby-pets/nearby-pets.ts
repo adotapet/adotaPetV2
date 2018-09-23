@@ -1,17 +1,9 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {LocationsProvider} from '../../providers/locations/locations';
 import {GoogleMapsProvider} from '../../providers/google-maps/google-maps';
-import {IonicPage, ModalController, NavController, Platform} from 'ionic-angular';
+import {ModalController, NavController, Platform} from 'ionic-angular';
 import {PetsPerdidosPage} from "../pets-perdidos/pets-perdidos";
 
-/**
- * Generated class for the NearbyPetsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
-@IonicPage()
 @Component({
     selector: 'page-nearby-pets',
     templateUrl: 'nearby-pets.html',

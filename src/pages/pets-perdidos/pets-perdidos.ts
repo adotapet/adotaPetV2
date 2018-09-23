@@ -7,14 +7,6 @@ import {FormBuilder, Validators, FormGroup} from "@angular/forms";
 import {NearbyPetsPage} from "../nearby-pets/nearby-pets";
 import {GoogleMapsProvider} from "../../providers/google-maps/google-maps";
 
-/**
- * Generated class for the PetsPerdidosPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
-@IonicPage()
 @Component({
     selector: 'page-pets-perdidos',
     templateUrl: 'pets-perdidos.html',
@@ -94,11 +86,12 @@ export class PetsPerdidosPage {
             this.camera.getPicture(options).then((imageData) => {
                 // imageData is either a base64 encoded string or a file URI
                 // If it's base64:
-                let base64Image = 'data:image/jpeg;base64,' + imageData;
+               let base64Image = 'data:image/jpeg;base64,' + imageData;
                 let date = new Date().getTime();
                 this.photoData = {"data": date, "img": base64Image};
                 this.photoUrl = base64Image;
             }, (err) => {
+                console.log('Erro',err);
                 let popup = this.alert.create({
                     title: 'Erro! :(',
                     subTitle: 'Não conseguimos encontrar a imagem, tente novamente. ',

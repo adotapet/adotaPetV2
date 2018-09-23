@@ -109,4 +109,17 @@ export class LocationsProvider {
         return dis;
     }
 
+    getCurrentPosition(): Promise<any> {
+        return new Promise(resolve => {
+            this.geolocation.getCurrentPosition().then((position) => {
+                let usersLocation = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                localStorage.setItem("currentLocation", JSON.stringify(usersLocation));
+                resolve(usersLocation);
+            });
+        });
+    }
+
 }

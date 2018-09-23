@@ -30,7 +30,6 @@ export class AuthProvider {
 
 
     getUser(): Promise<any> {
-
         return new Promise((resolve) => {
             let currentUser = this.afAuth.auth.currentUser;
             resolve(currentUser);

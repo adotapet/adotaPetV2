@@ -3,8 +3,6 @@ import {Platform, Nav, ToastController} from 'ionic-angular';
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {TabsControllerPage} from "../pages/tabs-controller/tabs-controller";
-import {OneSignal} from "@ionic-native/onesignal";
-import {MeusPetsPage} from '../pages/meus-pets/meus-pets';
 import {MensagemPage} from "../pages/mensagem/mensagem";
 import {AndroidPermissions} from "@ionic-native/android-permissions";
 import {AngularFireAuth} from "angularfire2/auth";

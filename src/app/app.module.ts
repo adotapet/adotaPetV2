@@ -31,7 +31,6 @@ import {ProfilePage} from "../pages/profile/profile";
 import {OneSignal} from "@ionic-native/onesignal";
 import {SocialSharing} from "@ionic-native/social-sharing";
 import {EmojiProvider} from "../providers/emoji";
-import {EmojiPickerComponent} from "../components/emoji-picker/emoji-picker";
 import {MeusPetsComponent} from "../components/meus-pets/meus-pets";
 import {SalasChatComponent} from "../components/salas-chat/salas-chat";
 import {ConnectivityProvider} from '../providers/connectivity/connectivity';
@@ -50,6 +49,8 @@ import {HttpClientModule, HttpClient} from '@angular/common/http';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {PetsPerdidosPage} from "../pages/pets-perdidos/pets-perdidos";
+import {EmojiPickerComponent} from "../components/emoji-picker/emoji-picker";
+import {CameraMock} from "./camera.mock";
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
@@ -74,8 +75,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         UserPerfilPage,
         MeusPetsComponent,
         SalasChatComponent,
-        EmojiPickerComponent,
-        PleaseLoginComponent
+        PleaseLoginComponent,
+        EmojiPickerComponent
     ],
     imports: [
         BrowserModule,
@@ -113,18 +114,20 @@ export function HttpLoaderFactory(http: HttpClient) {
         SalasChatComponent,
         MeusPetsComponent,
         NearbyPetsPage,
-        PleaseLoginComponent
+        PleaseLoginComponent,
+        EmojiPickerComponent
     ],
     providers: [
         StatusBar,
         SplashScreen,
         {provide: ErrorHandler, useClass: IonicErrorHandler},
+        //{provide: Camera, useClass: CameraMock},
+        Camera,
         LoginProvider,
         AuthProvider,
         PostProvider,
         ChatProvider,
         Facebook,
-        Camera,
         OneSignal,
         SocialSharing,
         EmojiProvider,
