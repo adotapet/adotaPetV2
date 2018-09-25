@@ -8,7 +8,7 @@ import {AndroidPermissions} from "@ionic-native/android-permissions";
 import {AngularFireAuth} from "angularfire2/auth";
 
 import {TranslateService} from '@ngx-translate/core';
-import {DatePipe} from "@angular/common";
+import {OneSignal} from "@ionic-native/onesignal";
 
 @Component({
     templateUrl: 'app.html'
@@ -23,7 +23,8 @@ export class MyApp {
                 public toast: ToastController,
                 public afAuth: AngularFireAuth,
                 private androidPermissions: AndroidPermissions,
-                translate: TranslateService
+                translate: TranslateService,
+                public oneSiganal: OneSignal
     ) {
 
 
@@ -32,16 +33,12 @@ export class MyApp {
             // Here you can do any higher level native things you might need.
             statusBar.styleLightContent();
             splashScreen.hide();
+            this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.GEOLOCATION).then(()=> console.log('perguntado'));
 
-            // OneSignal Code start:
-            // Enable to debug issues:
-            //window["plugins"].OneSignal.setLogLevel({logLevel: 4, visualLevel: 4});
-
-
-            this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.GEOLOCATION).then(
-                result => console.log('Has permission?', result.hasPermission),
-                err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.GEOLOCATION)
-            );
+            this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.GEOLOCATION).then( erro=>{
+                //console.log('Has permission?', result.hasPermission),
+                console.log('erro', erro)
+            });
 
 
             this.androidPermissions.requestPermissions([
@@ -63,9 +60,11 @@ export class MyApp {
             let androidPermissions = this.androidPermissions;
 
             function onError(error) {
+                console.log('retorno alert', error);
                 alert('Este APP funciona pela localizacão, listando PETS em adoção proxímo a você! ' +
                     'Permita a localizacao para listar os PETS   ');
-                androidPermissions.requestPermissions([androidPermissions.PERMISSION.GEOLOCATION, androidPermissions.PERMISSION.GET_ACCOUNTS]);
+                androidPermissions.requestPermissions([androidPermissions.PERMISSION.GEOLOCATION]);
+
             }
 
             navigator.geolocation.getCurrentPosition(onSuccess, onError);
@@ -87,15 +86,20 @@ export class MyApp {
                         'id_interessado': msg.id_interessado
                     });
                 } else {
-                    this.toast.create({
-                        message: 'Você recebeu uma menssagem',
-                        duration: 2000
-                    }).present();
+                    //Colocar um pilow na tab do perfil pra quando o usuario estiver em outra tala fora do chat.
                 }
                 console.log('NOTIFICATION RECEIVED', data);
             };
-
-
+            //window["plugins"].OneSignal
+            //    .startInit("f2dc92d3-6665-406d-8e5f-e7c6e19e822d", "534848323519")
+            //    .handleNotificationOpened(funcaoRetorno)
+            //    .endInit();
+            this.oneSiganal.startInit("f2dc92d3-6665-406d-8e5f-e7c6e19e822d", "534848323519")
+                .handleNotificationOpened(funcaoRetorno)
+                .endInit();
+            this.oneSiganal.getPermissionSubscriptionState().then((status) => {
+                console.log('STATUS NOTIFICACAO', status)
+            })
 
         });
     }
