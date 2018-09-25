@@ -8,13 +8,14 @@ import {AndroidPermissions} from "@ionic-native/android-permissions";
 import {AngularFireAuth} from "angularfire2/auth";
 
 import {TranslateService} from '@ngx-translate/core';
+import {DatePipe} from "@angular/common";
 
 @Component({
     templateUrl: 'app.html'
 })
 export class MyApp {
     @ViewChild(Nav) navCtrl: Nav;
-    rootPage: any;
+    rootPage: any = 'TabsControllerPage';
 
     constructor(platform: Platform,
                 statusBar: StatusBar,
@@ -25,7 +26,6 @@ export class MyApp {
                 translate: TranslateService
     ) {
 
-        this.rootPage = TabsControllerPage;
 
         platform.ready().then(() => {
             // Okay, so the platform is ready and our plugins are available.
@@ -36,24 +36,7 @@ export class MyApp {
             // OneSignal Code start:
             // Enable to debug issues:
             //window["plugins"].OneSignal.setLogLevel({logLevel: 4, visualLevel: 4});
-            let funcaoRetorno = (data) => {
-                //Direcionando para o chat pegando os dados da sala que sao enviados dentro na notificacao.
-                let msg = data.notification.payload.additionalData;
-                if (!data.notification.isAppInFocus) {
-                    this.navCtrl.push(MensagemPage, {
-                        'key': msg.pet,
-                        'idGrouped': msg.sala,
-                        'titulo': msg.titulo,
-                        'id_interessado': msg.id_interessado
-                    });
-                } else {
-                    this.toast.create({
-                        message: 'Você recebeu uma menssagem',
-                        duration: 2000
-                    }).present();
-                }
-                console.log('NOTIFICATION RECEIVED', data);
-            };
+
 
             this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.GEOLOCATION).then(
                 result => console.log('Has permission?', result.hasPermission),
@@ -77,11 +60,13 @@ export class MyApp {
                     'Timestamp: ' + position.timestamp + '\n');
             };
 
+            let androidPermissions = this.androidPermissions;
+
             function onError(error) {
                 alert('Este APP funciona pela localizacão, listando PETS em adoção proxímo a você! ' +
                     'Permita a localizacao para listar os PETS   ');
-                this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.GEOLOCATION, this.androidPermissions.PERMISSION.GET_ACCOUNTS]);
-            };
+                androidPermissions.requestPermissions([androidPermissions.PERMISSION.GEOLOCATION, androidPermissions.PERMISSION.GET_ACCOUNTS]);
+            }
 
             navigator.geolocation.getCurrentPosition(onSuccess, onError);
 
@@ -91,11 +76,27 @@ export class MyApp {
             // Insere a lingua como padrao
             translate.setDefaultLang(language);
 
+            let funcaoRetorno = (data) => {
+                //Direcionando para o chat pegando os dados da sala que sao enviados dentro na notificacao.
+                let msg = data.notification.payload.additionalData;
+                if (!data.notification.isAppInFocus) {
+                    this.navCtrl.push('MensagemPage', {
+                        'key': msg.pet,
+                        'idGrouped': msg.sala,
+                        'titulo': msg.titulo,
+                        'id_interessado': msg.id_interessado
+                    });
+                } else {
+                    this.toast.create({
+                        message: 'Você recebeu uma menssagem',
+                        duration: 2000
+                    }).present();
+                }
+                console.log('NOTIFICATION RECEIVED', data);
+            };
 
-            window["plugins"].OneSignal.startInit("f2dc92d3-6665-406d-8e5f-e7c6e19e822d",
-                "534848323519")
-                .handleNotificationOpened(funcaoRetorno)
-                .endInit();
+
+
         });
     }
 
@@ -103,7 +104,7 @@ export class MyApp {
         this.afAuth.auth.signOut().then(() => {
             localStorage.clear();
             if (!params) params = {};
-            this.navCtrl.push(TabsControllerPage, null, {animation: 'md-transition'});
+            this.navCtrl.push('TabsControllerPage', null, {animation: 'md-transition'});
         });
 
     }

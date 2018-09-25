@@ -78,8 +78,8 @@ export class LocationsProvider {
         locations.map((location) => {
 
             let placeLocation = {
-                lat: location.coordenadas.lat,
-                lng: location.coordenadas.lng
+                lat: location.lat,
+                lng: location.lng
             };
 
             location.distance = this.getDistanceFromLatLonInKm(
@@ -119,6 +119,22 @@ export class LocationsProvider {
                 localStorage.setItem("currentLocation", JSON.stringify(usersLocation));
                 resolve(usersLocation);
             });
+        });
+    }
+
+    getDistancia(petCoords) {
+        petCoords = [petCoords];
+
+        return new Promise(resolve => {
+            this.geolocation.getCurrentPosition().then((position) => {
+                let userLocation = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                let distancia = this.applyHaversine(petCoords, userLocation);
+                resolve(distancia);
+            });
+
         });
     }
 

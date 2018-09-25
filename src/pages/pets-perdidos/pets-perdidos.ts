@@ -64,7 +64,7 @@ export class PetsPerdidosPage {
             this.pet.tipo = this.tipo;
             this.afDb.object('perdidos/pets/' + key).set(this.pet).then(() => {
                 loading.dismiss();
-                this.navCtrl.setRoot(NearbyPetsPage);
+                this.navCtrl.setRoot('NearbyPetsPage');
             });
         });
     }

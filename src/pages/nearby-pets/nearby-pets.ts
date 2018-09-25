@@ -51,7 +51,7 @@ export class NearbyPetsPage {
 
     newLostPet(tipo: number) {
         console.log(tipo);
-        this.navCtrl.push(PetsPerdidosPage, {"tipo": tipo})
+        this.navCtrl.push('PetsPerdidosPage', {"tipo": tipo})
     }
 
 }

@@ -3,7 +3,6 @@ import {LoginProvider} from "../../providers/login/login";
 import {Component} from '@angular/core';
 import {AngularFireDatabase} from "angularfire2/database";
 import {TabsControllerPage} from "../tabs-controller/tabs-controller";
-import {OneSignal} from "@ionic-native/onesignal";
 
 
 @Component({
@@ -16,7 +15,7 @@ export class ProfilePage {
     userId: string;
 
     constructor(public navParams: NavParams, public navCtrl: NavController, private login: LoginProvider,
-                public alert: AlertController, public afDb: AngularFireDatabase, private oneSignal: OneSignal
+                public alert: AlertController, public afDb: AngularFireDatabase
     ) {
         this.userId = this.navParams.get('userId');
 
@@ -24,9 +23,9 @@ export class ProfilePage {
 
 
     createProfile() {
-        this.login.createProfile(this.userId).then(()=>{
+        this.login.createProfile(this.userId).then(() => {
             console.log('returned');
-            this.navCtrl.setRoot(TabsControllerPage);
+            this.navCtrl.setRoot('TabsControllerPage');
         })
     }
 

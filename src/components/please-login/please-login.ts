@@ -22,7 +22,7 @@ export class PleaseLoginComponent {
   }
 
   gotoLogin(){
-      let loginModal = this.modalCtrl.create(LoginPage);
+      let loginModal = this.modalCtrl.create('LoginPage');
       loginModal.present();
   }
 }

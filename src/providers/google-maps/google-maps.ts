@@ -1,13 +1,8 @@
 import {Injectable} from '@angular/core';
 import {ConnectivityProvider} from '../connectivity/connectivity'
 import {Geolocation} from '@ionic-native/geolocation';
-import {ModalController, ToastController} from "ionic-angular";
-import {ChatPage} from "../../pages/chat/chat";
-/*
-  Generated class for the GoogleMapsProvider provider.
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular DI.
-*/
+import {ModalController} from "ionic-angular";
+
 
 declare var google;
 
@@ -63,9 +58,9 @@ export class GoogleMapsProvider {
                     script.id = "googleMaps";
 
                     if (this.apiKey) {
-                        script.src = 'http://maps.google.com/maps/api/js?key=' + this.apiKey + '&callback=mapInit';
+                        script.src = 'https://maps.google.com/maps/api/js?key=' + this.apiKey + '&callback=mapInit';
                     } else {
-                        script.src = 'http://maps.google.com/maps/api/js?callback=mapInit';
+                        script.src = 'https://maps.google.com/maps/api/js?callback=mapInit';
                     }
 
                     document.body.appendChild(script);
@@ -422,9 +417,9 @@ export class GoogleMapsProvider {
         let latLng = new google.maps.LatLng(lat, lng);
         let icon = '';
         if (pet.tipo == 1) {
-            icon = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+            icon = 'https://maps.google.com/mapfiles/ms/icons/red-dot.png';
         } else {
-            icon = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
+            icon = 'https://maps.google.com/mapfiles/ms/icons/green-dot.png';
         }
         let marker = new google.maps.Marker({
             map: this.map,
@@ -437,7 +432,7 @@ export class GoogleMapsProvider {
         marker.addListener('click', (event) => {
 
             console.log('clicked', event);
-            let modal = this.modalCtrl.create(ChatPage, {"pet": pet, "key": key});
+            let modal = this.modalCtrl.create('ChatPage', {"pet": pet, "key": key});
             modal.present();
 
         });
@@ -447,9 +442,9 @@ export class GoogleMapsProvider {
     getClickedCoords(tipo): Promise<any> {
         let icon = '';
         if (tipo = 1) {
-            icon = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+            icon = 'https://maps.google.com/mapfiles/ms/icons/red-dot.png';
         } else {
-            icon = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
+            icon = 'https://maps.google.com/mapfiles/ms/icons/green-dot.png';
         }
         return new Promise((resolve) => {
             this.map.addListener('click', data => {

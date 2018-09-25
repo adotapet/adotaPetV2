@@ -2,6 +2,7 @@ import {AngularFireAuth} from 'angularfire2/auth';
 import {AngularFireDatabase} from 'angularfire2/database';
 import {Injectable} from '@angular/core';
 import firebase from 'firebase';
+import {Observable} from "rxjs";
 
 @Injectable()
 export class AuthProvider {
@@ -13,19 +14,15 @@ export class AuthProvider {
 
     public fireAuth: any;
 
-    private uid: string;
-
 
     resetPassword(email: string): any {
         return this.fireAuth.sendPasswordResetEmail(email);
     }
 
-    setUid(uid: string): void {
-        this.uid = uid;
-    }
+    get autenticated(): Observable<any> {
 
-    getUid(): string {
-        return this.uid;
+        return this.afAuth.authState
+
     }
 
 

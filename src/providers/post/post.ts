@@ -11,6 +11,6 @@ export class PostProvider {
     }
 
     getPetsRef(){
-        return `${this.location}/adocao/pets`;
+        return 'adocao/pets';
     }
 }

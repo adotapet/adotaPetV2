@@ -1,8 +1,11 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {NavController, NavParams, ViewController, Content, Events} from 'ionic-angular';
+import {NavController, NavParams, ViewController, Content, IonicPage} from 'ionic-angular';
 import {ChatProvider} from "../../providers/chat/chat";
 import {AuthProvider} from "../../providers/auth/auth";
 
+@IonicPage({
+    priority: 'low'
+})
 @Component({
     selector: 'page-mensagem',
     templateUrl: 'mensagem.html'
@@ -29,10 +32,12 @@ export class MensagemPage {
         });
         this.titulo = params.get('titulo');
         this.listMessages();
+        this.scrollToBottom();
+
     }
 
     ionViewDidLoad() {
-        this.scrollToBottom();
+       // this.scrollToBottom();
     }
 
     listMessages() {
@@ -42,8 +47,15 @@ export class MensagemPage {
         });
     }
 
-    sendMessage(msg) {
-        this.chatProvider.sendMessage(msg, this.key, this.idGrouped, this.id_interessado);
+    sendMessage(msg:string) {
+            this.chatProvider.sendMessage(msg, this.key, this.idGrouped, this.id_interessado).then(result => {
+                console.log('result', result);
+               this.showEmojiPicker = false;
+                this.content.resize();
+            }).catch(erro => {
+                console.log('erro', erro);
+
+            });
         this.msgText = '';
         this.scrollToBottom();
     }

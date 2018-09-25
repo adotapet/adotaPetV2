@@ -40,7 +40,7 @@ export class SalasChatComponent {
 
     goToMensagem(sala) {
         if (!sala) sala = null;
-        this.navCtrl.push(MensagemPage, {
+        this.navCtrl.push('MensagemPage', {
             "key": sala.pet,
             "idGrouped": sala.dono_interessado_pet,
             "titulo": sala.nomePet,

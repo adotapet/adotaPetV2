@@ -1,16 +1,17 @@
 import {Component} from '@angular/core';
-import {AlertController, LoadingController, Loading, NavController, ToastController} from 'ionic-angular';
+import {AlertController, LoadingController, Loading, NavController, ToastController, IonicPage} from 'ionic-angular';
 
 import {Post} from "../../models/post";
 import {AuthProvider} from "../../providers/auth/auth";
 import {AngularFireDatabase} from 'angularfire2/database';
 import {Camera, CameraOptions} from "@ionic-native/camera";
 import {storage, database} from "firebase";
-import {AdotePage} from "../adote/adote";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {LocationsProvider} from "../../providers/locations/locations";
 
-
+@IonicPage({
+    priority:'low'
+})
 @Component({
     selector: 'page-adicionar-pet',
     templateUrl: 'adicionar-pet.html'
@@ -284,7 +285,9 @@ export class AdicionarPetPage {
                     role: 'confirm',
                     handler: () => {
                         this.post.reset();
-                        this.navCtrl.push(AdotePage, null, {animation: 'md-transition'});
+                        this.photoUrls = [];
+                        this.fotoUrls = [];
+                        this.navCtrl.push('AdotePage', null, {animation: 'md-transition'});
                     }
                 }]
             });

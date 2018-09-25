@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, NavParams, AlertController, LoadingController} from 'ionic-angular';
+import {NavController, NavParams, AlertController, LoadingController, IonicPage} from 'ionic-angular';
 import {User} from "../../models/user";
 import {CadastrarPage} from "../cadastrar/cadastrar";
 import {AngularFireAuth} from "angularfire2/auth";
@@ -10,7 +10,9 @@ import {ProfilePage} from "../profile/profile";
 import {AngularFireDatabase} from "angularfire2/database";
 import {AuthProvider} from "../../providers/auth/auth";
 
-
+@IonicPage({
+    priority:'medium'
+})
 @Component({
     selector: 'page-login',
     templateUrl: 'login.html'
@@ -78,7 +80,7 @@ export class LoginPage {
     }
 
     register() {
-        this.navCtrl.push(CadastrarPage);
+        this.navCtrl.push('CadastrarPage');
     }
 
     recuperarSenha() {
@@ -122,10 +124,6 @@ export class LoginPage {
         });
         alert.present();
     }
-
-    // anonimo() {
-    //   this.navCtrl.push(TabsControllerPage);
-    // }
 
     //Login com Facebook
 

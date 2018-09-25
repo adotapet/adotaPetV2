@@ -1,11 +1,21 @@
 import {Component} from '@angular/core';
-import {AlertController, LoadingController, Loading, NavController, NavParams, ToastController} from 'ionic-angular';
+import {
+    AlertController,
+    LoadingController,
+    Loading,
+    NavController,
+    NavParams,
+    ToastController,
+    IonicPage
+} from 'ionic-angular';
 import {MensagemPage} from "../mensagem/mensagem";
 import {AngularFireAuth} from "angularfire2/auth";
 import {SocialSharing} from '@ionic-native/social-sharing';
 import {AngularFireDatabase} from "angularfire2/database";
 
-
+@IonicPage({
+    priority:'medium'
+})
 @Component({
     selector: 'page-perfil',
     templateUrl: 'perfil.html'
@@ -75,9 +85,10 @@ export class PerfilPage {
         let key = this.key;
         let idGrouped = `${this.pet.user}_${this.usuarioAtual}_${key}`;
         console.log(key, this.pet.user);
-        this.navCtrl.push(MensagemPage, {"key": key, "idGrouped": idGrouped, "id_interessado": this.usuarioAtual, "titulo": this.pet.nome});
+        this.navCtrl.push('MensagemPage', {"key": key, "idGrouped": idGrouped, "id_interessado": this.usuarioAtual, "titulo": this.pet.nome});
     }
 
+    //Nao esta usando mais
     marcarComoAdotado() {
         let popup = this.alert.create({
             title: 'Tem certeza que quer marcar o pet como adotado?',
@@ -88,7 +99,7 @@ export class PerfilPage {
                 handler: () => {
                     this.presentWithGif();
                     this.presentToast();
-                    this.db.list('BR/adocao/pets/' + this.pet).remove().then(() => {
+                    this.db.object('adocao/pets/' + this.key).remove().then(() => {
 
                     });
                 }

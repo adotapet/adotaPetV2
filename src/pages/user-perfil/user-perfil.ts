@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, ToastController} from 'ionic-angular'
+import {IonicPage, NavController, ToastController} from 'ionic-angular'
 import {AuthProvider} from "../../providers/auth/auth";
 import {TranslateService} from "@ngx-translate/core";
 import {AngularFireAuth} from "angularfire2/auth";
@@ -11,7 +11,9 @@ import {TabsControllerPage} from "../tabs-controller/tabs-controller";
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
+@IonicPage({
+    priority: 'low'
+})
 @Component({
     selector: 'page-user-perfil',
     templateUrl: 'user-perfil.html',
@@ -19,7 +21,7 @@ import {TabsControllerPage} from "../tabs-controller/tabs-controller";
 export class UserPerfilPage {
 
     section: string = 'one';
-    canEnter: boolean;
+    canEnter: boolean = false;
 
     constructor(public navCtrl: NavController,
                 public auth: AuthProvider,
@@ -31,28 +33,18 @@ export class UserPerfilPage {
     }
 
     ionViewCanEnter() {
-        this.auth.getUser().then(user => {
-            let translation: string = this.translate.instant('Faça login para continuar');
-            let result = !!user;
-            console.log('auth', result, user);
-            let toast = this.toastCtrl.create({
-                message: translation,
-                duration: 2000,
-                position: 'bottom'
-            });
-            if (!result) {
-                toast.present();
-                this.canEnter = false;
-            } else {
-                this.canEnter = true;
-            }
-        })
+        this.auth.autenticated.subscribe((value) => {
+            console.log('retorno', value);
+
+            (!value) ? this.canEnter = false : this.canEnter = true;
+        });
+        //let translation: string = this.translate.instant('Faça login para continuar');
     }
 
     logOf(): void {
         this.afAuth.auth.signOut().then(() => {
             localStorage.clear();
-            this.navCtrl.setRoot(TabsControllerPage, null, {animation: 'md-transition'});
+            this.navCtrl.push('AdotePage', null, {animation: 'md-transition'});
         });
     }
 }
