@@ -16,7 +16,7 @@
 <ion-content padding *ngIf="!canEnter">
     <please-login></please-login>
 </ion-content>
-<ion-content fullscreen #myContent *ngIf="canEnter">
+<ion-content  #myContent *ngIf="canEnter">
 
     <ion-toolbar color="light" mode="md">
         <ion-segment color="dark" mode="md" [(ngModel)]="section">

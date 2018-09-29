@@ -10,22 +10,9 @@
 
     <link rel="icon" type="image/x-icon" href="assets/icon/favicon.ico">
     <link rel="manifest" href="manifest.json">
-    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async='async'></script>
     <meta name="theme-color" content="#4e8ef7">
     <!-- cordova.js required for cordova apps -->
     <script src="cordova.js"></script>
-    <script>
-        var OneSignal = window.OneSignal || [];
-        OneSignal.push(function() {
-            OneSignal.init({
-                appId: "f2dc92d3-6665-406d-8e5f-e7c6e19e822d",
-                autoRegister: false,
-                notifyButton: {
-                    enable: true,
-                },
-            });
-        });
-    </script>
     <!--
        <script>
            if ('serviceWorker' in navigator) {

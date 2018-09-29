@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {AuthProvider} from "../auth/auth";
 import {AngularFireDatabase} from 'angularfire2/database';
-import {OneSignal} from "@ionic-native/onesignal";
 import {Post} from "../../models/post";
+import {HttpClient} from "@angular/common/http";
 
 
 @Injectable()
@@ -15,8 +15,9 @@ export class ChatProvider {
     tokenInteressado: any;
     petData: any = {"user": 12321};
     dono: any;
+    onesignal_api = 'https://onesignal.com/api/v1/notifications';
 
-    constructor(public auth: AuthProvider, public afDb: AngularFireDatabase, public oneSignal: OneSignal) {
+    constructor(public auth: AuthProvider, public afDb: AngularFireDatabase, private http: HttpClient) {
         console.log('Hello ChatProvider Provider');
         this.auth.getUser().then(data => {
             this.myInfo = data;
@@ -81,95 +82,100 @@ export class ChatProvider {
         }
     }
 
-    gravarDados(petKey, idGrouped, msg, id_interessado): void {
-        this.afDb.list('chat/salas', ref => ref.orderByChild('dono_interessado_pet').equalTo(idGrouped)).valueChanges().subscribe((sala) => {
-            let notToken = (this.myToken == this.tokenInteressado) ? this.dono.pushToken : this.tokenInteressado;
-            console.log('TOKEN FINAL', notToken);
-            console.log('SALAAAA22222222', sala);
+    gravarDados(petKey, idGrouped, msg, id_interessado): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.afDb.list('chat/salas', ref => ref.orderByChild('dono_interessado_pet').equalTo(idGrouped)).valueChanges().subscribe((sala) => {
+                let notToken = (this.myToken == this.tokenInteressado) ? this.dono.pushToken : this.tokenInteressado;
+                console.log('TOKEN FINAL', notToken);
+                console.log('SALAAAA22222222', sala);
 
-            let date = new Date().toLocaleString();
-            if (!sala[0]) {
-                let objSala = {
-                    id_dono: this.petData.user,
-                    nomeDono: (this.dono.nome ? this.dono.nome : 'Sem nome'),
-                    id_interessado: this.myInfo.uid,
-                    nomeInteressado: (this.myInfo.displayName ? this.myInfo.displayName : this.myInfo.email),
-                    pet: petKey,
-                    nomePet: this.petData.nome,
-                    imagePet: this.petData.fotoUrls[0],
-                    dono_interessado_pet: idGrouped
-                };
-                let objMsg = {
-                    img: 'assets/user.jpg',
-                    content: msg,
-                    senderName: (this.myInfo.displayName ? this.myInfo.displayName : this.myInfo.email),
-                    time: date,
-                    dono_interessado_pet: idGrouped,
-                    autor: this.myInfo.uid,
-                    token: this.myToken,
-                    dono: this.petData.user,
-                    pet: petKey
-                };
+                let date = new Date().toLocaleString();
+                let timestamp = new Date().getTime();
+                if (!sala[0]) {
+                    let objSala = {
+                        id_dono: this.petData.user,
+                        nomeDono: (this.dono.nome ? this.dono.nome : 'Sem nome'),
+                        id_interessado: this.myInfo.uid,
+                        nomeInteressado: (this.myInfo.displayName ? this.myInfo.displayName : this.myInfo.email),
+                        pet: petKey,
+                        nomePet: this.petData.nome,
+                        imagePet: this.petData.fotoUrls[0],
+                        dono_interessado_pet: idGrouped
+                    };
+                    let objMsg = {
+                        img: 'assets/user.jpg',
+                        content: msg,
+                        senderName: (this.myInfo.displayName ? this.myInfo.displayName : this.myInfo.email),
+                        time: date,
+                        timestamp: timestamp,
+                        dono_interessado_pet: idGrouped,
+                        autor: this.myInfo.uid,
+                        token: this.myToken,
+                        dono: this.petData.user,
+                        pet: petKey
+                    };
 
-                this.salasRef.push(objSala).then(() => {
-                    this.msgRef.push(objMsg).then(() => {
-                        let notMsg: any = {
-                            "app_id": "f2dc92d3-6665-406d-8e5f-e7c6e19e822d",
-                            "data": {
-                                "sala": objMsg.dono_interessado_pet,
-                                "pet": objMsg.pet,
-                                'titulo': this.petData.nome,
-                                "id_interessado": id_interessado
-                            },
-                            "contents": {"en": objMsg.content, "pt": objMsg.content},
-                            "include_player_ids": [`${notToken}`]
-                        };
-                        console.log('obj', notMsg);
-                        this.oneSignal.postNotification(notMsg).then(() => {
-                            console.log('NOTIFICAÇÃO ENVIADA');
-                            return true
-                        }).catch(erro => {
-                            console.log('NOTIFICAÇÃO NAO ENVIADA');
+                    this.salasRef.push(objSala).then(() => {
+                        this.msgRef.push(objMsg).then(() => {
+                            let notMsg: any = {
+                                "app_id": "f2dc92d3-6665-406d-8e5f-e7c6e19e822d",
+                                "data": {
+                                    "sala": objMsg.dono_interessado_pet,
+                                    "pet": objMsg.pet,
+                                    'titulo': this.petData.nome,
+                                    "id_interessado": id_interessado
+                                },
+                                "contents": {"en": objMsg.content, "pt": objMsg.content},
+                                "include_player_ids": [`${notToken}`]
+                            };
+                            console.log('obj', notMsg);
+                            let notification = this.http.post(this.onesignal_api, notMsg).subscribe((retorno) => {
+                                console.log('RETORNO API', retorno);
+                                resolve(retorno);
 
-                            return false;
+                            }, error => {
+                                console.log('RETORNO API ERRO', error);
+                                reject(error);
+                            });
                         });
                     });
-                });
 
-            } else {
-                let objMsg = {
-                    img: 'assets/to-user.jpg',
-                    content: msg,
-                    senderName: (this.myInfo.displayName ? this.myInfo.displayName : this.myInfo.email),
-                    time: date,
-                    dono_interessado_pet: idGrouped,
-                    autor: this.myInfo.uid,
-                    token: this.myToken,
-                    dono: this.petData.user,
-                    pet: petKey
-                };
-                this.msgRef.push(objMsg);
+                } else {
+                    let objMsg = {
+                        img: 'assets/to-user.jpg',
+                        content: msg,
+                        senderName: (this.myInfo.displayName ? this.myInfo.displayName : this.myInfo.email),
+                        time: date,
+                        timestamp: timestamp,
+                        dono_interessado_pet: idGrouped,
+                        autor: this.myInfo.uid,
+                        token: this.myToken,
+                        dono: this.petData.user,
+                        pet: petKey
+                    };
+                    this.msgRef.push(objMsg);
 
-                let notMsg: any = {
-                    "app_id": "f2dc92d3-6665-406d-8e5f-e7c6e19e822d",
-                    "data": {
-                        "sala": objMsg.dono_interessado_pet,
-                        "pet": objMsg.pet,
-                        'titulo': this.petData.nome,
-                        "id_interessado": id_interessado
-                    },
-                    "contents": {"en": objMsg.content, "pt": objMsg.content},
-                    "include_player_ids": [`${notToken}`]
-                };
-                this.oneSignal.postNotification(notMsg).then(() => {
-                    console.log('NOTIFICAÇÃO ENVIADA');
-                    return true
-                }).catch(erro => {
-                    console.log('NOTIFICAÇÃO NÃO ENVIADA');
-                    return false;
-                });
-            }
+                    let notMsg: any = {
+                        "app_id": "f2dc92d3-6665-406d-8e5f-e7c6e19e822d",
+                        "data": {
+                            "sala": objMsg.dono_interessado_pet,
+                            "pet": objMsg.pet,
+                            'titulo': this.petData.nome,
+                            "id_interessado": id_interessado
+                        },
+                        "contents": {"en": objMsg.content, "pt": objMsg.content},
+                        "include_player_ids": [`${notToken}`]
+                    };
+                    this.http.post(this.onesignal_api, notMsg).subscribe((retorno) => {
+                        console.log('RETORNO API', retorno);
+                        resolve(retorno);
+                    }, error => {
+                        console.log('RETORNO API ERRO', error);
+                        reject(error);
+                    });
+                }
 
+            });
         });
     }
 
@@ -195,5 +201,4 @@ export class ChatProvider {
         });
 
     }
-
 }

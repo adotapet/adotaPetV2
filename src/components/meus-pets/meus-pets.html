@@ -9,7 +9,7 @@
     <ion-list id="meusPets-list3" *ngFor="let pet of myPets.ativos">
         <ion-item color="assertive" id="meusPets-list-item6">
             <ion-avatar item-left>
-                <img src="{{pet.payload.val().fotoUrls[0]}}"/>
+                <img [src]="pet.payload.val().fotoUrls[0]"/>
             </ion-avatar>
             <h2>
                 {{pet.payload.val().nome}}

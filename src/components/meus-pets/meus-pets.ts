@@ -22,11 +22,13 @@ export class MeusPetsComponent {
                 private toastCtrl: ToastController,
                 private storage: AngularFireStorage,
                 private translate: TranslateService
-                ) {
+    ) {
 
         this.authProvider.getUser().then(user => {
             this.myId = user.uid;
-            this.listPets();
+            if (user.uid) {
+                this.listPets();
+            }
         });
 
     }
@@ -49,9 +51,9 @@ export class MeusPetsComponent {
 
     deletePet(id, pet) {
 
-        const translationTitle:string = this.translate.instant('Você tem certeza que deseja deletar?');
-        const translationText:string = this.translate.instant('Tenho certeza');
-        const translationNo:string = this.translate.instant('Não');
+        const translationTitle: string = this.translate.instant('Você tem certeza que deseja deletar?');
+        const translationText: string = this.translate.instant('Tenho certeza');
+        const translationNo: string = this.translate.instant('Não');
 
         let popup = this.alert.create({
 
@@ -86,9 +88,9 @@ export class MeusPetsComponent {
     }
 
     marcarComoAdotado(id, pet) {
-        const translationTitle:string = this.translate.instant('Tem certeza que quer marcar o Pet como adotado?');
-        const translationText:string = this.translate.instant('Tenho certeza');
-        const translationNo:string = this.translate.instant('Não');
+        const translationTitle: string = this.translate.instant('Tem certeza que quer marcar o Pet como adotado?');
+        const translationText: string = this.translate.instant('Tenho certeza');
+        const translationNo: string = this.translate.instant('Não');
 
         let popup = this.alert.create({
             title: translationTitle,
@@ -118,10 +120,10 @@ export class MeusPetsComponent {
     }
 
     marcarComoAtivo(id, pet) {
-        const translationTitle:string = this.translate.instant('Você deseja colocar o pet em adoção novamente?');
-        const translationText:string = this.translate.instant('Tenho certeza');
-        const translationNo:string = this.translate.instant('Não');
-        const translationBack:string = this.translate.instant('voltou para a adoção!');
+        const translationTitle: string = this.translate.instant('Você deseja colocar o pet em adoção novamente?');
+        const translationText: string = this.translate.instant('Tenho certeza');
+        const translationNo: string = this.translate.instant('Não');
+        const translationBack: string = this.translate.instant('voltou para a adoção!');
 
 
         let popup = this.alert.create({

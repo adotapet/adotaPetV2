@@ -2,8 +2,6 @@ import {Component, ViewChild} from '@angular/core';
 import {Platform, Nav, ToastController} from 'ionic-angular';
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
-import {TabsControllerPage} from "../pages/tabs-controller/tabs-controller";
-import {MensagemPage} from "../pages/mensagem/mensagem";
 import {AndroidPermissions} from "@ionic-native/android-permissions";
 import {AngularFireAuth} from "angularfire2/auth";
 
@@ -24,7 +22,7 @@ export class MyApp {
                 public afAuth: AngularFireAuth,
                 private androidPermissions: AndroidPermissions,
                 translate: TranslateService,
-                public oneSiganal: OneSignal
+                public oneSignal: OneSignal
     ) {
 
 
@@ -33,9 +31,9 @@ export class MyApp {
             // Here you can do any higher level native things you might need.
             statusBar.styleLightContent();
             splashScreen.hide();
-            this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.GEOLOCATION).then(()=> console.log('perguntado'));
+            this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.GEOLOCATION).then(() => console.log('perguntado'));
 
-            this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.GEOLOCATION).then( erro=>{
+            this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.GEOLOCATION).then(erro => {
                 //console.log('Has permission?', result.hasPermission),
                 console.log('erro', erro)
             });
@@ -90,17 +88,15 @@ export class MyApp {
                 }
                 console.log('NOTIFICATION RECEIVED', data);
             };
-            //window["plugins"].OneSignal
-            //    .startInit("f2dc92d3-6665-406d-8e5f-e7c6e19e822d", "534848323519")
-            //    .handleNotificationOpened(funcaoRetorno)
-            //    .endInit();
-            this.oneSiganal.startInit("f2dc92d3-6665-406d-8e5f-e7c6e19e822d", "534848323519")
+            console.log('WINDOW', window['plugins'].OneSignal);
+            let oneSignal = window['plugins'].OneSignal;
+            // window.plugins.OneSignal
+            //     .startInit("f2dc92d3-6665-406d-8e5f-e7c6e19e822d")
+            //     .handleNotificationOpened(funcaoRetorno)
+            //     .endInit();
+            oneSignal.startInit("f2dc92d3-6665-406d-8e5f-e7c6e19e822d", "534848323519")
                 .handleNotificationOpened(funcaoRetorno)
                 .endInit();
-            this.oneSiganal.getPermissionSubscriptionState().then((status) => {
-                console.log('STATUS NOTIFICACAO', status)
-            })
-
         });
     }
 

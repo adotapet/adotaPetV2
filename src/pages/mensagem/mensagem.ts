@@ -37,7 +37,7 @@ export class MensagemPage {
     }
 
     ionViewDidLoad() {
-       // this.scrollToBottom();
+        // this.scrollToBottom();
     }
 
     listMessages() {
@@ -48,14 +48,14 @@ export class MensagemPage {
     }
 
     sendMessage(msg:string) {
-            this.chatProvider.sendMessage(msg, this.key, this.idGrouped, this.id_interessado).then(result => {
-                console.log('result', result);
-               this.showEmojiPicker = false;
-                this.content.resize();
-            }).catch(erro => {
-                console.log('erro', erro);
+        this.chatProvider.sendMessage(msg, this.key, this.idGrouped, this.id_interessado).then(result => {
+            console.log('MENSAGEM ENVIADA RETORNO', result);
+            this.showEmojiPicker = false;
+            this.content.resize();
+        }).catch(erro => {
+            console.log(erro);
 
-            });
+        });
         this.msgText = '';
         this.scrollToBottom();
     }

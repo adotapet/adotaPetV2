@@ -34,8 +34,6 @@ import {HttpClientModule, HttpClient} from '@angular/common/http';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {ProfilePage} from "../pages/profile/profile";
-import {NearbyPetsPage} from "../pages/nearby-pets/nearby-pets";
-import {DatePipe} from "@angular/common";
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
@@ -90,8 +88,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         ConnectivityProvider,
         GoogleMapsProvider,
         LocationsProvider,
-        AndroidPermissions,
-        DatePipe
+        AndroidPermissions
     ]
 })
 export class AppModule {
