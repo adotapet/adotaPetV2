@@ -1,20 +1,11 @@
 import {Component} from '@angular/core';
-import {
-    AlertController,
-    LoadingController,
-    Loading,
-    NavController,
-    NavParams,
-    ToastController,
-    IonicPage
-} from 'ionic-angular';
-import {MensagemPage} from "../mensagem/mensagem";
+import {LoadingController, Loading, NavController, NavParams, IonicPage} from 'ionic-angular';
 import {AngularFireAuth} from "angularfire2/auth";
 import {SocialSharing} from '@ionic-native/social-sharing';
 import {AngularFireDatabase} from "angularfire2/database";
 
 @IonicPage({
-    priority:'medium'
+    priority: 'low'
 })
 @Component({
     selector: 'page-perfil',
@@ -23,8 +14,8 @@ import {AngularFireDatabase} from "angularfire2/database";
 export class PerfilPage {
 
     pet: any;
-    key: string = 'aaaaaaaa';
-    user: any;
+    key: string;
+    dono: any;
     usuarioAtual: any;
     donoDaPostagem: boolean;
     loading: Loading;
@@ -33,32 +24,29 @@ export class PerfilPage {
                 public params: NavParams,
                 private afAuth: AngularFireAuth,
                 private socialSharing: SocialSharing,
-                private db: AngularFireDatabase,
-                private alert: AlertController,
-                private toastCtrl: ToastController,
-                public loadingCtrl: LoadingController
-                ) {
+                public loadingCtrl: LoadingController,
+                //private afDatabase: AngularFireDatabase
+    ) {
+        this.pet = params.get('pet') ? params.get('pet') : {};
+        this.key = params.get('key') ? params.get('key') : '';
 
-        this.pet = params.get('pet');
-        this.key = params.get('key');
-        console.log(this.key);
     }
 
-
     ionViewDidLoad() {
-
+        //this.afDatabase.object(`profile/${this.pet.user}`).valueChanges().subscribe((user) => {
+        //    this.dono = user;
+        //    console.log(this.dono);
+        //});
         this.afAuth.authState.subscribe(data => {
             if (data && data.email && data.uid) {
                 this.usuarioAtual = data.uid;
                 if (this.usuarioAtual == this.pet.user) {
-
                     this.donoDaPostagem = true;
                     console.log(this.donoDaPostagem)
                 } else {
                     this.donoDaPostagem = false;
                     console.log(this.usuarioAtual)
                 }
-
             }
         });
 
@@ -82,54 +70,22 @@ export class PerfilPage {
     }
 
     goToChat() {
+        if (!this.key && !this.pet.user && !this.usuarioAtual) {
+            return false
+        }
         let key = this.key;
         let idGrouped = `${this.pet.user}_${this.usuarioAtual}_${key}`;
         console.log(key, this.pet.user);
-        this.navCtrl.push('MensagemPage', {"key": key, "idGrouped": idGrouped, "id_interessado": this.usuarioAtual, "titulo": this.pet.nome});
-    }
-
-    //Nao esta usando mais
-    marcarComoAdotado() {
-        let popup = this.alert.create({
-            title: 'Tem certeza que quer marcar o pet como adotado?',
-            subTitle: 'Ele não vai mais aparecer na listagem.',
-            buttons: [{
-                text: 'Sim',
-                role: 'confirm',
-                handler: () => {
-                    this.presentWithGif();
-                    this.presentToast();
-                    this.db.object('adocao/pets/' + this.key).remove().then(() => {
-
-                    });
-                }
-            },
-                {
-                    text: 'Cancelar',
-                    role: 'cancel',
-                    handler: () => {
-
-                    }
-                }
-            ]
+        this.navCtrl.push('MensagemPage', {
+            "key": key,
+            "idGrouped": idGrouped,
+            "id_interessado": this.usuarioAtual,
+            "titulo": this.pet.nome
         });
-        popup.present();
-    }
-
-    presentToast() {
-        let toast = this.toastCtrl.create({
-            message: this.pet.nome + ' foi marcado como adotado!',
-            duration: 2000,
-            position: 'bottom'
-        });
-        toast.present();
     }
 
     whatsappShare() {
-        this.pet;
-        console.log(this.pet.fotoUrls[0])
-
-        this.socialSharing.shareViaWhatsApp("Olá,meu nome é " + this.pet.nome + " sou um(a) " + this.pet.especie + " da Raça " + this.pet.raca + " estou a procura de um dono! :D ", null /*Image*/, " Para me adotar bastar clicar nesse link abaixo e baixar o AdotaPet: " +
+        this.socialSharing.shareViaWhatsApp("Olá,meu nome é " + this.pet.nome + " e estou a procura de um dono! :D ", null /*Image*/, " Para me adotar bastar clicar nesse link abaixo e baixar o AdotaPet: " +
             " https://play.google.com/store/apps/details?id=com.labup.adotapet " + " Para ver minha foto acesse: " + this.pet.fotoUrls[0] /* url */)
             .then(() => {
                     console.log("Success");

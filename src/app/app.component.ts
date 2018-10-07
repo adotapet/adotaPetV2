@@ -21,7 +21,7 @@ export class MyApp {
                 public toast: ToastController,
                 public afAuth: AngularFireAuth,
                 private androidPermissions: AndroidPermissions,
-                translate: TranslateService,
+                public translate: TranslateService,
                 public oneSignal: OneSignal
     ) {
 
@@ -31,18 +31,27 @@ export class MyApp {
             // Here you can do any higher level native things you might need.
             statusBar.styleLightContent();
             splashScreen.hide();
-            this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.GEOLOCATION).then(() => console.log('perguntado'));
 
-            this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.GEOLOCATION).then(erro => {
+            // substitui o navigator.globalization e obtendo a linguagem do celular
+            const language = window.navigator.language;
+            console.log(language);
+            // Insere a lingua como padrao
+            this.translate.setDefaultLang(language);
+            this.translate.use(language);
+
+            this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.GEOLOCATION).then((retorno) => console.log('perguntado', retorno));
+
+            this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.GEOLOCATION).then(result => {
                 //console.log('Has permission?', result.hasPermission),
-                console.log('erro', erro)
+                console.log('resultPermission', result);
+                if (result.hasPermission) {
+                    this.androidPermissions.requestPermissions([
+                        this.androidPermissions.PERMISSION.GEOLOCATION,
+                        this.androidPermissions.PERMISSION.GET_ACCOUNTS
+                    ]);
+                }
             });
 
-
-            this.androidPermissions.requestPermissions([
-                this.androidPermissions.PERMISSION.GEOLOCATION,
-                this.androidPermissions.PERMISSION.GET_ACCOUNTS
-            ]);
 
             const onSuccess = function (position) {
                 console.log('Latitude: ' + position.coords.latitude + '\n' +
@@ -57,21 +66,15 @@ export class MyApp {
 
             let androidPermissions = this.androidPermissions;
 
-            function onError(error) {
+            let onError = (error) => {
                 console.log('retorno alert', error);
                 alert('Este APP funciona pela localizacão, listando PETS em adoção proxímo a você! ' +
                     'Permita a localizacao para listar os PETS   ');
                 androidPermissions.requestPermissions([androidPermissions.PERMISSION.GEOLOCATION]);
-
-            }
+            };
 
             navigator.geolocation.getCurrentPosition(onSuccess, onError);
 
-            // substitui o navigator.globalization e obtendo a linguagem do celular
-            const language = window.navigator.language;
-            console.log(language);
-            // Insere a lingua como padrao
-            translate.setDefaultLang(language);
 
             let funcaoRetorno = (data) => {
                 //Direcionando para o chat pegando os dados da sala que sao enviados dentro na notificacao.

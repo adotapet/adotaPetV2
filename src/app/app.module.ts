@@ -48,7 +48,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     imports: [
         BrowserModule,
         IonicModule.forRoot(MyApp, {
-            preload: true
+            preload: false
         }),
         AngularFireModule.initializeApp(FIREBASE_CONFIG),
         AngularFireDatabaseModule,

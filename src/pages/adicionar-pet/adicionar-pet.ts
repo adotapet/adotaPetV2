@@ -52,7 +52,7 @@ export class AdicionarPetPage {
             let result = !!user;
             let toast = this.toastCtrl.create({
                 message: 'Faça login para continuar',
-                duration: 2000,
+                duration: 1000,
                 position: 'bottom'
             });
             if (!result) {

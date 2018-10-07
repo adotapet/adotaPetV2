@@ -16,7 +16,7 @@
             </ion-label>
             <ion-input type="text" name="nome" formControlName="nome" [(ngModel)]="profile.nome"></ion-input>
         </ion-item>
-        <ion-input type="text" name="nome" formControlName="pushToken" [(ngModel)]="pushToken"></ion-input>
+        <ion-input type="hidden" name="pushToken" formControlName="pushToken" [(ngModel)]="pushToken"></ion-input>
 
         <button ion-button type="submit" block (click)="createProfile(userId)" [disabled]="!profile.valid">Criar perfil</button>
     </form>

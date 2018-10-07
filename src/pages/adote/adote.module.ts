@@ -2,10 +2,10 @@ import {NgModule} from "@angular/core";
 import {IonicPageModule} from "ionic-angular";
 import {AdotePage} from "./adote";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {ComponentsModule} from "../../components/components.module";
 import {HttpClient} from "@angular/common/http";
 import {HttpLoaderFactory} from "../../app/app.module";
-import {ComponentsModule} from "../../components/components.module";
-import {DatePipe} from "@angular/common";
+
 
 @NgModule({
     declarations: [
@@ -13,18 +13,20 @@ import {DatePipe} from "@angular/common";
     ],
     imports: [
         IonicPageModule.forChild(AdotePage),
-        ComponentsModule,
-        TranslateModule.forRoot({
+        TranslateModule.forChild({
             loader: {
                 provide: TranslateLoader,
                 useFactory: HttpLoaderFactory,
                 deps: [HttpClient]
-            }
-        })
+            },
+            isolate: false
+        }),
+        ComponentsModule
     ],
     exports: [
         AdotePage
-    ]
+    ],
+    providers: []
 
 })
 export class AdotePageModule {

@@ -20,9 +20,7 @@ export class AuthProvider {
     }
 
     get autenticated(): Observable<any> {
-
         return this.afAuth.authState
-
     }
 
 

@@ -9,10 +9,9 @@
     </ion-navbar>
 </ion-header>
 <ion-content padding id="page4">
-    <ion-card id="adote-card21" *ngFor="let post of posts" (click)="goToPerfil(post.key, post)">
-        <ion-list>
-            <img  src="{{post.fotoUrls[0]}}"/>
-
+    <ion-card id="adote-card21" *ngFor="let post of allPets; index as i" (click)="goToPerfil(post.key, post)">
+        <ion-list *ngIf="i < listCount">
+            <img src="{{post.fotoUrls[0]}}"/>
             <ion-item color="assertive" id="adote-list-item4">
                 <ion-icon name="logo-octocat" item-left><h5>{{post.nome}}</h5></ion-icon>
                 <ion-icon name="paw" item-left><h5>{{post.raca}}</h5></ion-icon>
@@ -20,4 +19,9 @@
             </ion-item>
         </ion-list>
     </ion-card>
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+        <ion-infinite-scroll-content
+                loadingText="Loading more data...">
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 </ion-content>

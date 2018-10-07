@@ -34,11 +34,11 @@ export class UserPerfilPage {
 
     ionViewCanEnter() {
         this.auth.autenticated.subscribe((value) => {
+            let translation: string = this.translate.instant('Faça login para continuar');
             console.log('retorno', value);
-
+            console.log(translation);
             (!value) ? this.canEnter = false : this.canEnter = true;
         });
-        //let translation: string = this.translate.instant('Faça login para continuar');
     }
 
     logOf(): void {

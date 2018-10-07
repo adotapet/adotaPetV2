@@ -3,6 +3,7 @@ import {AuthProvider} from "../auth/auth";
 import {AngularFireDatabase} from 'angularfire2/database';
 import {Post} from "../../models/post";
 import {HttpClient} from "@angular/common/http";
+import {OneSignal} from "@ionic-native/onesignal";
 
 
 @Injectable()
@@ -15,12 +16,17 @@ export class ChatProvider {
     tokenInteressado: any;
     petData: any = {"user": 12321};
     dono: any;
-    onesignal_api = 'https://onesignal.com/api/v1/notifications';
+    onesignal_api: string = 'https://onesignal.com/api/v1/notifications';
 
-    constructor(public auth: AuthProvider, public afDb: AngularFireDatabase, private http: HttpClient) {
+    constructor(public auth: AuthProvider, public afDb: AngularFireDatabase, private http: HttpClient, private oneSignal: OneSignal) {
         console.log('Hello ChatProvider Provider');
         this.auth.getUser().then(data => {
             this.myInfo = data;
+            this.oneSignal.getIds().then((signalUser) => {
+                this.afDb.object(`profile/${data.uid}`).update({"pushToken": signalUser.pushToken}).then(
+                    () => console.log('Token atualizado'),
+                    erro => console.log('Erro ao atualizar o token', erro))
+            }, errorObject => console.log('Erro ao Solicitar o token', errorObject));
         });
     }
 
@@ -29,14 +35,14 @@ export class ChatProvider {
 
         //pegando o token do usuario local.
         let MytokenPromise = new Promise((resolve, reject) => {
-            this.afDb.object('profile/' + this.myInfo.uid + '/pushToken').valueChanges().subscribe(token => {
-                this.myToken = token;
-                resolve(token);
-                console.log('MYTOKEN', token);
+            this.oneSignal.getIds().then((signalUser) => {
+                console.log("OneSignal User ID:", signalUser);
+                this.myToken = signalUser.pushToken;
+                console.log('MYTOKEN', signalUser.pushToken);
+                resolve(signalUser.pushToken);
             }, error => {
-                reject("Nao foi possivel pegar o meu token");
-                console.log("Nao foi possivel pegar o meu token")
-            })
+                reject("Nao foi possivel pegar o meu token" + error);
+            });
         });
 
         // pegando o token do dono do pet
@@ -129,7 +135,7 @@ export class ChatProvider {
                                 "include_player_ids": [`${notToken}`]
                             };
                             console.log('obj', notMsg);
-                            let notification = this.http.post(this.onesignal_api, notMsg).subscribe((retorno) => {
+                            this.http.post(this.onesignal_api, notMsg).subscribe((retorno) => {
                                 console.log('RETORNO API', retorno);
                                 resolve(retorno);
 

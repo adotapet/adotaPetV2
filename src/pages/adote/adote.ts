@@ -1,17 +1,14 @@
 import {Component} from '@angular/core';
-import {NavController, ToastController, LoadingController, IonicPage} from 'ionic-angular';
+import {NavController, ToastController, LoadingController, IonicPage, InfiniteScroll} from 'ionic-angular';
 import {AngularFireAuth} from "angularfire2/auth";
-import {AngularFireDatabase, AngularFireList} from "angularfire2/database";
+import {AngularFireDatabase} from "angularfire2/database";
 
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/observable/combineLatest';
 
-
-import {AuthProvider} from "../../providers/auth/auth";
 import {LocationsProvider} from "../../providers/locations/locations";
 import {Geolocation} from "@ionic-native/geolocation";
 import {map} from "rxjs/operators";
-import {Observable} from "rxjs";
 
 @IonicPage({
     priority: 'high'
@@ -22,8 +19,7 @@ import {Observable} from "rxjs";
 })
 export class AdotePage {
 
-    posts: any[];
-    postRef: AngularFireList<any>;
+    allPets: any[];
     listCount: number = 10;
 
     constructor(
@@ -35,49 +31,53 @@ export class AdotePage {
         public location: LocationsProvider,
         public geolocation: Geolocation
     ) {
-
-
+        this.listPets().then(pets => {
+            console.log('PET', pets);
+        });
     }
 
 
-    ionViewDidLoad() {
-        this.listPets();
-    }
-
-    listPets() {
+    listPets(): Promise<any> {
 
         let loading = this.loadingCtrl.create({
             content: 'Carregando...'
         });
-
         loading.present();
-        this.postRef = this.db.list('adocao/pets/', ref => ref.limitToFirst(this.listCount));
-        this.postRef.snapshotChanges().pipe(
-            map(changes =>
-                changes.map(c => ({key: c.payload.key, ...c.payload.val()}))
-            )
-        ).subscribe(pets => {
-            pets.map(pet => {
-                this.location.getDistancia(pet.coordenadas).then(distancia => {
-                    pet.distancia = distancia[0].distance;
-                    pets.sort((locationA, locationB) => {
-                        return locationA.coordenadas.distance - locationB.coordenadas.distance
+
+        return new Promise(resolve => {
+
+            this.db.list('adocao/pets/').snapshotChanges().pipe(
+                map(changes =>
+                    changes.map(c => ({key: c.payload.key, ...c.payload.val()}))
+                )
+            ).subscribe(pets => {
+                pets.map((pet) => {
+                    this.location.getDistancia(pet.coordenadas).then(distancia => {
+                        pet.distancia = distancia[0].distance;
+                        pets.sort((locationA, locationB) => {
+                            return locationA.coordenadas.distance - locationB.coordenadas.distance
+                        });
                     });
                 });
-            });
-            this.posts = pets;
-            loading.dismiss();
-        })
+
+                this.allPets = pets;
+                loading.dismiss();
+                resolve(pets);
+            })
+        });
 
     }
 
-    doInfinite(event) {
-        console.log('event', event);
-        this.listCount = this.listCount + 10;
-
-        this.posts = [];
-        this.listPets();
-        event.complete();
+    doInfinite(event: InfiniteScroll) {
+        setTimeout(() => {
+            if (this.listCount > this.allPets.length) {
+                event.enable(false);
+            } else {
+                this.listCount += 10;
+                console.log(this.listCount);
+                event.complete();
+            }
+        }, 600);
     }
 
 
