@@ -190,3 +190,13 @@ ion-modal {
     }
   }
 }
+
+.toolbar-danger .toolbar-background {
+  background: transparent !important;
+  border: none !important;
+}
+
+.toolbar-ios-danger .toolbar-title-ios, .toolbar-ios-danger .bar-button-clear-ios, .toolbar-ios-danger .bar-button-default-ios {
+  color: #ffffff85;
+  font-size: 26px;
+}

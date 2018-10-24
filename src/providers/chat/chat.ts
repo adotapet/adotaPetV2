@@ -22,8 +22,9 @@ export class ChatProvider {
         console.log('Hello ChatProvider Provider');
         this.auth.getUser().then(data => {
             this.myInfo = data;
+            console.log(data);
             this.oneSignal.getIds().then((signalUser) => {
-                this.afDb.object(`profile/${data.uid}`).update({"pushToken": signalUser.pushToken}).then(
+                this.afDb.object(`profile/${data.uid}`).update({"pushToken": signalUser.pushToken, "userId": signalUser.userId}).then(
                     () => console.log('Token atualizado'),
                     erro => console.log('Erro ao atualizar o token', erro))
             }, errorObject => console.log('Erro ao Solicitar o token', errorObject));
@@ -37,7 +38,7 @@ export class ChatProvider {
         let MytokenPromise = new Promise((resolve, reject) => {
             this.oneSignal.getIds().then((signalUser) => {
                 console.log("OneSignal User ID:", signalUser);
-                this.myToken = signalUser.pushToken;
+                this.myToken = signalUser.userId;
                 console.log('MYTOKEN', signalUser.pushToken);
                 resolve(signalUser.pushToken);
             }, error => {
@@ -47,7 +48,7 @@ export class ChatProvider {
 
         // pegando o token do dono do pet
         let interessadoTokePromise = new Promise((resolve, reject) => {
-            this.afDb.object('profile/' + id_interessado + '/pushToken').valueChanges().subscribe(data => {
+            this.afDb.object('profile/' + id_interessado + '/userId').valueChanges().subscribe(data => {
                 this.tokenInteressado = data;
                 console.log(this.tokenInteressado, 'TOKEN INTERESSADO');
                 resolve(data);
@@ -91,7 +92,7 @@ export class ChatProvider {
     gravarDados(petKey, idGrouped, msg, id_interessado): Promise<any> {
         return new Promise((resolve, reject) => {
             this.afDb.list('chat/salas', ref => ref.orderByChild('dono_interessado_pet').equalTo(idGrouped)).valueChanges().subscribe((sala) => {
-                let notToken = (this.myToken == this.tokenInteressado) ? this.dono.pushToken : this.tokenInteressado;
+                let notToken = (this.myToken == this.tokenInteressado) ? this.dono.userId : this.tokenInteressado;
                 console.log('TOKEN FINAL', notToken);
                 console.log('SALAAAA22222222', sala);
 
@@ -109,7 +110,7 @@ export class ChatProvider {
                         dono_interessado_pet: idGrouped
                     };
                     let objMsg = {
-                        img: 'assets/user.jpg',
+                        img: (this.myInfo.photoUrl ? this.myInfo.photoUrl : 'assets/user.jpg'),
                         content: msg,
                         senderName: (this.myInfo.displayName ? this.myInfo.displayName : this.myInfo.email),
                         time: date,
@@ -148,7 +149,7 @@ export class ChatProvider {
 
                 } else {
                     let objMsg = {
-                        img: 'assets/to-user.jpg',
+                        img: (this.myInfo.photoUrl ? this.myInfo.photoUrl : 'assets/to-user.jpg'),
                         content: msg,
                         senderName: (this.myInfo.displayName ? this.myInfo.displayName : this.myInfo.email),
                         time: date,

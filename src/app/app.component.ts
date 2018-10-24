@@ -93,10 +93,6 @@ export class MyApp {
             };
             console.log('WINDOW', window['plugins'].OneSignal);
             let oneSignal = window['plugins'].OneSignal;
-            // window.plugins.OneSignal
-            //     .startInit("f2dc92d3-6665-406d-8e5f-e7c6e19e822d")
-            //     .handleNotificationOpened(funcaoRetorno)
-            //     .endInit();
             oneSignal.startInit("f2dc92d3-6665-406d-8e5f-e7c6e19e822d", "534848323519")
                 .handleNotificationOpened(funcaoRetorno)
                 .endInit();

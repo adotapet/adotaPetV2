@@ -1,10 +1,10 @@
-ion-menu{
-  .header::after{background-image:none;} /*Hide toolbar shadow*/
-  ion-toolbar{
-    .toolbar-background{background:$menu_bg_color; border:0px; }
-  }
-
-}
+//ion-menu{
+//  .header::after{background-image:none;} /*Hide toolbar shadow*/
+//  ion-toolbar{
+//    .toolbar-background{background:$menu_bg_color; border:0px; }
+//  }
+//
+//}
 
 //-----------------------------------------------------
 .button-md {text-transform:none;}
@@ -30,4 +30,9 @@ ion-backdrop {
   visibility: initial !important;
   background: transparent;
   height: 89% !important;
+}
+.toolbar-ios-danger .toolbar-title-ios, .toolbar-ios-danger .bar-button-clear-ios, .toolbar-ios-danger .bar-button-default-ios {
+  color: #fff;
+  font-size: 18px;
+  float: left;
 }

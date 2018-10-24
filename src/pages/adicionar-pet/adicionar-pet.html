@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-navbar>
+    <ion-navbar class="toolbar toolbar-danger" color="danger" style="background-image: url('assets/img/bgMenuAdotaPet.png') !important;height: 80px;width: 100%;background-size: 100% 100%;">
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
@@ -7,11 +7,11 @@
             {{ "Adicionar Pet" | translate }}
         </ion-title>
     </ion-navbar>
+
 </ion-header>
-<ion-content padding id="page3.1" *ngIf="!canEnter">
+<ion-content class="bgdLogin" padding id="page3.1" *ngIf="!canEnter" >
     <please-login></please-login>
 </ion-content>
-
 
 <ion-content padding id="page3" *ngIf="canEnter">
 

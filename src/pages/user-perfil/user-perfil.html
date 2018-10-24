@@ -1,19 +1,23 @@
 <ion-header>
-    <ion-navbar color="danger">
-        <ion-title>
+    <!--<ion-navbar class="toolbar toolbar-danger" color="danger" style="background-image: url('../assets/img/bgMenuAdotaPet.png') !important;height: 80px;width: 100%;background-size: 100% 100%;">-->
+        <!--<button ion-button menuToggle>-->
+            <!--<ion-icon name="menu"></ion-icon>-->
+        <!--</button>-->
+        <!--<ion-title>{{ "Perfil" | translate }}</ion-title>-->
+    <!--</ion-navbar>-->
+
+    <ion-navbar class="toolbar toolbar-danger" color="danger" style="background-image: url('assets/img/bgMenuAdotaPet.png') !important;height: 80px;width: 100%;background-size: 100% 100%;">
+
+    <ion-title>
             {{"Perfil" | translate}}
         </ion-title>
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
-        <ion-fab top right>
-            <button ion-fab color="danger" (click)="logOf()">
-                <ion-icon name="log-out"></ion-icon>
-            </button>
-        </ion-fab>
+
     </ion-navbar>
 </ion-header>
-<ion-content padding *ngIf="!canEnter">
+<ion-content class="bgdLogin" padding id="page3.1" *ngIf="!canEnter" >
     <please-login></please-login>
 </ion-content>
 <ion-content  #myContent *ngIf="canEnter">

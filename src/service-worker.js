@@ -18,16 +18,6 @@ self.toolbox.precache(
     './build/vendor.js',
     './build/main.css',
     './build/polyfills.js',
-    './plugins/cordova-plugin-advanced-http/src/browser/cordova-http-plugin.js',
-    './plugins/cordova-plugin-android-permissions/www/permissions-dummy.js',
-    './plugins/cordova-plugin-camera/src/browser/CameraProxy.js',
-    './plugins/cordova-plugin-file/src/browser/FileProxy.js',
-    './plugins/cordova-plugin-firebase/www/firebase-browser.js',
-    './plugins/cordova-plugin-network-information/src/browser/network.js',
-    './plugins/es6-promise-plugin/www/promise.js',
-    './plugins/ionic-plugin-keyboard/www/browser/keyboard.js',
-    './OneSignalSDKUpdaterWorker.js',
-    './OneSignalSDKWorker.js',
     'index.html',
     'manifest.json'
   ]

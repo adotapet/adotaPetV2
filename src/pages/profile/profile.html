@@ -1,6 +1,8 @@
 <ion-header>
-
-    <ion-navbar>
+    <ion-navbar class="toolbar toolbar-danger" color="danger" style="background-image: url('assets/img/bgMenuAdotaPet.png') !important;height: 80px;width: 100%;background-size: 100% 100%;">
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
         <ion-title>{{ "Perfil" | translate }}</ion-title>
     </ion-navbar>
 
@@ -14,9 +16,8 @@
             <ion-label>
                 Seu nome:
             </ion-label>
-            <ion-input type="text" name="nome" formControlName="nome" [(ngModel)]="profile.nome"></ion-input>
+            <ion-input type="text" name="nome" formControlName="nome"></ion-input>
         </ion-item>
-        <ion-input type="hidden" name="pushToken" formControlName="pushToken" [(ngModel)]="pushToken"></ion-input>
 
         <button ion-button type="submit" block (click)="createProfile(userId)" [disabled]="!profile.valid">Criar perfil</button>
     </form>

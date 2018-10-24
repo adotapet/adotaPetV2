@@ -3,7 +3,6 @@ import {Component} from '@angular/core';
 import {AngularFireDatabase} from "angularfire2/database";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {OneSignal} from "@ionic-native/onesignal";
-import {FirebaseAnalytics} from "@ionic-native/firebase-analytics";
 
 @Component({
     selector: 'page-profile',
@@ -15,24 +14,25 @@ export class ProfilePage {
     userId: string;
     profile: FormGroup;
     pushToken: any;
+    oneSignalUserId: string;
 
     constructor(public navParams: NavParams, public navCtrl: NavController,
                 public alert: AlertController, public afDb: AngularFireDatabase, public formBuilder: FormBuilder,
-                private oneSignal: OneSignal, private firebaseAnalytics: FirebaseAnalytics
+                private oneSignal: OneSignal
     ) {
         this.userId = this.navParams.get('userId');
         this.profile = this.formBuilder.group({
-            nome: ['', Validators.required],
-            pushToken: ['', Validators.required],
+            nome: ['', Validators.compose([
+                Validators.required, Validators.minLength(4)
+            ])],
         });
-        this.firebaseAnalytics.setCurrentScreen('page-profile').then(() => console.log('current screen'));
     }
 
     ionViewDidLoad() {
         this.oneSignal.getIds().then((signalUser) => {
             console.log("OneSignal User ID:", signalUser);
             this.pushToken = signalUser.pushToken;
-            this.profile.value.pushToken = signalUser.pushToken;
+            this.oneSignalUserId = signalUser.userId;
             console.log("PROFILE FINAL:", this.profile.value);
 
         }, error => {
@@ -42,11 +42,13 @@ export class ProfilePage {
 
 
     createProfile(userId) {
-        if (this.pushToken) {
-            this.afDb.object('profile/' + userId).set(this.profile.value).then(() => {
-                this.firebaseAnalytics.logEvent('profile_created', {user: this.profile.value.nome})
-                    .then((res: any) => console.log(res))
-                    .catch((error: any) => console.error(error));
+        if (this.pushToken && this.oneSignalUserId) {
+            let userObj = {
+                'nome': this.profile.value.nome,
+                'pushToken': this.pushToken,
+                'userId': this.oneSignalUserId
+            };
+            this.afDb.object('profile/' + userId).set(userObj).then(() => {
                 this.profile.reset();
                 this.navCtrl.setRoot('TabsControllerPage', null, {animation: 'md-transition'})
             });
