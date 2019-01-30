@@ -88,6 +88,8 @@ export class MyApp {
             'titulo': msg.titulo,
             'id_interessado': msg.id_interessado
           });
+        }else{
+          console.log('app in focus');
         }
       };
 

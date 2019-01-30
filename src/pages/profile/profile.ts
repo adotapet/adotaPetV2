@@ -34,24 +34,22 @@ export class ProfilePage {
             console.log("OneSignal User ID:", signalUser);
             this.pushToken = signalUser.pushToken;
             this.oneSignalUserId = signalUser.userId;
-            console.log("PROFILE FINAL:", this.profile.value);
-
         }, error => {
             console.log('Nao foi possivel pegar o token de notificação', error);
         });
     }
 
 
-    createProfile(userId) {
+    createProfile() {
         if (this.pushToken && this.oneSignalUserId) {
             let userObj = {
                 'nome': this.profile.value.nome,
                 'pushToken': this.pushToken,
                 'userId': this.oneSignalUserId
             };
-            this.afDb.object('profile/' + userId).set(userObj).then(() => {
+            this.afDb.object('profile/' + this.userId).set(userObj).then(() => {
                 this.profile.reset();
-                this.navCtrl.setRoot(TabsControllerPage, null, {animation: 'md-transition'})
+                this.navCtrl.setRoot(TabsControllerPage, null, {animation: 'ios-transition'})
             });
         } else {
             alert('Nao foi possivel pegar o token da notificação');

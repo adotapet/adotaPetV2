@@ -20,33 +20,17 @@
 </ion-header>
 <ion-content padding id="page4">
 
-  <!--<ion-refresher (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content
-      pullingIcon="arrow-dropdown"
-      pullingText="Puxe para atualizar a lista"
-      refreshingSpinner="circles"
-      refreshingText="Atualizando..."
-    ></ion-refresher-content>
-  </ion-refresher>
-  -->
-
   <div [virtualScroll]="allPets">
-    <ion-card *virtualItem="let post" (click)="goToPerfil(post.key, post)">
-      <img class="card-img" [src]="post.fotoUrls[0]">
-        <ion-list>
-          <ion-item color="assertive" id="adote-list-item4">
-            <ion-icon name="logo-octocat" item-left><h5>{{post?.nome}}</h5></ion-icon>
-            <ion-icon name="paw" item-left><h5>{{post?.raca}}</h5></ion-icon>
-            <ion-icon name="pin" item-left><h5>{{post?.distance | number:'1.0-0'}} KM</h5></ion-icon>
-          </ion-item>
-        </ion-list>
+    <ion-card *virtualItem="let post" (click)="goToPerfil(post.key, post)" class="animated fadeInLeft">
+      <img class="card-img" [src]="post?.fotoUrls[0]">
+      <ion-list no-lines>
+        <ion-item color="assertive" id="adote-list-item4">
+          <ion-icon name="logo-octocat" item-left><h5>{{post?.nome}}</h5></ion-icon>
+          <ion-icon name="paw" item-left><h5>{{post?.raca}}</h5></ion-icon>
+          <ion-icon name="pin" item-left><h5>{{post?.distance | number:'1.0-0'}} KM</h5></ion-icon>
+        </ion-item>
+      </ion-list>
     </ion-card>
   </div>
-  <!--
-  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
-    <ion-infinite-scroll-content
-      loadingText="Carregando mais pets...">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
-  -->
+
 </ion-content>

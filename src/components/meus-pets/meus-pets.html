@@ -1,15 +1,8 @@
-<ion-searchbar
-        [(ngModel)]="searchParam"
-        [showCancelButton]="shouldShowCancel"
-        (ionCancel)="onCancel($event)"
-        (ionInput)="onInput($event)"
-        (keyup.enter)="dismiss()">
-</ion-searchbar>
 <div *ngIf="myId">
-    <ion-list id="meusPets-list3" *ngFor="let pet of myPets.ativos">
+    <ion-list no-lines id="meusPets-list3" *ngFor="let pet of myPets.ativos">
         <ion-item color="assertive" id="meusPets-list-item6">
             <ion-avatar item-left>
-                <img [src]="pet.payload.val().fotoUrls[0]"/>
+                <img [src]="pet?.payload.val().fotoUrls[0]"/>
             </ion-avatar>
             <h2>
                 {{pet.payload.val().nome}}
@@ -26,8 +19,8 @@
 
         </ion-item>
     </ion-list>
-    <ion-list id="meusPets-adotados" *ngFor="let pet of myPets.adotados">
-        <ion-item color="assertive" id="meusPets-list-item">
+    <ion-list no-lines id="meusPets-adotados" *ngFor="let pet of myPets.adotados">
+        <ion-item color="assertive" id="meusPets-list-item" >
             <ion-avatar item-left>
                 <img src="{{pet.payload.val().fotoUrls[0]}}"/>
             </ion-avatar>

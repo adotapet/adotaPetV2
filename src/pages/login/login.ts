@@ -8,6 +8,7 @@ import {Facebook} from "@ionic-native/facebook";
 import {ProfilePage} from "../profile/profile";
 import {AngularFireDatabase} from "@angular/fire/database";
 import {AuthProvider} from "../../providers/auth/auth";
+import {auth} from "firebase/app";
 
 @Component({
   selector: 'page-login',
@@ -40,8 +41,8 @@ export class LoginPage {
       const result = await this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password);
       console.log('email verificado', result.user.emailVerified);
       localStorage.setItem('skipIntro', 'true');
-      await loading.dismiss();
       this.navCtrl.setRoot(TabsControllerPage, null, {animation: 'ios-transition'});
+      await loading.dismiss();
     } catch (e) {
       loading.dismiss();
       await this.afAuth.auth.signOut();
@@ -115,65 +116,38 @@ export class LoginPage {
 
   //Login com Facebook
 
-  facebookLogin(): Promise<any> {
+  async facebookLogin() {
+    this.loading = this.loadingCtrl.create({
+      content: 'Autenticando...'
+    });
+    this.loading.present();
+    try {
+      let response = await this.facebook.login(['public_profile', 'email']);
+      const facebookCredential = auth.FacebookAuthProvider.credential(response.authResponse.accessToken);
+      let success = await this.afAuth.auth.signInWithCredential(facebookCredential);
+      console.log("Firebase success: " + JSON.stringify(success));
 
-
-    return this.facebook.login(['public_profile', 'email'])
-      .then(response => {
-
-
-        const facebookCredential = this.afAuth.auth.FacebookAuthProvider
-          .credential(response.authResponse.accessToken);
-        this.loading = this.loadingCtrl.create({
-          content: 'Autenticando...'
-        });
-
-        this.loading.present();
-
-        setTimeout(() => {
+      this.afDatabase.list(`profile/${success.uid}`).valueChanges().subscribe(data => {
+        if (data) {
+          this.navCtrl.setRoot(TabsControllerPage);
           this.loading.dismiss();
-        }, 5000);
+        } else {
+          console.log('!hasProfile');
+          this.navCtrl.setRoot(ProfilePage, {"userId": success.uid});
+          this.loading.dismiss();
 
-        firebase.auth().signInWithCredential(facebookCredential)
-          .then(success => {
+        }
+      },error => this.loading.dismiss());
 
-
-            let hasProfile;
-            console.log("Firebase success: " + JSON.stringify(success));
-            this.afDatabase.database.ref(`profile/${success.uid}`).once('value', data => {
-              hasProfile = data.val();
-              if (hasProfile) {
-
-                console.log(hasProfile);
-                localStorage.setItem('skipIntro', 'true');
-                // Salva o estado em localstorage para filtros
-                localStorage.setItem('adotapet_filtros', JSON.stringify(hasProfile.adotapet_filtros));
-
-
-                this.navCtrl.setRoot(TabsControllerPage);
-                this.loading.dismiss();
-              } else {
-
-                console.log('!hasProfile');
-                this.navCtrl.setRoot(ProfilePage, {"userId": success.uid});
-                this.loading.dismiss();
-              }
-            });
-
-          });
-
-
-      }).catch((error) => {
-        console.error(error);
-
-        let alert = this.alertCtrl.create({
-          title: 'ERRO',
-          subTitle: error,
-          buttons: ['ok']
-        });
-        alert.present();
+    } catch (e) {
+      console.error(e);
+      this.loading.dismiss();
+      let alert = this.alertCtrl.create({
+        title: 'ERRO',
+        subTitle: e,
+        buttons: ['ok']
       });
-
-
+      alert.present();
+    }
   }
 }

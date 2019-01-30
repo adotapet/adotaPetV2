@@ -58,7 +58,7 @@ export class CadastrarPage {
           displayName: this.user.value.nome,
           photoURL: null
         });
-        let signalUser = {'pushToken': '', 'userId': ''}; //await this.oneSignal.getIds();
+        let signalUser =  await this.oneSignal.getIds();
         console.log("OneSignal User ID:", signalUser);
         let userObj = {
           'nome': this.user.value.nome,
@@ -69,6 +69,7 @@ export class CadastrarPage {
         await this.afDb.object('profile/' + result.user.uid).set(userObj);
         this.user.reset();
         await loading.dismiss();
+        this.navCtrl.pop();
       }
     } catch (e) {
       loading.dismiss();

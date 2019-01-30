@@ -4,6 +4,7 @@ import {AngularFireAuth} from "@angular/fire/auth";
 import {SocialSharing} from '@ionic-native/social-sharing';
 import {AngularFireDatabase} from "@angular/fire/database";
 import {MensagemPage} from "../mensagem/mensagem";
+import {PostProvider} from "../../providers/post/post";
 
 @Component({
   selector: 'page-perfil',
@@ -14,7 +15,7 @@ export class PerfilPage {
   pet: any;
   key: string;
   dono: any;
-  usuarioAtual: any;
+  usuarioAtual: any = false;
   donoDaPostagem: boolean;
   loading: Loading;
 
@@ -24,7 +25,7 @@ export class PerfilPage {
               public afDb: AngularFireDatabase,
               private socialSharing: SocialSharing,
               public loadingCtrl: LoadingController,
-              //private afDatabase: AngularFireDatabase
+              private postProvider: PostProvider
   ) {
     this.pet = params.get('pet') ? params.get('pet') : {};
     this.key = params.get('key') ? params.get('key') : '';
@@ -32,11 +33,14 @@ export class PerfilPage {
 
   ionViewDidLoad() {
     this.afDb.object(`profile/${this.pet.user}`).valueChanges().subscribe((dono: any) => {
-      this.dono = dono.nome
+      this.dono = dono.nome;
+      console.log(this.dono);
+
     });
-    console.log(this.dono);
 
     this.afAuth.authState.subscribe(data => {
+      console.log('auth state', data);
+
       if (data && data.email && data.uid) {
         this.usuarioAtual = data.uid;
         if (this.usuarioAtual == this.pet.user) {
@@ -46,6 +50,9 @@ export class PerfilPage {
           this.donoDaPostagem = false;
           console.log(this.usuarioAtual)
         }
+      } else {
+        this.usuarioAtual = false;
+        console.log('nao logado', this.usuarioAtual);
       }
     });
 
@@ -84,14 +91,17 @@ export class PerfilPage {
   }
 
   whatsappShare() {
-    this.socialSharing.shareViaWhatsApp(`Olá, meu nome é ${this.pet.nome} e estou a procura de um dono! :D `, null /*Image*/, " Para me adotar bastar clicar nesse link abaixo e baixar o AdotaPet GO: " +
-      " https://play.google.com/store/apps/details?id=com.labup.adotapetV2 " + " Para ver minha foto acesse: " + this.pet.fotoUrls[0] /* url */)
-      .then(() => {
-          console.log("Success");
-        },
-        () => {
-          console.log("failed")
-        })
+    this.postProvider.shorUrl(this.pet.fotoUrls[0]).subscribe(url => {
+      console.log(url);
+      this.socialSharing.shareViaWhatsApp(`Olá, meu nome é ${this.pet.nome} e estou a procura de um dono! :D `, null /*Image*/, " Para me adotar bastar clicar nesse link abaixo e baixar o AdotaPet GO: " +
+        "https://adotapetgo.page.link/bCK1" + " Para ver minha foto acesse: " +  url.shortLink)
+        .then(() => {
+            console.log("Success");
+          },
+          () => {
+            console.log("failed")
+          })
+    });
   }
 
 

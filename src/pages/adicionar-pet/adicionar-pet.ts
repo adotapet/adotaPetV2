@@ -1,7 +1,5 @@
 import {Component} from '@angular/core';
 import {AlertController, LoadingController, Loading, NavController, ToastController} from 'ionic-angular';
-
-import {Post} from "../../models/post";
 import {AuthProvider} from "../../providers/auth/auth";
 import {AngularFireDatabase} from '@angular/fire/database';
 import {Camera, CameraOptions} from "@ionic-native/camera";
@@ -19,7 +17,7 @@ import {AngularFireStorage, AngularFireStorageReference} from "@angular/fire/sto
 export class AdicionarPetPage {
 
   post: FormGroup;
-  photoData = [];
+  photoData: any = {};
   fotoUrls: any[];
   especie = [];
   selectedRacas: any;
@@ -212,7 +210,7 @@ export class AdicionarPetPage {
         let base64Image = 'data:image/jpeg;base64,' + imageData;
         let date = new Date().getTime();
         let image = {'date': date, 'img': base64Image};
-        this.photoData.push(image);
+        this.photoData = image;
         console.log(this.photoData)
       }, (err) => {
         let popup = this.alert.create({
@@ -252,7 +250,7 @@ export class AdicionarPetPage {
         let base64Image = 'data:image/jpeg;base64,' + imageData;
         let date = new Date().getTime();
         let image = {'date': date, 'img': base64Image};
-        this.photoData.push(image);
+        this.photoData = image;
         console.log(this.photoData)
       }, (err) => {
         let popup = this.alert.create({
@@ -283,14 +281,14 @@ export class AdicionarPetPage {
           role: 'confirm',
           handler: () => {
             this.post.reset();
-            this.photoData = [];
+            this.photoData = {};
             this.fotoUrls = [];
             this.navCtrl.push(AdotePage, null, {animation: 'md-transition'});
           }
         }]
       });
 
-      if (this.photoData[0]) {
+      if (this.photoData.img) {
 
         this.showloader = true;
         this.presentWithGif();
@@ -338,33 +336,31 @@ export class AdicionarPetPage {
   }
 
 
-  async uploadImagesAndUpdatePet(key): Promise<any> {
-    let i = 0;
-    this.fotoUrls = [];
+  uploadImagesAndUpdatePet(key): Promise<any> {
+    return new Promise(async (resolve, reject) => {
 
-    return new Promise((resolve, reject) => {
+      let fileName = `${key}_${this.photoData.date}`;
+      let filePath = `images/adocao/${key}/${fileName}`;
+      const fileRef: AngularFireStorageReference = this.storage.ref(filePath);
 
-      for (let foto of this.photoData) {
-
-        let fileName = key + '_' + foto.date;
-        let filePath = `images/adocao/${key}/${fileName}`;
-        const fileRef: AngularFireStorageReference = this.storage.ref(filePath);
-
+      try {
         // Upando a imagem base64
-        fileRef.putString(foto.img, 'data_url').then(data => {
-          // Aguardando a url da foto ficar disponivel e colocala no array;
-          fileRef.getDownloadURL().subscribe(url => {
-            console.log('url', url);
-            this.fotoUrls[i] = url;
-          }, erro => reject(erro));
-        }, error => reject(error));
-        i++;
+        let data = await fileRef.putString(this.photoData.img, 'data_url');
+        let arrayUrl = [];
+        // Aguardando a url da foto ficar disponivel e colocala no array;
+        fileRef.getDownloadURL().subscribe(async (url) => {
+          console.log('url', url);
+          if (url) {
+            arrayUrl.push(url);
+            console.log('arrayUrl', arrayUrl);
+            await this.afDatabase.object('adocao/pets/' + key).update({"fotoUrls": arrayUrl});
+            console.log('fotoUrl inserida');
+            resolve('Foto inserida');
+          }
+        }, erro => reject(erro));
+      } catch (e) {
+        reject(e);
       }
-      //END FOR
-      this.afDatabase.object('adocao/pets/' + key).update({"fotoUrls": this.fotoUrls}).then(() => {
-        console.log('fotoUrls atualizadas');
-        resolve('fotoUrls atualizadas');
-      }, error => reject(error));
     });
   }
 

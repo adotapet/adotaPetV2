@@ -51,7 +51,7 @@
         </ion-list>
     </ion-card>
 
-    <div *ngIf="!donoDaPostagem || !usuarioAtual">
+    <div *ngIf="usuarioAtual && !donoDaPostagem">
         <button id="abrirChat" ion-button color="assertive" block (click)="goToChat()">
             {{ "Abrir Chat" | translate }}
         </button>
