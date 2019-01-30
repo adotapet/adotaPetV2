@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import 'rxjs/add/operator/map';
-import {AngularFireDatabase} from "angularfire2/database";
+import {AngularFireDatabase} from "@angular/fire/database";
 import {Geolocation} from '@ionic-native/geolocation';
 
 
@@ -15,82 +15,28 @@ export class LocationsProvider {
 
     }
 
-    load() {
+    public applyHaversine(locations, usersLocation):any {
 
-        let locationPromise = new Promise(resolve => {
-            this.geolocation.getCurrentPosition().then((position) => {
-                let usersLocation = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                };
-                localStorage.setItem("currentLocation", JSON.stringify(usersLocation));
-                resolve(usersLocation);
-            });
-
-        });
-
-
-        if (this.data) {
-            return Promise.resolve(this.data);
-        }
-
-        return new Promise(resolve => {
-
-            let coordenadas = [];
-            locationPromise.then(usersLocation => {
-
-                this.afDb.list('perdidos/pets').snapshotChanges().subscribe(dados => {
-                    dados.map((item: any) => {
-                        let key = item.key;
-                        let item2 = item.payload.val();
-                        console.log('item', item2.foto);
-
-                        let objCoords = {
-                            "coordenadas": item2.coordenadas,
-                            "icon": item2.foto,
-                            "pet": item2,
-                            "key": key
-                        };
-
-                        if (item2.coordenadas) {
-                            coordenadas.splice(0, 0, objCoords);
-                        }
-                    });
-
-                    this.data = this.applyHaversine(coordenadas, usersLocation);
-                    console.log("THIS.DATA", this.data);
-                    this.data.sort((locationA, locationB) => {
-                        return locationA.distance - locationB.distance;
-                    });
-
-                    resolve(this.data);
-                });
-
-
-            });
-
-        });
-
-    }
-
-    applyHaversine(locations, usersLocation) {
-
+      let newData = [];
         locations.map((location) => {
-
+          if(!location.coordenadas) {
+            console.log('!haversine', location.coordenadas);
+          }
+          if(location.coordenadas){
             let placeLocation = {
-                lat: location.lat,
-                lng: location.lng
+              lat: location.coordenadas.lat,
+              lng: location.coordenadas.lng
             };
 
             location.distance = this.getDistanceFromLatLonInKm(
-                usersLocation,
-                placeLocation
+              usersLocation,
+              placeLocation
             ).toFixed(2);
-
+            newData.push(location);
+          }
         });
 
-        return locations;
-
+        return newData;
     }
 
 

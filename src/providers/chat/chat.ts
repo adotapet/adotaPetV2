@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {AuthProvider} from "../auth/auth";
-import {AngularFireDatabase} from 'angularfire2/database';
+import {AngularFireDatabase} from '@angular/fire/database';
 import {Post} from "../../models/post";
 import {HttpClient} from "@angular/common/http";
 import {OneSignal} from "@ionic-native/onesignal";

@@ -1,8 +1,9 @@
 import {NavController, NavParams, AlertController} from 'ionic-angular';
 import {Component} from '@angular/core';
-import {AngularFireDatabase} from "angularfire2/database";
+import {AngularFireDatabase} from "@angular/fire/database";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {OneSignal} from "@ionic-native/onesignal";
+import {TabsControllerPage} from "../tabs-controller/tabs-controller";
 
 @Component({
     selector: 'page-profile',
@@ -50,7 +51,7 @@ export class ProfilePage {
             };
             this.afDb.object('profile/' + userId).set(userObj).then(() => {
                 this.profile.reset();
-                this.navCtrl.setRoot('TabsControllerPage', null, {animation: 'md-transition'})
+                this.navCtrl.setRoot(TabsControllerPage, null, {animation: 'md-transition'})
             });
         } else {
             alert('Nao foi possivel pegar o token da notificação');

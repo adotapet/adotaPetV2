@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import {AlertController, NavController, ToastController} from 'ionic-angular';
 import {AuthProvider} from "../../providers/auth/auth";
-import {AngularFireDatabase} from "angularfire2/database";
-import {AngularFireStorage} from "angularfire2/storage"
+import {AngularFireDatabase} from "@angular/fire/database";
+import {AngularFireStorage} from "@angular/fire/storage"
 import {TranslateService} from "@ngx-translate/core";
 
 @Component({

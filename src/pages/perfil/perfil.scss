@@ -1,6 +1,9 @@
 page-perfil {
 
-  #gif{
+  ion-content .scroll-content {
+    background-color: #e9f5f2;
+  }
+  #gif {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -10,11 +13,10 @@ page-perfil {
 
   .item-ios {
     padding-left: 16px;
-    padding-left: 16px;
     border-radius: 0;
     position: relative;
     font-size: 1.7rem;
-    color: #fff;
+    color: #000000;
     background-color: #fff0;
     -webkit-transition: background-color 200ms linear;
     transition: background-color 200ms linear;
@@ -22,13 +24,15 @@ page-perfil {
 
   .item-md {
     padding-left: 16px;
-    padding-left: 16px;
     border-radius: 0;
     position: relative;
     font-size: 1.7rem;
-    color: #fff;
+    color: #000000;
     background-color: #fff0;
     -webkit-transition: background-color 200ms linear;
     transition: background-color 200ms linear;
+  }
+  p {
+    font-family: "Arial Black";
   }
 }
