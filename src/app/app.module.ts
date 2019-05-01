@@ -40,6 +40,7 @@ import {PerfilPage} from "../pages/perfil/perfil";
 import {UserPerfilPage} from "../pages/user-perfil/user-perfil";
 import {ComponentsModule} from "../components/components.module";
 import {TabsControllerPage} from "../pages/tabs-controller/tabs-controller";
+import {AngularFirestoreModule} from "@angular/fire/firestore";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
@@ -63,6 +64,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     AngularFireDatabaseModule,
+    AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireAuthModule,
     ComponentsModule,

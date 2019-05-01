@@ -20,7 +20,6 @@ export class MeusPetsComponent {
               private authProvider: AuthProvider,
               private alert: AlertController,
               private toastCtrl: ToastController,
-              private storage: AngularFireStorage,
               private translate: TranslateService
   ) {
 

@@ -1,7 +1,6 @@
 import {AngularFireAuth} from '@angular/fire/auth';
 import {AngularFireDatabase} from '@angular/fire/database';
 import {Injectable} from '@angular/core';
-import firebase from 'firebase';
 import {Observable} from "rxjs";
 import {AlertController} from "ionic-angular";
 
@@ -19,6 +18,7 @@ export class AuthProvider {
   async resetPassword(email: string) {
     try {
       let result = await this.afAuth.auth.sendPasswordResetEmail(email);
+      console.log(result);
       let alert = this.alertCtrl.create({
         title: 'Sucesso',
         subTitle: 'Verifique sua caixa de email',
@@ -50,31 +50,25 @@ export class AuthProvider {
   }
 
   get autenticated(): Observable<any> {
-    return this.afAuth.authState
+    return this.afAuth.authState;
   }
 
 
   getUser(): Promise<any> {
     return new Promise((resolve) => {
-      let currentUser = this.afAuth.auth.currentUser;
-      resolve(currentUser);
+      this.afAuth.authState.subscribe(user => {
+        resolve(user);
+      });
     })
   }
 
-  getUserPerfil(userId = null) {
-    let id;
-    if (userId) {
-      id = userId;
-    } else {
-      this.getUser().then(user => {
-        id = user.uid;
-      });
-    }
-    try {
-      return this.afDb.database.ref('profile/' + id);
-    } catch (e) {
-      console.log(e);
-    }
+  getUserId(id): Observable<any> {
+    return this.afDb.object(`profile/${id}`).valueChanges();
+  }
+
+  getUserLogadoPerfil(): Observable<any> {
+    let userId = JSON.parse(localStorage.getItem('usuarioId'));
+    return this.afDb.object(`profile/${userId}`).valueChanges();
   }
 
 }

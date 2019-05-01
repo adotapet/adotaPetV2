@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController} from 'ionic-angular';
+import {Events, NavController} from 'ionic-angular';
 import {AdotePage} from "../adote/adote";
 import {AdicionarPetPage} from "../adicionar-pet/adicionar-pet";
 import {UserPerfilPage} from "../user-perfil/user-perfil";
@@ -13,35 +13,26 @@ export class TabsControllerPage {
   tab1Root: any = AdotePage;
   tab2Root: any = AdicionarPetPage;
   tab3Root: any = UserPerfilPage;
+  notifications:any = [{'idSala': '', 'count': 0}];
+  count = 0;
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, public events: Events) {
 
-
-  }
-
-
-  goToAdote(params) {
-    if (!params) params = {};
-    this.navCtrl.push('AdotePage');
-  }
-
-  goToPerfil(params) {
-    if (!params) params = {};
-    this.navCtrl.push('PerfilPage');
-  }
-
-  goToUserPerfil(params) {
-    if (!params) params = {};
-    this.navCtrl.push('UserPerfilPage');
-  }
-
-  goToChat(params) {
-    if (!params) params = {};
-    this.navCtrl.push('ChatPage');
-  }
-
-  goToMensagem(params) {
-    if (!params) params = {};
-    this.navCtrl.push('MensagemPage');
+    this.events.subscribe('notification:received', (not) => {
+      let idSala = not.idSala;
+      //this.count = '!';
+      this.notifications.idSala = 0;
+      this.notifications.map((notification) => {
+        if (notification.idSala == idSala) notification.count++;
+      })
+    });
+    this.events.subscribe('notification:opened', (idSala) => {
+      this.notifications.map((notification) => {
+        if (notification.idSala == idSala) {
+        //  this.count = this.count - notification.count;
+          notification.count = 0
+        }
+      })
+    });
   }
 }

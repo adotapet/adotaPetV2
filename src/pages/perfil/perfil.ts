@@ -13,7 +13,6 @@ import {PostProvider} from "../../providers/post/post";
 export class PerfilPage {
 
   pet: any;
-  key: string;
   dono: any;
   usuarioAtual: any = false;
   donoDaPostagem: boolean;
@@ -28,7 +27,6 @@ export class PerfilPage {
               private postProvider: PostProvider
   ) {
     this.pet = params.get('pet') ? params.get('pet') : {};
-    this.key = params.get('key') ? params.get('key') : '';
   }
 
   ionViewDidLoad() {
@@ -58,35 +56,12 @@ export class PerfilPage {
 
   }
 
-  presentWithGif() {
-    this.loading = this.loadingCtrl.create({
-      spinner: 'hide',
-      content: `
-                         <div class="custom-spinner-container">
-                             <img class="loading" width="200px" height="200px" src="../../assets/chibis-usagi-bow.gif" />
-                         </div>`
-    });
-    this.loading.present();
-
-    setTimeout(() => {
-      this.loading.dismiss();
-    }, 3000);
-
-
-  }
-
   goToChat() {
-    if (!this.key && !this.pet.user && !this.usuarioAtual) {
+    if (!this.pet.key && !this.pet.user && !this.usuarioAtual) {
       return false
     }
-    let key = this.key;
-    let idGrouped = `${this.pet.user}_${this.usuarioAtual}_${key}`;
-    console.log(key, this.pet.user);
     this.navCtrl.push(MensagemPage, {
-      "key": key,
-      "idGrouped": idGrouped,
-      "id_interessado": this.usuarioAtual,
-      "titulo": this.pet.nome
+      'pet': this.pet
     });
   }
 
@@ -94,7 +69,7 @@ export class PerfilPage {
     this.postProvider.shorUrl(this.pet.fotoUrls[0]).subscribe(url => {
       console.log(url);
       this.socialSharing.shareViaWhatsApp(`Olá, meu nome é ${this.pet.nome} e estou a procura de um dono! :D `, null /*Image*/, " Para me adotar bastar clicar nesse link abaixo e baixar o AdotaPet GO: " +
-        "https://adotapetgo.page.link/bCK1" + " Para ver minha foto acesse: " +  url.shortLink)
+        "https://adotapetgo.page.link/bCK1" + " Para ver minha foto acesse: " + url.shortLink)
         .then(() => {
             console.log("Success");
           },

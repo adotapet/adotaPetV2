@@ -1,5 +1,5 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {NavController, NavParams, ViewController, Content} from 'ionic-angular';
+import {NavController, NavParams, ViewController, Content, Events} from 'ionic-angular';
 import {ChatProvider} from "../../providers/chat/chat";
 import {AuthProvider} from "../../providers/auth/auth";
 
@@ -11,50 +11,51 @@ export class MensagemPage {
 
   @ViewChild(Content) content: Content;
   @ViewChild('chat_input') messageInput: ElementRef;
+  pet: any = {};
   messages: any[];
-  msgText: string;
-  key: string;
-  myId;
-  idGrouped: string;
-  id_interessado: string;
+  msgText: string = '';
+  myId = null;
+  idSala = '';
   showEmojiPicker = false;
   titulo;
 
-  constructor(public navCtrl: NavController, public params: NavParams, public viewCtrl: ViewController, private chatProvider: ChatProvider, private auth: AuthProvider) {
-    this.key = params.get('key');
-    this.idGrouped = params.get('idGrouped');
-    this.id_interessado = params.get('id_interessado');
+  constructor(public navCtrl: NavController, public params: NavParams, public events: Events, private chatProvider: ChatProvider, private auth: AuthProvider) {
+    this.pet = params.get('pet') || null;
+    this.idSala = params.get('idSala') || null;
     this.auth.getUser().then(user => {
       this.myId = user.uid;
+      this.listMessages();
+      this.scrollToBottom();
     });
-    this.titulo = params.get('titulo');
-    this.listMessages();
-    this.scrollToBottom();
+  }
 
+  ionViewCanEnter() {
+    this.auth.getUser().then(user => {
+      return user.uid;
+    });
   }
 
   ionViewDidLoad() {
-    // this.scrollToBottom();
+    this.events.publish('notification:opened');
   }
 
   listMessages() {
-    this.chatProvider.getMenssagens(this.idGrouped).subscribe(data => {
-      this.messages = data;
+    this.chatProvider.getMensagens(this.idSala).subscribe(data => {
+      this.messages = data.mensagens;
       this.scrollToBottom();
     });
   }
 
   sendMessage(msg: string) {
-    this.chatProvider.sendMessage(msg, this.key, this.idGrouped, this.id_interessado).then(result => {
+    this.chatProvider.enviarMensagem(this.idSala, this.pet, this.myId, msg).then(result => {
       console.log('MENSAGEM ENVIADA RETORNO', result);
       this.showEmojiPicker = false;
       this.content.resize();
     }).catch(erro => {
       console.log(erro);
-
     });
     this.msgText = '';
-    this.scrollToBottom();
+    // this.scrollToBottom();
   }
 
   scrollToBottom() {

@@ -1,30 +1,10 @@
 <div pading>
-  <ion-item>
-    <a class="tab-item">
-      {{ "Mensagens Recebidas" | translate }}
-    </a>
-  </ion-item>
-  <ion-list no-lines >
-    <ion-item *ngFor="let msg of conversasRecebidas" (click)="goToMensagem(msg)">
+  <ion-list no-lines>
+    <ion-item *ngFor="let msg of salasChat" (click)="goToMensagem(msg)">
       <ion-avatar item-start>
         <img src="{{msg.imagePet}}">
       </ion-avatar>
       <h2>{{msg.nomeInteressado}}</h2>
-      <h3>{{msg.nomePet}}</h3>
-    </ion-item>
-  </ion-list>
-
-  <ion-item>
-    <a class="tab-item">
-      {{ "Mensagens Enviadas" | translate }}
-    </a>
-  </ion-item>
-  <ion-list no-lines >
-    <ion-item *ngFor="let msg of conversasEnviadas" (click)="goToMensagem(msg)">
-      <ion-avatar item-start>
-        <img src="{{msg.imagePet}}">
-      </ion-avatar>
-      <h2>{{msg.nomeDono}}</h2>
       <h3>{{msg.nomePet}}</h3>
     </ion-item>
   </ion-list>

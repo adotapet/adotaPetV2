@@ -9,6 +9,7 @@ import {Geolocation} from "@ionic-native/geolocation";
 import {map} from "rxjs/operators";
 import {AngularFireDatabase} from "@angular/fire/database";
 import {PerfilPage} from "../perfil/perfil";
+import {AuthProvider} from "../../providers/auth/auth";
 
 @Component({
   selector: 'page-adote',
@@ -25,9 +26,11 @@ export class AdotePage {
     public toast: ToastController,
     public loadingCtrl: LoadingController,
     public location: LocationsProvider,
-    public geolocation: Geolocation
+    public geolocation: Geolocation,
+    public auth: AuthProvider
   ) {
     this.listPets();
+    this.auth.getUserLogadoPerfil();
   }
 
   listPets() {
@@ -35,7 +38,9 @@ export class AdotePage {
       content: 'Carregando...'
     });
     loading.present();
-
+    setTimeout(() => {
+      loading.dismiss();
+    }, 6000);
     this.db.list('adocao/pets/').snapshotChanges().pipe(
       map(changes =>
         changes.map(c => ({key: c.payload.key, ...c.payload.val()}))
@@ -53,13 +58,14 @@ export class AdotePage {
       this.allPets = petsComDistancia;
 
     }, error => {
+      loading.dismiss();
       console.log('errrooooo', error);
     });
 
   }
 
-  goToPerfil(key, data) {
-    this.navCtrl.push(PerfilPage, {"pet": data, "key": key});
+  goToPerfil(pet) {
+    this.navCtrl.push(PerfilPage, {"pet": pet});
   }
 
 }

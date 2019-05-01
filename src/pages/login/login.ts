@@ -41,6 +41,7 @@ export class LoginPage {
       const result = await this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password);
       console.log('email verificado', result.user.emailVerified);
       localStorage.setItem('skipIntro', 'true');
+      localStorage.setItem('usuarioId', JSON.stringify(result.user.uid));
       this.navCtrl.setRoot(TabsControllerPage, null, {animation: 'ios-transition'});
       await loading.dismiss();
     } catch (e) {
@@ -103,7 +104,7 @@ export class LoginPage {
           text: 'Recuperar',
           handler: data => {
             if (data.email) {
-              let result = this.authProvider.resetPassword(data.email);
+              this.authProvider.resetPassword(data.email);
             } else {
               return false;
             }
@@ -128,16 +129,20 @@ export class LoginPage {
       console.log("Firebase success: " + JSON.stringify(success));
 
       this.afDatabase.list(`profile/${success.uid}`).valueChanges().subscribe(data => {
-        if (data) {
-          this.navCtrl.setRoot(TabsControllerPage);
-          this.loading.dismiss();
+        console.log('profile/idDousuario', data);
+        if (data[0]) {
+          this.authProvider.getUser().then(user => {
+            localStorage.setItem('usuarioId', JSON.stringify(user.uid));
+            this.navCtrl.setRoot(TabsControllerPage);
+            this.loading.dismiss();
+          })
         } else {
           console.log('!hasProfile');
           this.navCtrl.setRoot(ProfilePage, {"userId": success.uid});
           this.loading.dismiss();
 
         }
-      },error => this.loading.dismiss());
+      }, error => this.loading.dismiss());
 
     } catch (e) {
       console.error(e);
