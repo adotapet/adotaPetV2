@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "534848323519",
+    "firebase_url": "https://adotapet-dev.firebaseio.com",
+    "project_id": "adotapet-dev",
+    "storage_bucket": "adotapet-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:534848323519:android:53c94578ab87a2c7",
+        "android_client_info": {
+          "package_name": "com.labup.adotapet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "534848323519-s7ljn29aakndhjrhvgs8vls8j3snoert.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQj0n_QQY_bkw6NOLdQXitYyXCCKePSno"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,24 @@
+page-adicionar-pet {
+  .header {
+    background: #ff4436 !important;
+  }
+  .noimg {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .bgdLogin {
+    background-image: url(../../assets/dogBackG.png);
+    background-size: 100% 100%;
+  }
+  .toolbar {
+    background-image: url("../assets/img/bgMenuAdotaPet.png") !important;
+    height: 8rem;
+    width: 100%;
+    background-size: 100% 100%;
+    position: relative;
+    top: 10px;
+  }
+}

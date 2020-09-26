@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-navbar class="toolbar toolbar-danger" color="danger"
+              style="background-image: url('./assets/img/bgMenuAdotaPet.png') !important;height: 80px;width: 100%;background-size: 100% 100%;">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      {{ "Cadastre" | translate }}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-list no-lines padding-top>
+    <form [formGroup]="user">
+      <ion-item>
+        <ion-input type="text" placeholder="Seu nome" formControlName="nome"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="email" placeholder="Email" formControlName="email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="password" placeholder="(Minimo de 6 digitos)" formControlName="senha"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="password" placeholder="Confirme a senha" formControlName="confirmPassword"></ion-input>
+      </ion-item>
+      <button ion-button block round color="secondary" [disabled]="!user.valid" (click)="register()">
+        Cadastrar
+      </button>
+    </form>
+  </ion-list>
+
+</ion-content>

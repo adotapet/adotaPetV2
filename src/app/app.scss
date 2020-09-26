@@ -1,0 +1,50 @@
+//ion-menu{
+//  .header::after{background-image:none;} /*Hide toolbar shadow*/
+//  ion-toolbar{
+//    .toolbar-background{background:$menu_bg_color; border:0px; }
+//  }
+//
+//}
+
+//-----------------------------------------------------
+.button-md {text-transform:none;}
+.facebookButton {background-color:#3b5998; color:#fff; }
+.instagramButton {
+  background: rgba(97,95,202,1);
+  background: -moz-linear-gradient(-45deg, rgba(97,95,202,1) 0%, rgba(183,57,139,1) 31%, rgba(214,139,58,1) 67%, rgba(219,54,131,1) 100%);
+  background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(97,95,202,1)), color-stop(31%, rgba(183,57,139,1)), color-stop(67%, rgba(214,139,58,1)), color-stop(100%, rgba(219,54,131,1)));
+  background: -webkit-linear-gradient(-45deg, rgba(97,95,202,1) 0%, rgba(183,57,139,1) 31%, rgba(214,139,58,1) 67%, rgba(219,54,131,1) 100%);
+  background: -o-linear-gradient(-45deg, rgba(97,95,202,1) 0%, rgba(183,57,139,1) 31%, rgba(214,139,58,1) 67%, rgba(219,54,131,1) 100%);
+  background: -ms-linear-gradient(-45deg, rgba(97,95,202,1) 0%, rgba(183,57,139,1) 31%, rgba(214,139,58,1) 67%, rgba(219,54,131,1) 100%);
+  background: linear-gradient(135deg, rgba(97,95,202,1) 0%, rgba(183,57,139,1) 31%, rgba(214,139,58,1) 67%, rgba(219,54,131,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#615fca', endColorstr='#db3683', GradientType=1 );
+  color: #fff;padding: 0 28px;
+}
+.hrLine { width: 75%;
+  text-align:center;
+  border-bottom: 1px dotted #fff; line-height: 0.1em; margin:15px auto;}
+.hrLine span { background:#fff; padding:0 5px;  font-size:18px; color:#000;}
+
+
+ion-backdrop {
+  visibility: initial !important;
+  background: transparent;
+  height: 89% !important;
+}
+.toolbar-ios-danger .toolbar-title-ios, .toolbar-ios-danger .bar-button-clear-ios, .toolbar-ios-danger .bar-button-default-ios {
+  color: #fff;
+  font-size: 18px;
+  float: left;
+}
+
+.card-ios {
+  margin: 12px;
+  border-radius: 2px;
+  width: calc(100% - 24px);
+  font-size: 1.4rem;
+  BORDER-RADIUS: 10PX;
+  background: #fff;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  /* -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); */
+  /* box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); */
+}

@@ -1,0 +1,38 @@
+<ion-header>
+    <ion-navbar hideBackButton="true">
+
+    </ion-navbar>
+</ion-header>
+<ion-content padding>
+
+    <ion-grid>
+        <ion-row>
+            <ion-col>
+                <button ion-button block class="facebookButton" (click)="facebookLogin()">Logar com Facebook</button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+    <div class="hrLine"><span>OU</span></div>
+
+    <form>
+        <ion-list no-lines padding-top>
+            <ion-item>
+                <ion-input type="text" placeholder="Usuário" [(ngModel)]="user.email" name="email"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-input type="password" placeholder="Senha" [(ngModel)]="user.password"
+                           name="password"></ion-input>
+            </ion-item>
+        </ion-list>
+        <button ion-button block round color="secondary" (click)="login(user)">Login</button>
+    </form>
+    <div padding-top>
+        <button ion-button block color="light" clear (click)="register()">Não tem uma conta? Cadastre-se</button>
+
+        <button ion-button block color="light" clear (click)="recuperarSenha()">Esqueceu a Senha</button>
+
+        <!--<button ion-button block color="light" clear (click)="anonimo()">Logar como Anônimo</button>-->
+    </div>
+
+</ion-content>

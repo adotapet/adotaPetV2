@@ -1,0 +1,19 @@
+"angularfire2": "^5.0.0-rc.10",
+"firebase": "^5.0.4",
+ 
+
+"ionic-angular": "3.9.2",
+"rxjs": "^6.2.1",
+"rxjs-compat": "^6.2.1"
+    "@angular/animations": "5.2.11",
+    "@angular/common": "5.2.11",
+    "@angular/compiler": "5.2.11",
+    "@angular/compiler-cli": "5.2.11",
+    "@angular/core": "5.2.11",
+    "@angular/forms": "5.2.11",
+    "@angular/platform-browser": "5.2.11",
+    "@angular/platform-browser-dynamic": "5.2.11",
+
+    $ npm install grpc@latest
+
+Agora as 22:28 

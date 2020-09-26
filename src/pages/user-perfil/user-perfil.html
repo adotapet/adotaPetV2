@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-navbar class="toolbar toolbar-danger" color="danger">
+    <ion-title>
+      {{ 'Perfil' | translate }}
+    </ion-title>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+  </ion-navbar>
+</ion-header>
+<ion-content class="bgdLogin" padding id="page3.1" [hidden]="canEnter">
+  <please-login></please-login>
+</ion-content>
+<ion-content #myContent [hidden]="!canEnter">
+  <ion-toolbar color="light" mode="md">
+    <ion-segment color="dark" mode="md" [(ngModel)]="section">
+      <ion-segment-button value="one">
+        {{ 'Meus Pets' | translate }}
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <div [ngSwitch]="section">
+    <div *ngSwitchCase="'one'">
+      <ion-card padding>
+        <meus-pets></meus-pets>
+      </ion-card>
+    </div>
+  </div>
+  <ion-footer>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-6 class="welcome" *ngIf="user">
+          Olá, {{'WELCOME' | translate}}(a):
+          <p class="name">{{ user?.displayName }}</p>
+        </ion-col>
+        <ion-col col-6>
+          <button icon-start ion-button block round (click)="logOf()">
+            <ion-icon name="ios-log-out-outline"></ion-icon>
+            Sair
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-footer>
+</ion-content>

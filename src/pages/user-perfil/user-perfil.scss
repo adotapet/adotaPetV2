@@ -1,0 +1,46 @@
+page-user-perfil {
+  .header {
+    background: #ff4436 !important;
+  }
+  .toolbar {
+    background-image: url("../assets/img/bgMenuAdotaPet.png") !important;
+    height: 8rem;
+    width: 100%;
+    background-size: 100% 100%;
+    position: relative;
+    top: 10px;
+  }
+  .card-md {
+    border-radius: 10px 0px 10px 0px !important;
+  }
+  .card-ios {
+    border-radius: 10px 0px 10px 0px !important;
+  }
+  .bgdLogin {
+    background-image: url("../../assets/dogBackG.png");
+    background-size: 100% 100%;
+  }
+  .welcome {
+    text-align: center;
+    font-weight: 400;
+    margin: auto !important;
+  }
+  .name {
+    margin: auto;
+    font-size: 1.4em;
+    text-align: center;
+    font-weight: 500;
+    color: #ff4437;
+  }
+  .header-md::after {
+    height: 0px !important;
+  }
+  // .button-md {
+  //   margin-top: 10px !important;
+  //   border-radius: 0px 0px 10px 0px !important;
+  // }
+  // .button-ios {
+  //   margin-top: 10px !important;
+  //   border-radius: 0px 0px 10px 0px !important;
+  // }
+}

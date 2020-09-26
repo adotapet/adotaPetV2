@@ -1,0 +1,148 @@
+<ion-header class="header" no-border>
+  <ion-navbar class="toolbar toolbar-danger" color="danger">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      {{ 'ADD_PET' | translate }}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content class="bgdLogin" padding id="page3.1" [hidden]="canEnter">
+  <please-login></please-login>
+</ion-content>
+
+<ion-content padding id="page3" [hidden]="!canEnter">
+  <img class="noimg" *ngIf="!photoData.img" src="./assets/img/NsepPTAR9CVtubPYQpQ5_noimglarge.png" />
+  <ion-slides pager="true" *ngIf="photoData.img">
+    <ion-slide>
+      <img [src]="photoData.img" />
+    </ion-slide>
+  </ion-slides>
+
+  <form [formGroup]="post">
+    <div style="width: 50%; float: left; padding: 5px;">
+      <button (click)="takePhoto()" ion-button icon-left block round color="assertive" style="width: 100%;">
+        <ion-icon name="camera"></ion-icon>
+        {{ 'TAKE_PHOTO' | translate }}
+      </button>
+    </div>
+    <div style="width: 50%; float: left; padding: 5px;">
+      <button (click)="takeGallery()" ion-button icon-left block round color="assertive" style="width: 100%;">
+        <ion-icon name="images"></ion-icon>
+        {{ 'GALLERY' | translate }}
+      </button>
+    </div>
+    <div class="spacer" style="width:300px;height:100px;"></div>
+    <ion-item>
+      <ion-label>
+        {{ 'PET_NAME' | translate }}
+      </ion-label>
+      <ion-input type="text" maxlength="15" name="nome" formControlName="nome">
+        <ion-note color="danger" *ngIf="nome.dirty && nome.hasError('maxlength')">
+          Max 15 characters
+        </ion-note>
+      </ion-input>
+
+
+
+    </ion-item>
+    <div class="spacer" style="width:300px;height:45px;" id="adicionarPet-spacer3"></div>
+    <ion-item id="adicionarPet-select1">
+      <ion-label>
+        {{ 'SPECIES' | translate }}
+      </ion-label>
+      <ion-select name="especie" formControlName="especie" (ngModelChange)="onChange($event)">
+        <ion-option value="Canina">
+
+          {{ 'CANINE' | translate }}
+        </ion-option>
+        <ion-option value="Felina">
+
+          {{ 'FELINE' | translate }}
+        </ion-option>
+        <ion-option value="Outros">
+
+          {{ 'OTHERS' | translate }}
+        </ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        {{ 'BREED' | translate }}
+      </ion-label>
+
+      <ion-select name="raca" id="raca" (change)="onItemChange($event.target.value)" formControlName="raca">
+        <ion-option checked value=""></ion-option>
+        <!--<ion-option aria-checked="undefined" *ngFor="let selectedRaca of selectedRacas" [value]="" >{{selectedRaca}} </ion-option>-->
+        <ion-option *ngFor="let item of selectedRacas" [value]="">{{ item }}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <div class="spacer" style="width:300px;height:45px;"></div>
+    <ion-item>
+      <ion-label>
+        {{ 'AGE' | translate }}
+      </ion-label>
+      <ion-select name="idade" formControlName="idade">
+        <ion-option value="{{ '1_3_MONTHS' | translate }}">
+          {{ '1_3_MONTHS' | translate }}
+        </ion-option>
+        <ion-option value="{{ '3_6_MONTHS' | translate }}">
+          {{ '3_6_MONTHS' | translate }}
+        </ion-option>
+        <ion-option value="{{ '6_9_MONTHS' | translate }}">
+          {{ '6_9_MONTHS' | translate }}
+        </ion-option>
+        <ion-option value="{{ '9_12_MONTHS' | translate }}">
+          {{ '9_12_MONTHS' | translate }}
+        </ion-option>
+        <ion-option value="{{ '1_3_YEARS' | translate }}">
+          {{ '1_3_YEARS' | translate }}
+        </ion-option>
+        <ion-option value="{{ 'OVER_3_YEARS' | translate }}">
+          {{ 'OVER_3_YEARS' | translate }}
+        </ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        {{ 'GENDER' | translate }}
+      </ion-label>
+      <ion-select name="sexo" formControlName="sexo">
+        <ion-option value="Mâcho">
+          {{ 'MALE' | translate }}
+        </ion-option>
+        <ion-option value="Femêa">
+          {{ 'FEMALE' | translate }}
+        </ion-option>
+        <ion-option value="Desconhecido">
+          {{ 'UNKNOWN' | translate }}
+        </ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        WhatsApp
+      </ion-label>
+      <ion-input type="text" [brmasker]="{phone: true}" name="whats" formControlName="whatsapp"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>
+        {{ 'INFORMATION' | translate }}
+      </ion-label>
+      <ion-textarea name="informacoes" type="text" row="6" placeholder="{{ 'TELL_MORE_PET' | translate }}"
+        formControlName="informacoes">
+      </ion-textarea>
+    </ion-item>
+
+    <div class="spacer" style="width:300px;height:45px;" id="adicionarPet-spacer3"></div>
+    <button ion-button color="assertive" block type="submit" [disabled]="!post.valid" (click)="addPost()"
+      *ngIf="!showloader" style="border-radius:100px 100px 100px 100px;">
+      {{ 'SEND' | translate }}
+    </button>
+  </form>
+</ion-content>

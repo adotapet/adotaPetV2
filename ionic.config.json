@@ -1,0 +1,8 @@
+{
+  "name": "AdotaptV3",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}

@@ -1,0 +1,21 @@
+<ion-header class="header">
+  <ion-navbar class="toolbar toolbar-danger" color="danger">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{ "PROFILE" | translate }}</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <form [formGroup]="profile">
+    <ion-item>
+      <ion-label>
+        Seu nome:
+      </ion-label>
+      <ion-input type="text" name="nome" formControlName="nome"></ion-input>
+    </ion-item>
+    <button ion-button type="submit" block (click)="createProfile(userId)" [disabled]="!profile.valid">Criar
+      perfil</button>
+  </form>
+
+</ion-content>

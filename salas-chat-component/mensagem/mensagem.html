@@ -1,0 +1,48 @@
+<!-- <ion-header>
+  <ion-navbar>
+    <ion-title>{{titulo}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+
+  <div class="message-wrap" #content>
+
+    <div *ngFor="let msg of messages"
+         class="message"
+         [class.left]=" msg.autor != myId"
+         [class.right]=" msg.autor === myId">
+      <div class="msg-detail">
+        <div class="msg-info">
+          <p>
+            {{msg.autorNome}}&nbsp;&nbsp;&nbsp;{{msg.createdAt}}</p>
+        </div>
+        <div class="msg-content">
+          <span class="triangle"></span>
+          <p class="line-breaker ">{{msg.content}}</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</ion-content>
+
+<ion-footer no-border [ngStyle]="{'height':showEmojiPicker == false ? '55px' : '255px' }">
+  <div class="input-wrap">
+    <button ion-button clear icon-only item-right (click)="switchEmojiPicker()">
+      <ion-icon name="md-happy"></ion-icon>
+    </button>
+    <textarea #chat_input
+              placeholder="Digite sua mensagem..."
+              [(ngModel)]="msgText"
+              (keyup.enter)="sendMessage(msgText)"
+              (focusin)="onFocus()">
+    </textarea>
+    <button ion-button clear icon-only item-right [disabled]="!msgText" (click)="sendMessage(msgText)">
+      <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
+    </button>
+  </div>
+  <emoji-picker [(ngModel)]="msgText"></emoji-picker>
+</ion-footer> -->

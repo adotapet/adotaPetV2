@@ -1,0 +1,158 @@
+<ion-content fullscreen parallax-header no-padding>
+  <div class="back">
+    <ion-fab mini top left (click)="back()">
+      <button color="light" ion-fab>
+        <ion-icon style="font-size: 2.4em;" name="ios-arrow-round-back"></ion-icon>
+      </button>
+    </ion-fab>
+  </div>
+  <div class="shared">
+    <ion-fab mini top left (click)="shared()">
+      <button color="light" ion-fab>
+        <ion-icon style="font-size: 2.4em;" name="ios-share-outline"></ion-icon>
+      </button>
+    </ion-fab>
+  </div>
+  <!-- <div class="favorite">
+    <ion-fab mini top left (click)="favorite()">
+      <button color="light" ion-fab>
+        <ion-icon style="font-size: 2.4em;" name="ios-heart-outline"></ion-icon>
+      </button>
+    </ion-fab>
+  </div> -->
+
+  <div [hidden]="load">
+    <skeleton-item class="pin-image" height="250px" width="auto" style="margin-bottom: 5px;"></skeleton-item>
+    <ion-item no-padding lines="full">
+      <div class="nome-pet">
+        <skeleton-item class="pin-image" height="18px" width="60px" style="margin-bottom: 5px;"></skeleton-item>
+        <skeleton-item class="pin-image" height="12px" width="80%" style="margin-bottom: 5px;"></skeleton-item>
+      </div>
+    </ion-item>
+
+    <ion-item no-padding lines="full">
+      <div class="nome-pet">
+        <skeleton-item class="pin-image" height="18px" width="60px" style="margin-bottom: 5px;"></skeleton-item>
+        <skeleton-item class="pin-image" height="12px" width="80%" style="margin-bottom: 5px;"></skeleton-item>
+      </div>
+    </ion-item>
+
+    <ion-item no-padding lines="full">
+      <div class="nome-pet">
+        <skeleton-item class="pin-image" height="18px" width="60px" style="margin-bottom: 5px;"></skeleton-item>
+        <skeleton-item class="pin-image" height="12px" width="80%" style="margin-bottom: 5px;"></skeleton-item>
+      </div>
+    </ion-item>
+
+    <ion-item no-padding lines="full">
+      <div class="nome-pet">
+        <skeleton-item class="pin-image" height="18px" width="60px" style="margin-bottom: 5px;"></skeleton-item>
+        <skeleton-item class="pin-image" height="12px" width="80%" style="margin-bottom: 5px;"></skeleton-item>
+      </div>
+    </ion-item>
+
+    <ion-item no-padding lines="full">
+      <div class="nome-pet">
+        <skeleton-item class="pin-image" height="18px" width="60px" style="margin-bottom: 5px;"></skeleton-item>
+        <skeleton-item class="pin-image" height="12px" width="80%" style="margin-bottom: 5px;"></skeleton-item>
+      </div>
+    </ion-item>
+
+    <ion-item no-padding lines="full">
+      <div class="nome-pet">
+        <skeleton-item class="pin-image" height="18px" width="60px" style="margin-bottom: 5px;"></skeleton-item>
+        <skeleton-item class="pin-image" height="12px" width="80%" style="margin-bottom: 5px;"></skeleton-item>
+      </div>
+    </ion-item>
+  </div>
+  <!-- Fechando skeleton-->
+  <div class="header-image">
+    <ion-slides pager="true">
+      <ion-slide *ngFor="let photo of pet2?.fotoUrls" [ngStyle]="{'background-image':'url('+photo+')'}">
+        <div class="section bg1">
+          <img [src]="photo" />
+        </div>
+      </ion-slide>
+    </ion-slides>
+  </div>
+
+  <ion-item class="container" no-padding lines="full">
+    <div class="nome-pet">
+      <h2><strong>{{pet2?.nome}}</strong></h2>
+    </div>
+    <div class="age-breed">
+      <span>
+        <ion-icon color="danger" name="ios-information-circle-outline" item-left></ion-icon>
+        {{"AGE" | translate }} : {{pet2?.idade || 'Não informada'}}
+      </span>
+      <span>
+        -
+        <ion-icon color="danger" name="logo-octocat" item-left></ion-icon>
+        {{ "BREED" | translate }} : {{pet2?.raca || 'Não informada'}}
+      </span>
+    </div>
+  </ion-item>
+
+  <ion-item no-padding lines="full">
+    <div class="species-gender">
+      <span>
+        <ion-icon color="danger" name="ios-paw-outline" item-left></ion-icon>
+        {{ "SPECIES" | translate }} : {{pet2?.especie || 'Não informada'}}
+      </span>
+      -
+      <span>
+        <ion-icon color="danger" name="female" item-left></ion-icon>
+        {{"GENDER" | translate }} : {{pet2?.sexo || 'Não informado'}}
+      </span>
+    </div>
+  </ion-item>
+
+  <ion-item no-padding lines="full" text-wrap>
+    <div class="information">
+      <strong> {{"INFORMATION" | translate }} :</strong>
+      <br />
+      <p style="color: #2e2c2c;">{{pet2?.informacoes}}</p>
+    </div>
+  </ion-item>
+
+  <ion-item no-padding lines="full">
+    <div class="owner">
+      <div class="owner-name">{{ "OWNER" | translate }}</div>
+
+      <ion-avatar color="primary" item-left>
+        <img src="./assets/img/user.png" />
+      </ion-avatar>
+
+      <label for="">
+        {{ "NAME" | translate }} : {{ pet2?.dono || 'Não informado'}}</label>
+
+      <div class="fab-chat" style="position: initial; margin-bottom: 3px;">
+        <ion-fab right (click)="whatsappSend(pet2?.whatsapp, pet2?.nome)">
+          <button ion-fab>
+            <ion-icon name="ios-chatbubbles"></ion-icon>
+          </button>
+        </ion-fab>
+      </div>
+    </div>
+  </ion-item>
+
+  <ion-item no-padding lines="full" text-wrap>
+    <div class="sharegroups">
+      <div class="adoted">
+        <p>{{"SHARE_FRIENDS_ADOPTED_QUICKLY" | translate}}</p>
+      </div>
+    </div>
+  </ion-item>
+  <button ion-button class="sharedwhasapp" full (click)="whatsappShare()">
+    <span class="whatsapp"> {{"SHARED" | translate}}</span>
+  </button>
+  <hr />
+  <ion-item lines="full">
+    <ion-icon name="ios-warning-outline" item-left></ion-icon>
+    {{"REPORT" | translate }}
+    <button ion-button round outline item-end (tap)="reportAbuse()">
+      {{ "REPORT" | translate}} ?
+    </button>
+  </ion-item>
+
+</ion-content>
